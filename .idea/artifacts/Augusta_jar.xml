@@ -10,11 +10,11 @@
       <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-actors-2.11.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-actors-migration_2.11-1.1.0.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-library.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-parser-combinators_2.11-1.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-parser-combinators_2.11-1.0.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-reflect.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-swing_2.11-1.0.1.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-xml_2.11-1.0.3.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/lib/antlr-4.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-swing_2.11-1.0.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-xml_2.11-1.0.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/antlr-4.5.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>
