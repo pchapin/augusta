@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.oasis-open.org/docbook/xml/5.0/rng/docbookxi.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
+  <info>
+    <title>Ada for Scala Programmers</title>
+    <author>
+      <orgname>Vermont Technical College</orgname>
+      <address>
+        <street>201 Lawrence Place</street>
+        <city>Williston</city>
+        <state>Vermont</state>
+        <postcode>05495</postcode>
+        <country>USA</country>
+      </address>
+      <email>PChapin@vtc.vsc.edu</email>
+    </author>
+  </info>
+
+  <part>
+    <title>Tutorial</title>
+    <chapter>
+      <title>Introduction</title>
+      <para>This document is intended to help a Scala programmer learn about Ada. It is a very
+        unfinished work.</para>
+    </chapter>
+
+    <chapter>
+      <title>Overview of Ada</title>
+      <para>Give an overview of Ada from the point of view of a Scala programmer.</para>
+    </chapter>
+  </part>
+
+<!--  <part>
+    <title>Case Studies</title>
+  </part> -->
+</book>

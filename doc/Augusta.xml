@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+   "http://www.docbook.org/xml/4.5/docbookx.dtd" [
+
+<!ELEMENT xi:include (xi:fallback?) >
+<!ATTLIST xi:include
+    xmlns:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude"
+    href       CDATA      #REQUIRED
+    parse      (xml|text) "xml"
+    encoding   CDATA      #IMPLIED >
+<!ELEMENT xi:fallback ANY>
+<!ATTLIST xi:fallback
+    xmlsn:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude" >
+<!ENTITY % local.chapter.class "| xi:include">
+<!ENTITY % local.section.class "| xi:include">
+]>
+
+<!-- FILE        : Augusta.xml
+     SUBJECT     : Master document for the Augusta documentation set.
+     AUTHOR      : (C) Copyright 2014 by Peter C. Chapin <PChapin@vtc.vsc.edu>
+
+This is the documentation for the Augusta Ada compiler. -->
+
+<book status="draft">
+  <bookinfo>
+    <title>Augusta</title>
+    <author>
+      <firstname>Peter</firstname>
+      <surname>Chapin</surname>
+      <othername role="mi">C.</othername>
+      <affiliation>
+        <orgname>Vermont Technical College</orgname>
+        <orgdiv>Computer Information Systems Department</orgdiv>
+      </affiliation>
+    </author>
+    <authorinitials>pcc</authorinitials>
+    <copyright>
+      <year>2014</year>
+      <holder>Peter C. Chapin</holder>
+    </copyright>
+    <legalnotice>
+      <para> Permission is granted to copy, distribute and/or modify this document under the
+        terms of the GNU Free Documentation License, Version 1.1 or any later version published
+        by the Free Software Foundation; with the Invariant Sections being LIST THEIR TITLES,
+        with the Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST. A copy
+        of the license is included in the section entitled "GNU Free Documentation License".
+      </para>
+    </legalnotice>
+    <!-- Do we really want to include this revision history now? -->
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+        <date>2020-12-31</date>
+        <authorinitials>pcc</authorinitials>
+        <revremark>This is a work in progress. Release 1.0 is scheduled for the end of
+          2020.</revremark>
+      </revision>
+    </revhistory>
+  </bookinfo>
+  <preface id="Introduction">
+    <title>Introduction</title>
+
+    <para>Augusta is an open source Ada compiler developed as a personal project by me, Peter C.
+      Chapin. As a person interested in Ada related technologies, I created Augusta primarily
+      for my own education and enjoyment. However, it is also my hope that Augusta will
+      eventually provide another option besides GNAT for those interested in using an open
+      source Ada compiler. Although GNAT is a fine product, I believe in the value of diversity
+      when it comes to available programming tools.</para>
+
+    <para>Augusta is a long term project. Since I can only work on it in my spare time and since
+      I'm not expecting many contributors at first, I anticipate it taking years before Augusta
+      reaches any level of maturity. Yet to put a concrete time line on my work I have decided
+      to release version 1.0 of Augusta on December 31, 2020. At that time I intend to have a
+      usable compiler ready, for some reasonable definition of "usable."</para>
+
+    <para>Augusta is written primarily in the Scala programming language. I chose Scala because
+      it is a functional language, and thus supports features that I believe will be helpful for
+      compiler construction (such as algebraic data types and pattern matching). Accordingly I
+      intend to write Augusta in as purely a functional style as feasible with the hope that
+      doing so will make the code more understandable, more reliable, and more amenable to
+      parallelization. In addition Scala gives me access to an enormous collection of Java
+      libraries, tools, and technologies, many of which are very powerful and highly mature. I
+      intend to capitalize on that legacy as much as possible during the development of
+      Augusta.</para>
+
+    <para>I understand that Scala is an unusual choice as an implementation language for an Ada
+      compiler. I understand that I would be more likely to attract help from the Ada community
+      if I wrote Augusta in Ada. However, as a personal project I have the luxury of selecting
+      tools that interest me even if they might not be strategically optimal. I hope my choice
+      of Scala pays off in the long run. If the compiler is easier to write or if Augusta
+      eventually becomes a bridge between the Scala/Java and Ada communities, my choice might
+      prove to be strategic after all.</para>
+
+    <para>August targets the LLVM compiler framework. This allows me to defer the details of low
+      level code generation and optimization to the framework. Thus in theory Augusta supports
+      all target architectures supported by LLVM, both now and in the future. This approach also
+      allows me to capitalize on future advances made in LLVM technology. However, unlike high
+      level virtual machines such as the JVM or CLR, LLVM should not restrict my implementation
+      options. I believe it will be easier to accurately implement a language like Ada, which is
+      intended to support low level programming, on top of a low level framework.</para>
+
+    <para>I anticipate that as Augusta matures others will become attracted to the project and
+      may join the effort. For this reason, aside from this introduction, the documentation is
+      written as if it is being authored by a group of contributors rather than just a single
+      person. This will reduce the amount of editing needed when there actually is a group of
+      Augusta contributors!</para>
+
+    <para>Although I hope others will become interested in this project in the future, I am also
+      realistic enough to know that I will most likely be the only contributor for some time.
+      People don't want to spend time on a grand project that just fizzles out in a couple of
+      months. I will need to prove Augusta's seriousness by demonstrating a sustained effort and
+      steady progress before anyone is likely to be willing to invest in it. This actually suits
+      me fine because it allows me to shape the design and structure of the project on my own
+      before others with competing views start to participate.</para>
+
+    <para>This documentation describes both the design and use of the Augusta compiler.</para>
+
+    <!-- Include disclaimer. -->
+
+  </preface>
+
+  <xi:include href="Vision.xml"/>
+  <xi:include href="Build.xml"/>
+  <xi:include href="User.xml"/>
+  <xi:include href="Requirements.xml"/>
+  <xi:include href="Design.xml"/>
+
+  <!-- <bibliography> ... </bibliography> -->
+
+</book>

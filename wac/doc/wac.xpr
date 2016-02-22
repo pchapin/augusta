@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="11.1">
+    <meta>
+        <filters directoryPatterns="" filePatterns=""
+            positiveFilePatterns="" showHiddenFiles="false"/>
+        <options/>
+    </meta>
+    <projectTree name="wac.xpr">
+        <file name="doc-Lexical.xml"/>
+        <file name="doc-Build.xml"/>
+        <file name="wac-Design.xml"/>
+    </projectTree>
+</project>

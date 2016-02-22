@@ -1,0 +1,579 @@
+%{
+/****************************************************************************
+FILE    : ada.ypp
+SUBJECT : Grammar for Ada 2005
+AUTHOR  : (C) Copyright 2010 by Peter C. Chapin <peter@openwatcom.org>
+
+This grammar is in a form acceptable to Open Watcom's yacc.
+****************************************************************************/
+
+#include <iostream>
+
+extern int yylex( );
+extern int yyerror( const char * );
+extern int current_line;
+
+%}
+
+%token Y_ABORT
+%token Y_ABS
+%token Y_ABSTRACT
+%token Y_ACCEPT
+%token Y_ACCESS
+%token Y_ALIASED
+%token Y_ALL
+%token Y_AND
+%token Y_ARRAY
+%token Y_AT
+%token Y_BEGIN
+%token Y_BODY
+%token Y_CASE
+%token Y_CONSTANT
+%token Y_DECLARE
+%token Y_DELAY
+%token Y_DELTA
+%token Y_DIGITS
+%token Y_DO
+%token Y_ELSE
+%token Y_ELSIF
+%token Y_END
+%token Y_ENTRY
+%token Y_EXCEPTION
+%token Y_EXIT
+%token Y_FOR
+%token Y_FUNCTION
+%token Y_GENERIC
+%token Y_GOTO
+%token Y_IF
+%token Y_IN
+%token Y_INTERFACE
+%token Y_IS
+%token Y_LIMITED
+%token Y_LOOP
+%token Y_MOD
+%token Y_NEW
+%token Y_NOT
+%token Y_NULL
+%token Y_OF
+%token Y_OR
+%token Y_OTHERS
+%token Y_OUT
+%token Y_OVERRIDING
+%token Y_PACKAGE
+%token Y_PRAGMA
+%token Y_PRIVATE
+%token Y_PROCEDURE
+%token Y_PROTECTED
+%token Y_RAISE
+%token Y_RANGE
+%token Y_RECORD
+%token Y_REM
+%token Y_RENAMES
+%token Y_REQUEUE
+%token Y_RETURN
+%token Y_REVERSE
+%token Y_SELECT
+%token Y_SEPARATE
+%token Y_SUBTYPE
+%token Y_SYNCHRONIZED
+%token Y_TAGGED
+%token Y_TASK
+%token Y_TERMINATE
+%token Y_THEN
+%token Y_TYPE
+%token Y_UNTIL
+%token Y_USE
+%token Y_WHEN
+%token Y_WHILE
+%token Y_WITH
+%token Y_XOR
+
+%token Y_COLON
+%token Y_COLONEQUAL
+%token Y_COMMA
+%token Y_DOT
+%token Y_LABELSTART
+%token Y_LABELEND
+%token Y_LPAREN
+%token Y_RPAREN
+%token Y_SEMICOLON
+%token Y_TICK
+
+%token Y_IDENTIFIER
+%token Y_STRING
+
+%start compilation
+
+%%
+
+/* Additional Rules */
+/* ================ */
+
+designated_end:
+        Y_END
+      | designator Y_END
+      ;
+
+/* SECTION 3 */
+/* ========= */
+
+defining_identifier:
+        Y_IDENTIFIER
+      ;
+
+subtype_mark:
+        name
+      ;
+
+subtype_mark_list:
+        subtype_mark
+      | subtype_mark_list ',' subtype_mark
+      ;
+
+null_exclusion:
+        Y_NOT Y_NULL
+      ;
+
+/* SECTION 4 */
+/* ========= */
+
+name_list:
+        name
+      | name_list ',' name
+      ;
+
+direct_name:
+        Y_IDENTIFIER
+      | operator_symbol
+      ;
+
+/* SECTION 5 */
+/* ========= */
+
+sequence_of_statements:
+        statement
+      | sequence_of_statements statement
+      ;
+
+statement:
+        label_list simple_statement
+      | label_list compound_statement
+      ;
+
+simple_statement:
+        null_statement
+      | assignment_statement
+      | exit_statement
+      | goto_statement
+      | procedure_call_statement
+      | simple_return_statement
+/*      | entry_call_statement  */
+      | requeue_statement
+      | delay_statement
+      | abort_statement
+      | raise_statement
+      | code_statement
+      ;
+
+compound_statement:
+        if_statement
+      | case_statement
+      | loop_statement
+      | block_statement
+      | extended_return_statement
+      | accept_statement
+      | select_statement
+      ;
+
+null_statement:
+        Y_NULL ';'
+      ;
+
+label_list:
+        label
+      | label_list label
+      | /* empty */
+      ;
+
+label:
+        Y_LABELSTART statement_identifier Y_LABELEND
+      ;
+
+statement_identifier:
+        direct_name
+      ;
+
+assignment_statement:
+        name Y_COLONEQUAL expression ';'
+      ;
+
+condition:
+        expression
+      ;
+
+exit_statement:
+        Y_EXIT ';'
+      | Y_EXIT name ';'
+      | Y_EXIT Y_WHEN condition ';'
+      | Y_EXIT name Y_WHEN condition ';'
+      ;
+
+goto_statement:
+        Y_GOTO name ';'
+      ;
+
+
+/* SECTION 6 */
+/* ========= */
+
+subprogram_declaration:
+        overriding_indicator subprogram_specification ';'
+      | subprogram_specification ';'
+      ;
+
+subprogram_specification:
+        procedure_specification
+      | function_specification
+      ;
+
+procedure_specification:
+        Y_PROCEDURE defining_program_unit_name parameter_profile
+      ;
+
+function_specification:
+        Y_FUNCTION defining_designator parameter_and_result_profile
+      ;
+
+designator:
+        parent_unit_name '.' Y_IDENTIFIER
+      | Y_IDENTIFIER
+      | operator_symbol
+      ;
+
+defining_designator:
+        defining_program_unit_name
+      | defining_operator_symbol
+      ;
+
+defining_program_unit_name:
+        defining_identifier
+      | parent_unit_name '.' defining_identifier
+      ;
+
+defining_operator_symbol:
+        operator_symbol
+      ;
+
+operator_symbol:
+        Y_STRING
+      ;
+
+parameter_profile:
+        formal_part
+      |
+      ;
+
+parameter_and_result_profile:
+        formal_part Y_RETURN null_exclusion subtype_mark
+      | formal_part Y_RETURN subtype_mark
+      | Y_RETURN null_exclusion subtype_mark
+      | Y_RETURN subtype_mark
+      | formal_part Y_RETURN access_definition
+      | Y_RETURN access_definition
+      ;
+
+formal_part:
+        parameter_specification_list
+      ;
+
+parameter_specification_list:
+        parameter_specification
+      | parameter_specification_list ';' parameter_specification
+      ;
+
+bulk_subprogram_body:
+      subprogram_specification Y_IS declarative_part
+         Y_BEGIN handled_sequence_of_statements designated_end ';'
+      ;
+
+subprogram_body:
+        overriding_indicator bulk_subprogram_body
+      | bulk_subprogram_body
+      ;
+
+simple_return_statement:
+        Y_RETURN ';'
+      | Y_RETURN expression ';'
+      ;
+
+/* SECTION 7 */
+/* ========= */
+
+package_declaration:
+        package_specification ';'
+      ;
+
+/* SECTION 8 */
+/* ========= */
+
+overriding_indicator:
+        Y_OVERRIDING
+      | Y_NOT Y_OVERRIDING
+      ;
+
+use_clause:
+        use_package_clause
+      | use_type_clause
+      ;
+
+use_package_clause:
+        Y_USE name_list ';'
+      ;
+
+use_type_clause:
+        Y_USE Y_TYPE subtype_mark_list ';'
+      ;
+
+package_renaming_declaration:
+        Y_PACKAGE defining_program_unit_name Y_RENAMES name ';'
+      ;
+
+subprogram_renaming_declaration:
+        overriding_indicator subprogram_specification Y_RENAMES name ';'
+      | subprogram_specification Y_RENAMES name ';'
+      ;
+
+generic_renaming_declaration:
+        Y_GENERIC Y_PACKAGE defining_program_unit_name Y_RENAMES name ';'
+      | Y_GENERIC Y_PROCEDURE defining_program_unit_name Y_RENAMES name ';'
+      | Y_GENERIC Y_FUNCTION defining_program_unit_name Y_RENAMES name ';'
+      ;
+
+/* SECTION 9 */
+/* ========= */
+
+requeue_statement:
+        Y_REQUEUE name ';'
+      | Y_REQUEUE name Y_WITH Y_ABORT ';'
+      ;
+
+delay_statement:
+        delay_until_statement
+      | delay_relative_statement
+      ;
+
+delay_until_statement:
+        Y_DELAY Y_UNTIL expression ';'
+      ;
+
+delay_relative_statement:
+        Y_DELAY expression ';'
+      ;
+
+task_name_list:
+        name
+      | task_name_list ',' name
+      ;
+
+abort_statement:
+        Y_ABORT task_name_list ';'
+      ;
+
+/* SECTION 10 */
+/* ========= */
+
+compilation:
+        compilation_unit compilation
+      | /* nothing */
+      ;
+
+compilation_unit:
+        context_clause library_item
+      | context_clause subunit
+      ;
+
+library_item:
+        library_unit_declaration
+      | Y_PRIVATE library_unit_declaration
+      | library_unit_renaming_declaration
+      | Y_PRIVATE library_unit_renaming_declaration
+      | library_unit_body
+      ;
+
+library_unit_declaration:
+        subprogram_declaration
+      | package_declaration
+      | generic_declaration
+      | generic_instantiation
+      ;
+
+library_unit_renaming_declaration:
+        package_renaming_declaration
+      | generic_renaming_declaration
+      | subprogram_renaming_declaration
+      ;
+
+library_unit_body:
+        subprogram_body
+      | package_body
+      ;
+
+parent_unit_name:
+        name
+      ;
+
+context_clause:
+        context_item context_clause
+      | /* nothing */
+      ;
+
+context_item:
+        with_clause
+      | use_clause
+      ;
+
+with_clause:
+        limited_with_clause
+      | nonlimited_with_clause
+      ;
+
+limited_with_clause:
+        Y_LIMITED Y_WITH name_list ';'
+      | Y_LIMITED Y_PRIVATE Y_WITH name_list ';'
+      ;
+
+nonlimited_with_clause:
+        Y_WITH name_list ';'
+      | Y_PRIVATE Y_WITH name_list ';'
+      ;
+
+subunit:
+        Y_SEPARATE '(' parent_unit_name ')' proper_body
+      ;
+
+/* SECTION 11 */
+/* ========== */
+
+raise_statement:
+        Y_RAISE ';'
+      | Y_RAISE name ';'
+      | Y_RAISE name Y_WITH expression ';'
+      ;
+
+/* SECTION 12 */
+/* ========== */
+
+generic_declaration:
+        generic_subprogram_declaration
+      | generic_package_declaration
+      ;
+
+generic_subprogram_declaration:
+        generic_formal_part subprogram_specification ';'
+      ;
+
+generic_package_declaration:
+        generic_formal_part package_specification ';'
+      ;
+
+/* SECTION 13 */
+/* ========== */
+
+code_statement:
+        qualified_expression ';'
+      ;
+
+/* The following non-terminals are not finished */
+/* ============================================ */
+
+accept_statement:
+        Y_ACCEPT direct_name Y_END ';'
+      ;
+
+access_definition:
+        Y_ACCESS Y_IDENTIFIER
+      ;
+
+block_statement:
+        Y_BEGIN handled_sequence_of_statements Y_END ';'
+      ;
+
+case_statement:
+        Y_CASE expression Y_IS Y_END Y_CASE ';'
+      ;
+
+declarative_part:
+        Y_IDENTIFIER ':' Y_IDENTIFIER ';'
+      ;
+
+entry_call_statement:
+        procedure_call_statement
+      ;
+
+expression:
+        Y_IDENTIFIER
+      ;
+
+extended_return_statement:
+        Y_RETURN defining_identifier Y_COLON Y_IDENTIFIER ';'
+      ;
+
+generic_formal_part:
+        Y_GENERIC
+      ;
+
+generic_instantiation:
+        Y_PACKAGE defining_program_unit_name Y_IS Y_NEW name ';'
+      ;
+
+handled_sequence_of_statements:
+        sequence_of_statements
+      ;
+
+if_statement:
+        Y_IF condition Y_THEN sequence_of_statements Y_END Y_IF ';'
+      ;
+
+loop_statement:
+        Y_LOOP sequence_of_statements Y_END Y_LOOP ';'
+      ;
+
+name:
+        Y_IDENTIFIER
+      ;
+
+package_body:
+        Y_PACKAGE Y_BODY defining_program_unit_name Y_IS declarative_part Y_END ';'
+      ;
+
+package_specification:
+        Y_PACKAGE Y_IDENTIFIER Y_IS Y_END
+      ;
+
+parameter_specification:
+        Y_IDENTIFIER ':' Y_IDENTIFIER
+      ;
+
+procedure_call_statement:
+        name ';'
+      ;
+
+proper_body:
+        subprogram_body
+      ;
+
+qualified_expression:
+        Y_IDENTIFIER Y_TICK '(' expression ')'
+      ;
+
+select_statement:
+        Y_SELECT Y_END Y_SELECT ';'
+      ;
+
+%%
+
+int yyerror( const char *message )
+{
+  std::cout << "Error [line " << current_line << "]: " << message << "\n";
+  return 0;
+}

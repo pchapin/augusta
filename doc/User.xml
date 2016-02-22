@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.docbook.org/xml/4.5/docbookx.dtd">
+  
+<chapter id="User">
+  <title>Augusta User Documentation</title>
+
+  <para>This chapter contains the user documentation for Augusta. It is divided into sections
+    that target different kinds of users. The first section is for traditional users who wish to
+    use Augusta non-interactively (for example at the command line or by way of a build script)
+    to compile programs. The second section is for tool builders who wish to use Augusta, or
+    parts of it, in programs of their own construction. The third section is for users who wish
+    to extend Augusta by creating plugins.</para>
+
+  <para>The sections are ordered in the sense that they assume a reader of section n is familiar
+    with the contents of section n-1. In contrast, a reader of section n need not be concerned
+    about the contents of section n+1.</para>
+
+  <section id="User.Traditional">
+    <title>Traditional Use</title>
+
+    <para>In this section we describe the use of Augusta as a traditional, command-line driven
+      tool. We describe installation, command-line syntax and options, error message format, and
+      the way Augusta interacts with other tools (in particular the LLVM back-end tools).</para>
+
+    <section id="User.Traditional.Installation">
+      <title>Installation</title>
+      <para>Augusta requires that several prerequisites systems be installed before Augusta is
+        installed. These prerequisite systems are listed below with some comments.</para>
+
+      <variablelist>
+        <varlistentry>
+          <term>Java Development Kit</term>
+          <listitem>
+            <!-- TODO: Is a full JDK really necessary or is a JRE enough? -->
+            <!-- TODO: Describe how to edit the path? -->
+            <para>Augusta requires that you install a full JDK and not just a Java Runtime
+              Environment (JRE). Currently only version 1.7 is officially supported but other
+              versions may also work. The JDK can be either 32 bit or 64 bit. After
+              installation, be sure both the <command>java</command> and
+                <command>javac</command> commands are accessible at the command-line. You may
+              have to edit your path manually to do this.</para>
+
+            <para>The Java API documentation ("JavaDoc") is not required in order to use Augusta
+              although you might find it useful if you ever build tools around Augusta or extend
+              Augusta.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>Scala</term>
+          <listitem>
+            <para>The Scala distribution contains both the runtime environment used by Scala
+              programs and the Scala compiler. Currently only version 2.10 is officially
+              supported but other versions may also work.</para>
+
+            <para>The Scala API documentation ("ScalaDoc") is not required in order to use
+              Augusta although you might find it useful if you ever build tools around Augusta
+              or extend Augusta.</para>
+          </listitem>
+        </varlistentry>
+
+        <varlistentry>
+          <term>LLVM</term>
+          <listitem>
+            <!-- TODO: Describe how to edit the path? -->
+            <para>Augusta requires the full set of LLVM back-end tools but none of the
+              front-ends or test programs distributed by LLVM are required. After installation
+              be sure the LLVM tools are accessible at the command-line. You may have to edit
+              your path manually to do this.</para>
+
+            <!-- TODO: What about LLVM documentation? Do you need that or not? -->
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <para>This manual does not provide specific instructions for installing the prerequisites
+        above. However, Augusta is intended to support "modern" versions of Windows, Linux, and
+        MacOS. The three prerequisites are available on all of those systems although detailed
+        installation instructions for them vary. Note that if you are using a modern Linux
+        distribution you may be able to install appropriate versions of the prerequisites using
+        your distribution's package manager.</para>
+
+      <para>At the time of this writing Augusta is not supported by any integrated development
+        environments (IDEs). To write programs you will also need a text editor. Many text
+        editors exist and it is not our place to specify one here. However, we suggest Emacs or
+        Vim on Linux systems or jEdit on Windows. Augusta integration into an IDE is an area for
+        future work.</para>
+
+      <para>Once the prerequisites are installed, <emphasis>Augusta can be installed by simply
+          unpacking its distribution archive at some suitable location and adding Augusta's
+            <filename>bin</filename> directory to the path. In addition you should set the
+            <envar>AUGUSTA_HOME</envar> environment variable to contain the path to the root of
+          the distribution after unpacking.</emphasis> There is no installation script.</para>
+
+      <para>Augusta archives contain the compiler, runtime libraries, documentation, test
+        programs, sample programs, and source code of the Augusta system. They have names of the
+        form <filename>augusta-yyyy-mm-dd.ext</filename> where "yyyy-mm-dd" is the date of
+        release and "ext" is the file extension. The extension specifies the archive format; use
+        an appropriate tool to extract the files. Currently Augusta is not versioned in the
+        conventional sense. Version 1.0 will be released on December 31, 2020. Until then
+        Augusta releases are distinguished by their release date.</para>
+
+      <para>The Augusta archive expands to a folder <filename>Augusta</filename> that contains
+        the entire system. To upgrade Augusta, simply remove the <filename>Augusta</filename>
+        folder from your previous installation and expand the new archive in its place. In most
+        cases no other steps should be necessary.</para>
+
+      <para>It is also possible to install Augusta from its Subversion repository. This gives
+        you access to the latest version of the system. However, be aware that there are
+        sometimes (hopefully temporary) problems introduced into the development system; we
+        recommend that you only use dated releases unless you are interested in contributing to
+        the Augusta project. Installing Augusta from Subversion also requires that you build the
+        system and its runtime libraries from source. The steps for doing this are described
+        elsewhere.</para>
+
+    </section>
+
+    <section id="User.Traditional.CommandSyntax">
+      <title>Command Line Syntax</title>
+      <para>Augusta is invoked using the <command>augusta</command> command. Command-line
+        options all begin with a dash. Every other word on the command line is taken to be a
+        file that Augusta is to process in some way. The action Augusta takes on each file
+        depends on the options in force and on the type of the file.</para>
+
+      <para>Augusta creates a folder <filename>Library</filename> (by default) as a direct
+        descendent of the current folder when it is invoked. In the <filename>Library</filename>
+        folder Augusta maintains a program library database described in more detail elsewhere.
+        Normally Augusta manages the contents of this database automatically. You can usually
+        just ignore it. If you remove the <filename>Library</filename> folder, Augusta will just
+        recreate it the next time it is run.</para>
+
+      <para>The simplest way to use Augusta is to just apply it to a compilation unit containing
+        your main procedure:</para>
+
+      <programlisting>
+        augusta main.adb
+      </programlisting>
+
+      <para>Here Augusta compiles the main procedure in the indicated file, along with any
+        required compilation units, and leaves an executable named <command>main</command> in
+        the same folder. This behavior can be changed and customized with appropriate
+        command-line options.</para>
+
+      <para>Augusta command-line options come in four forms:</para>
+
+      <variablelist>
+        <varlistentry>
+          <term>Normal Options</term>
+          <listitem>
+            <para>These options start with <literal>-</literal> and are intended for general
+              users.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Advanced Options</term>
+          <listitem>
+            <para>These options start with <literal>-Z</literal> and are intended for "power"
+              users interested in Augusta internals. The output produced in response to many of
+              the advanced options is quite verbose; they should be used with caution. Ordinary
+              users may find some advanced options useful for debugging difficult error messages
+              or verifying faults in Augusta itself.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Extension Options</term>
+          <listitem>
+            <para>These options start with <literal>-E</literal> and allow the Augusta user a
+              way of communicating with extension modules. Each use of a <literal>-E</literal>
+              option must include an extension identifier followed by a colon and then the text
+              of the option itself. For example setting the "indent_level" option of a style
+              checking extension might look like
+              <literal>-Estyle:indent_level=3</literal>.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Experimental Options</term>
+          <listitem>
+            <para>These options start with <literal>-X</literal> and give the Augusta user
+              access to experimental features that are under development or evaluation.
+              Experimental options should be considered volatile and may change semantics or be
+              removed at any time. Some experimental options may eventually become normal
+              options or advanced options. Some may remain "experimental" indefinitely.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+      <para>All Augusta options are spelled with lower case letters, possibly with embedded
+        underscores (but no leading or trailing underscores). These restriction are imposed on
+        extension authors as well; Augusta checks the lexical syntax of extension options before
+        passing them to extensions.</para>
+
+      <para>Options that require arguments have those arguments separated from the option by an
+          <literal>=</literal> symbol. Spaces are not allowed in an option name nor around the
+          <literal>=</literal> symbol, but spaces in an option's argument are allowed provided
+        they are quoted at the level of the command shell. In general the syntax of an option's
+        argument is arbitrary and depends on the option. Most of Augusta's options are fully
+        spelled out words with only a few commonly understood exceptions. Each option has only a
+        single name; there are no option aliases. Extension authors are encouraged to follow
+        these rules.</para>
+
+      <para>Augusta also supports <literal>option files</literal> that allow command-line
+        options to be placed in a file instead of written out on the command-line. Options
+        stored in option files can be easier to maintain and to automatically generate.</para>
+
+      <para>Whenever Augusta finds an option that starts with an <literal>@</literal> it takes
+        the text after the <literal>@</literal> to be the name of an option file. Augusta
+        behaves as if the contents of that file were placed on the command line at the point
+        where the <literal>@</literal> option is specified.</para>
+
+      <para>Option files can contain options with one option per line. Multiple options on the
+        same line are not permitted and may cause surprising errors. Blank lines are ignored.
+        Despite the name, option files can also contain the names of files to be processed.
+        Option files can contain other <literal>@</literal>-specified option files as well.
+        Augusta will detect and report any cycles that arise in option files from mutual
+          <literal>@</literal>-specified inclusions.</para>
+
+      <para>Some of the rules on option formatting are relaxed in an option file. In particular,
+        the <literal>#</literal> character introduces comments; any text after the
+          <literal>#</literal> character up to the end of the line is ignored. Also spaces
+        around the <literal>=</literal> symbol separating an option from its argument is
+        ignored. Finally, embedded spaces in an option's argument need not be quoted (but can
+        be). This is intended to make formatting option files easier.</para>
+
+      <para>Any error in the syntax of the command line (or any option file) will cause an
+        immediate termination of Augusta. No files will be processed and no output files will be
+        written or created. Augusta asks each extension to verify the sanity of the options sent
+        to it before Augusta begins processing any file. Note that in some cases the full
+        validity of an option might not be checkable until after file processing has begun; the
+        intent of the rule described here is to catch the common cases and to avoid making a
+        mess when it can be avoided.</para>
+
+      <para>In general the order of options is significant. Options may interact (although this
+        is not recommended). The options that are in force when a file is processed are only
+        those options seen on the command line before the file's name is reached. Many features
+        of Augusta can be activated and deactivated using appropriate options. Thus it is
+        possible to turn a feature on before processing a file and then turn it off again after
+        the file has been processed.</para>
+
+      <para>At any given time Augusta has a current <literal>option state</literal> containing
+        the set of all active options and their arguments (if any). The option state has a
+        default value when Augusta starts. Each option on the command-line causes Augusta to
+        generate a new option state. When a file name is encountered, the option state at that
+        point on the command-line is made available to the Augusta engine for processing that
+        file type. Since each option on the command-line causes a new option state to be
+        generated, rather than mutating a single option state, parallel processing of multiple
+        files with different collections of options in force is made possible. See the later
+        sections of this document for more information on the option state structure.</para>
+    </section>
+  </section>
+
+  <section id="User.ToolBuilder">
+    <title>Tool Building</title>
+
+    <para>y</para>
+  </section>
+
+  <section id="User.Extensions">
+    <title>User Extensions</title>
+
+    <para>z</para>
+  </section>
+</chapter>

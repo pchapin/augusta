@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.docbook.org/xml/4.5/docbookx.dtd">
+  
+<chapter id="Vision">
+  <title>Augusta Vision Statement</title>
+
+  <para>In this section we outline the philosophy and long range goals of Augusta. By doing so
+    we put Augusta in context and sketch an overall vision for the project. The vision is
+    intended to guide the project's development and be the source of its requirements.</para>
+
+  <itemizedlist>
+    <listitem>
+      <para>Augusta should be constructed in a modular fashion so that it can be effectively
+        called as a library from other applications. Augusta should support developers of Ada
+        tools by exposing independent components, such as the parser and type checker, as well
+        defined modules with clean, documented interfaces.</para>
+    </listitem>
+
+    <listitem>
+      <para>Augusta should support being used from modern IDEs using whatever means and
+        protocols are appropriate to do so.</para>
+    </listitem>
+
+    <listitem>
+      <para>Augusta should support ASIS.</para>
+    </listitem>
+
+    <listitem>
+      <para>Augusta should support an extension architecture so that users can extend the
+        compiler in useful ways in a well defined manner.</para>
+    </listitem>
+
+    <listitem>
+      <para>Augusta should be designed from the ground up to take advantage of modern hardware
+        by using parallelism and distributed computing when appropriate.</para>
+    </listitem>
+
+    <listitem>
+      <para>Augusta should be a "compiler writer's compiler," optionally exposing various
+        compiler internals that might of interest to the power user.</para>
+    </listitem>
+
+    <listitem>
+      <para>Augusta should attempt to be compatible enough with GNAT so that one could easily
+        port a GNAT project to Augusta. On the other hand Augusta shouldn't be slavishly
+        compatible with GNAT and should develop its own approach to doing things where
+        appropriate.</para>
+    </listitem>
+
+    <listitem>
+      <para>Augusta should attempt to integrate the Ada, Scala, and LLVM communities. It should,
+        to the greatest extent possible, follow the best practices of all these communities and
+        attempt to create a "comfortable common ground" for potential contributors from these
+        communities.</para>
+    </listitem>
+  </itemizedlist>
+
+</chapter>

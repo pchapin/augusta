@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+  "http://www.docbook.org/xml/4.4/docbookx.dtd" [
+
+<!ELEMENT xi:include (xi:fallback?) >
+<!ATTLIST xi:include
+    xmlns:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude"
+    href       CDATA      #REQUIRED
+    parse      (xml|text) "xml"
+    encoding   CDATA      #IMPLIED >
+<!ELEMENT xi:fallback ANY>
+<!ATTLIST xi:fallback
+    xmlsn:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude" >
+<!ENTITY % local.chapter.class "| xi:include">
+]>
+
+<!-- FILE        : wac-Design.xml
+     SUBJECT     : Master document for the wac design documentation set.
+     AUTHOR      : (C) Copyright 2010 by Peter C. Chapin
+
+This is the design documentation for the Open Watcom Ada compiler. -->
+
+<book status="draft">
+  <bookinfo>
+    <title>Open Watcom Ada Compiler Design Documentation</title>
+    <author>
+      <firstname>Peter</firstname>
+      <surname>Chapin</surname>
+      <othername role="mi">C.</othername>
+    </author>
+    <authorinitials>pcc</authorinitials>
+    <copyright>
+      <year>2010</year>
+      <holder>Peter C. Chapin</holder>
+    </copyright>
+    <legalnotice>
+      <para> Permission is granted to copy, distribute and/or modify this document under the
+        terms of the GNU Free Documentation License, Version 1.1 or any later version published
+        by the Free Software Foundation; with the Invariant Sections being LIST THEIR TITLES,
+        with the Front-Cover Texts being LIST, and with the Back-Cover Texts being LIST. A copy
+        of the license is included in the section entitled "GNU Free Documentation License".
+      </para>
+    </legalnotice>
+    <!-- Do I really want to include this revision history? -->
+    <revhistory>
+      <revision>
+        <revnumber>0.0</revnumber>
+        <date>2010-12-31</date>
+        <authorinitials>pcc</authorinitials>
+        <revremark>Initial release (well, not really).</revremark>
+      </revision>
+    </revhistory>
+  </bookinfo>
+  <preface id="Introduction">
+    <title>Introduction</title>
+
+    <para>
+      <emphasis>This project is not officially connected with the Open Watcom project. I
+        presumptuously use "Open Watcom" in the name of this project because a) one of this
+        project's goals is to be well integrated into the Open Watcom tool chain, and b) I
+        entertain wild fantasies that perhaps one day this project could become an official part
+        of Open Watcom</emphasis>.</para>
+
+    <para>This document describes the design of the Open Watcom Ada compiler, wac. My plan for
+      implementing the compiler is to write the front end (from scratch) and then use the Open
+      Watcom code generator for the back end. It is also my plan to eventually integrate support
+      for Ada into the entire Open Watcom tool chain. This includes the debugger, the IDE, and
+      other tools such as the profiler and code browser. I also hope to support all the usual
+      Open Watcom target systems, including the 16 bit systems.</para>
+
+    <para>Of course I understand that accomplishing all of this by myself is extremely unlikely.
+      However, it is my hope that as this project matures it will start to attract the attention
+      of others in both the Open Watcom and Ada communities. With some help perhaps all of this
+      can be done in a reasonable amount of time.</para>
+
+    <para>This project gives me, and any other wac contributors who join me, an opportunity to
+      build a new compiler from scratch using modern tools and methods. This project also has
+      the potential to contribute something useful to two different communities. The Ada
+      community benefits by having another, independent implementation of Ada in the world. The
+      Open Watcom community benefits by having another programming language available in the
+      Open Watcom toolkit.</para>
+
+    <section>
+      <title>Choice of Implementation Language</title>
+
+      <para>The wac project is written in C++. I choose C++ for several reasons.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Open Watcom can bootstrap wac. It is desirable for Open Watcom to be able to
+            compile the wac source code. For the foreseeable future that effectively limits the
+            language used for wac to C or C++.</para>
+        </listitem>
+
+        <listitem>
+          <para>C++ allows one to construct better abstractions than is the case with C. This
+            will (hopefully) make writing the compiler easier. C is good for low level device
+            control and operating systems, but in my view it is too low level a language for
+            compiler construction.</para>
+        </listitem>
+
+        <listitem>
+          <para>C++ can integrate with C easily. The Open Watcom code generator is written in C,
+            and I will need to call it from the wac specific code. Also I may want to borrow
+            certain things from the C or C++ compilers (command line parsing?) and that will be
+            easier with a language like C++ that interacts with C in a natural way.</para>
+        </listitem>
+
+        <listitem>
+          <para>Using C++ exercises the Open Watcom C++ compiler, tools, and libraries. If I
+            find problems with the C++ compiler, that will provide incentive for fixing those
+            problems.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>The other obvious choice for the language in which to write wac is Ada. There is an
+        advantage to writing a compiler in the same language as it compiles&#x2014;particularly
+        in an open source development environment. This is because those who maintain an open
+        source compiler are most likely to be drawn from the compiler's user community. The Open
+        Watcom Fortran compiler is written in C and it suffers from this. The C people aren't
+        interested in Fortran, and the Fortran people aren't interested in C.</para>
+
+      <para>The problem with using Ada for wac is that I would need another Ada compiler to
+        bootstrap the system. Since wac is likely to be an incomplete Ada implementation for a
+        long time, this extra bootstrap step would be necessary for a long time as well. Also
+        using an external Ada compiler might also complicate tool support and integration with
+        Open Watcom's code generator.</para>
+
+      <para>Note that at some future time it might be desirable to convert the compiler over to
+        Ada for the reasons I mention above. This could be done once wac is mature enough to
+        compile the resulting converted code. Conversion from C++ to Ada would be easier and
+        more natural than converting from C to Ada because both C++ and Ada provide expressive
+        facilities for creating and managing abstractions.</para>
+
+      <para>It is for the various reasons discussed here that wac is written in C++.</para>
+    </section>
+
+    <section>
+      <title>Coding Standards</title>
+
+      <para>Since wac may one day become part of Open Watcom, the way in which its source files
+        are organized and the way the development tools are used should follow the Open Watcom
+        tradition as much as reasonable. In addition, the source code itself should also follow
+        the Open Watcom style guide for C++ source.</para>
+
+      <para>However, one of the goals of the wac project is to explore and use some alternative
+        (and hopefully improved) approaches to code and document management relative to the rest
+        of Open Watcom. Specifically I hope to do the following things.</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Make effective use of the IDE and Open Watcom editor. This may require making
+            non-trivial improvements to these tools as a side effect of the wac project.</para>
+        </listitem>
+
+        <listitem>
+          <para>Build unit tests for wac's internal components as those components are being
+            built. None of the other Open Watcom projects have unit tests for internal
+            components. I hope this policy enhances wac's quality and sets a standard the other
+            Open Watcom projects can follow.</para>
+        </listitem>
+
+        <listitem>
+          <para>Write internal documentation (using an in-line documentation tool) as wac is
+            developed. I hope this policy produces detailed and useful documentation about the
+            compiler's internal components and encourages others to participate in the wac's
+            development.</para>
+        </listitem>
+
+        <listitem>
+          <para>Write and maintain detailed design documents that describe the compiler's
+            overall structure. The documents will complement and extend the internal
+            documentation mentioned above.</para>
+        </listitem>
+
+        <listitem>
+          <para>Make use of a modern documentation system rather than the Open Watcom standard
+            WGML. Although WGML is powerful and expressive, there have been concerns expressed
+            about Open Watcom's continued use of it. By using an alternative documentation
+            system in the wac project, the Open Watcom project as a whole can gain experience
+            with some other system and judge more clearly if it might be useful with the other
+            Open Watcom projects.</para>
+        </listitem>
+
+        <listitem>
+          <para>Using static analysis tools such as PC-Lint to find and fix problems during the
+            development that might ordinarily not be noticed until much later. I hope this
+            policy also works to enhance wac's quality.</para>
+        </listitem>
+
+        <listitem>
+          <para>Use long file names to improve the understandability of the code base. This may
+            make building wac on a pure FAT16 system difficult, but it is not clear how
+            important that ability is today. Once long file name support is in the Open Watcom
+            DOS hosted tools, this issue will be even less significant.</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>As a result of these wac-specific standards some of the tools, procedures, and
+        documentation in the wac project will diverge from the Open Watcom norm.</para>
+
+    </section>
+
+
+  </preface>
+
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doc-Build.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doc-Lexical.xml"/>
+
+  <!-- <bibliography> ... </bibliography> -->
+
+</book>

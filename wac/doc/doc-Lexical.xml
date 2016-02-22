@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN"
+  "http://www.docbook.org/xml/4.4/docbookx.dtd">
+  
+<chapter id="Lexical">
+  <title>Lexical Analysis</title>
+
+  <para>Section 2.1 of the Ada standard says that Ada source files should be written using the
+    ISO 10646 standard character set (essentially, Unicode). Furthermore implmentations can
+    assume that the input is in Normalization Form KC (compatibility characters are decomposed
+    and canonical composition has been done). Support for other normalization forms is
+    implementation defined. Finally the Ada standard leaves it to the implementation to specify
+    the character encoding of source files. It is not necessary to support the encoding methods
+    described in ISO 10646.</para>
+
+  <para>Wac assumes the input is given in Normalization Form KC. It currently does not check for
+    this nor does it support any other normalization form. If a source file with a different
+    normalization form is provided to wac, the result is undefined<footnote>
+      <para>Clearly this is an undesirable state of affairs. Wac should at least verify that the
+        input is in the expected form and throw an exception if it is not.</para>
+    </footnote>. Wac accepts input using several of the usual Unicode Transformation Formats.
+    Specifically the source file can be in UTF8, UTF16BE, UTF16LE, or UTF16 (with a BOM to
+    distinguish endianness).</para>
+
+  <para>The lexical analyzer shields itself from the input decoding process by using a class
+      <classname>SourceFile</classname> that returns the characters of a file as a
+      <type>wchar_t</type> (actually the type <type>std::wint_t</type> is used so that the value
+    WEOF can be reliably represented). Unicode is then used internally throughout. This allows
+    wac to take advantage of the build library's support for wide characters (for example
+      <classname>std::wstring</classname>). Since Open Watcom currently uses a 16 bit
+      <type>wchar_t</type> it is necessary to treat any characters outside the basic
+    multilingual plane as invalid. I do not expect this to be a hardship for many users. This
+    restriction may be lifted in the future when (if) Open Watcom's library is upgraded to use a
+    32 bit <type>wchar_t</type>. Note that as of this writing, Open Watcom's library does not
+    provide a Unicode locale. I don't think this is a serious problem for any of the internal
+    processing that wac requires. However it does mean that we can't make use of any multibyte
+    to wide character conversion functions in the build library when doing I/O. Class
+      <classname>SourceFile</classname> uses the C++ IOStream library partly because a Unicode
+    locale might be added to IOStreams at some point in the not too distant future. That may
+    allow some of the conversion work to be off loaded to the library and help simplify class
+      <classname>SourceFile</classname>.</para>
+
+</chapter>

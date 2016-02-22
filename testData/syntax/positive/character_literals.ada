@@ -1,0 +1,3 @@
+begin
+   X := 'x';
+end;

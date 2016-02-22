@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Augusta:jar">
+    <output-path>$PROJECT_DIR$/build/artifacts</output-path>
+    <root id="archive" name="Augusta.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="Augusta" />
+      <element id="module-output" name="Dragon" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-actors-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-actors-migration_2.11-1.1.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-library.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-parser-combinators_2.11-1.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-reflect.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-swing_2.11-1.0.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$SCALA_HOME$/lib/scala-xml_2.11-1.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/antlr-4.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

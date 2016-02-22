@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.docbook.org/xml/4.5/docbookx.dtd" [
+  
+<!ELEMENT xi:include (xi:fallback?) >
+<!ATTLIST xi:include
+    xmlns:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude"
+    href       CDATA      #REQUIRED
+    parse      (xml|text) "xml"
+    encoding   CDATA      #IMPLIED >
+<!ELEMENT xi:fallback ANY>
+<!ATTLIST xi:fallback
+    xmlsn:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude" >
+<!ENTITY % local.chapter.class "| xi:include">
+<!ENTITY % local.section.class "| xi:include"> 
+]>
+  
+<chapter id="Design">
+  <title>Augusta Design</title>
+
+  <para>This chapter contains the design documentation for Augusta. This chapter is only of
+    interest to Augusta contributors (or potential contributors). If you are a user of Augusta
+    you can ignore this entire chapter.</para>
+
+  <section id="Design.Structure">
+    <title>Augusta Structure</title>
+
+    <para>In this section we describe the overall structure of Augusta.</para>
+
+    <para>As described in <ulink url="http://library.epfl.ch/en/theses/?nr=3509">Philippe
+        Altherr's dissertation</ulink>, the Scala compiler works by rewriting the input source
+      code, using progressively more primitive constructs, until the result is "trivial" to
+      translate into the target machine code (JVM bytecode in the case of the Scala compiler).
+      At each rewriting step the intermediate language is a subset of Scala and fully typed.
+      Requiring that the output of each rewriting be fully typed makes it easier to catch
+      implementation errors and Scala type system quirks.</para>
+
+    <para>It may be effective to use a similar approach with Augusta. This supposes that high
+      level Ada constructs could be reasonably represented in a simpler subset of (fully typed)
+      Ada. It is not obvious that this would be possible but the advantages of having several
+      typed intermediate languages (all human readable) seem compelling. <emphasis>TODO:
+        Finalize the structure of Augusta once the requirements and User Manual are more
+        mature.</emphasis></para>
+  </section>
+
+  <section id="Design.ProgramLibraries">
+    <title>Program Libraries</title>
+
+    <para>The Ada standard requires that an implementation guarantees programs are only
+      constructed from consistently compiled compilation units. To this end Augusta
+      automatically creates and maintains "program libraries." These libraries contain the
+      object code of compiled units along with additional information about the compilation
+      units that are used during the compilation of dependent units. In this section we describe
+      the design of these program libraries.</para>
+
+    <para>Keep in mind that the organization of the source code is independent of the
+      organizational scheme described here for compiled units. For example, Augusta allows the
+      source of multiple compilation units to exist in a single source file. However, as you
+      will see, each compilation unit generates two primary "files" in the program library. This
+      is true regardless of how the source files are organized. The handling of source files is
+      described elsewhere in this document.</para>
+
+    <para>Augusta treats program libraries abstractly through the trait
+        <interface>ProgramLibrary</interface>. This allows multiple concrete implementations to
+      coexist simultaneously. Augusta can access several program libraries during a compilation,
+      and it is possible for the various libraries to be managed differently. For example it may
+      be possible to optimize the handling of a library, such as the standard library, that is
+      known to be read-only. Yet most of Augusta is unconcerned about the details of how each
+      program library is implemented.</para>
+
+    <section id="Design.ProgramLibraries.FileSystemLibrary">
+      <title>File System Library</title>
+
+      <para>At the time of this writing only one type of program library, called a
+          <classname>FileSystemLibrary</classname> is supported. In this case the compiled
+        compilation units are stored as ordinary files in the host file system. These files are
+        organized in a hierarchy of folders that follows the package structure of the Ada code.
+        This organization is inspired by the way Java typically organizes class files. Augusta's
+        ability to use a collection of program libraries is analogous to the Java compiler's use
+        of class paths.</para>
+
+      <para>Since Ada identifiers are case insensitive all file names are normalized to lower
+        case. That way multiple spellings of the same name that differ only by case will refer
+        to the same file in case sensitive file systems.</para>
+
+      <para>Augusta is intended to support Unicode identifiers as described in the Ada standard.
+        Currently the intent is to represent non-ASCII characters in identifiers (after folding
+        to lower case) directly in the host file system. This assumes the host file system is
+        capable of using such characters in file names.</para>
+
+      <para>Each compilation unit is represented by two primary files and one optional file. The
+        first file, with an extension of <filename>*.as</filename> or <filename>*.ab</filename>
+        contains Augusta specific information about the compilation unit. The
+          <filename>*.asi</filename> extension is used for compilation units that are
+        specifications and stands for "Augusta specification information." The
+          <filename>*.abi</filename> extension is used for all other kinds of compilation units
+        and stands for "Augusta body information."</para>
+
+      <para>The second file generated for each compilation unit is the LLVM assembly language
+        representing the compiled code itself. This file has a <filename>*.asi.llvm</filename>
+        extension for specifications and a <filename>*.abi.llvm</filename> for bodies. In
+        addition, compiled bitcode files might also be stored in the program library using an
+        extension of <filename>*.asi.bc</filename> or <filename>*.abi.bc</filename> as
+        appropriate.</para>
+
+      <para>For example, the specification for an Ada package
+          <package>Crypto.Algorithms.AES</package> would generate files
+          <filename>aes.asi</filename>, <filename>aes.asi.llvm</filename>, and optionally
+          <filename>aes.asi.bc</filename>. The LLVM files for a specification would be generated
+        only to support elaboration code; if they are not needed they are not generated. These
+        files would be stored in a folder <filename>crypto/algorithms</filename> relative to the
+        root of the program library.</para>
+
+      <para>Similarly the body of <package>Crypto.Algorithms.AES</package> would be stored in
+          <filename>aes.abi</filename>, <filename>aes.abi.llvm</filename>, and optionally
+          <filename>aes.abi.bc</filename>. The rules of Ada require that library units not be
+        overloaded nor be operators. This means that the only potential file name conflicts that
+        need to be considered are between a specification and its body. In that case, different
+        extensions are used to distinguish the files.</para>
+
+      <para>Subunits are stored in separate files as described above, but in a folder named
+        after their parent unit. For example if procedure
+          <function>Crypto.Algorithms.AES.Encrypt</function> is compiled as a subunit then it
+        would generate files <filename>encrypt.abi</filename>,
+          <filename>encrypt.abi.llvm</filename>, and optionally
+          <filename>encrypt.abi.bc</filename> all in folder
+          <filename>crypto/algorithms/aes</filename>. This folder will not conflict with any
+        other files related to the <package>AES</package> package since the other files will
+        have various extensions.</para>
+
+      <para>As source files are compiled, artifacts of the compilation are entered into the
+        library and all necessary folders are created automatically. If a compilation unit is
+        recompiled but compilation fails, all files related to that compilation unit are removed
+        from the library. Any empty folders created by this removal are automatically removed as
+        well. A file system library never contains any empty folders (even the root folder
+        always has a file identifying its nature).</para>
+
+      <para>The information files contain pointers to the units on which the given unit depends.
+        Augusta uses this information to build a graph of compilation unit dependencies that
+        span all the program libraries it knows about. This graph is used to compute which units
+        need to be recompiled (and in what order) when a change is made to a unit. Furthermore
+        if a unit fails to recompile, the artifacts of all dependent units are also removed from
+        all program libraries known to Augusta. The Augusta system strives to ensure that no
+        inconsistently compiled code resides in any program library.</para>
+
+      <para>The information files also contain a time stamp indicating when the last successful
+        compilation of that unit occurred. File system time stamps are <emphasis>not</emphasis>
+        used for this purpose because they are unreliable. If a file system library is copied
+        using normal file copying operations, the time stamps on the files might reflect the
+        time the copy was made. In addition the resolution on file system time stamps is not
+        sufficient. Since Augusta might be able to compile some files in less than one second,
+        the compilation time stamps need millisecond resolution so that Augusta can later verify
+        that units were compiled in the right order.</para>
+
+    </section>
+
+  </section>
+
+</chapter>

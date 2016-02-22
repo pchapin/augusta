@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="16.1">
+    <meta>
+        <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
+        <options>
+            <serialized version="16.1" xml:space="preserve">
+                <map>
+                    <entry>
+                        <String>ant.file.patterns</String>
+                        <String>disable.xml</String>
+                    </entry>
+                    <entry>
+                        <String>editor.line.width</String>
+                        <Integer>96</Integer>
+                    </entry>
+                    <entry>
+                        <String>editor.print.margin.columns</String>
+                        <Integer>96</Integer>
+                    </entry>
+                    <entry>
+                        <String>editor.show.print.margin</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
+                        <String>key.editor.format.option.pane.group</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
+                        <String>key.file.types.option.pane</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                    <entry>
+                        <String>key.text.editor.option.pane</String>
+                        <Boolean>true</Boolean>
+                    </entry>
+                </map>
+            </serialized>
+        </options>
+    </meta>
+    <projectTree name="Augusta.xpr">
+        <folder name="Augusta">
+            <file name="doc/Augusta.xml"/>
+            <file name="doc/Build.xml"/>
+            <file name="doc/Design.xml"/>
+            <file name="doc/Requirements.xml"/>
+            <file name="doc/User.xml"/>
+            <file name="doc/Vision.xml"/>
+        </folder>
+        <folder name="Dragon">
+            <file name="Dragon/doc/Design.xml"/>
+            <file name="Dragon/doc/Dragon.xml"/>
+        </folder>
+        <folder name="Tiger">
+            <file name="Tiger/doc/Design.xml"/>
+            <file name="Tiger/doc/Tiger.xml"/>
+        </folder>
+        <folder name="Tutorials">
+            <folder name="Ada2Scala">
+                <file name="doc/tutorials/Ada2Scala/Ada2Scala.xml"/>
+            </folder>
+            <folder name="Scala2Ada">
+                <file name="doc/tutorials/Scala2Ada/Scala2Ada.xml"/>
+            </folder>
+        </folder>
+    </projectTree>
+</project>

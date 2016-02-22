@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="graph-core-1.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/graph-core_2.11-1.9.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/graph-core_2.11-1.9.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

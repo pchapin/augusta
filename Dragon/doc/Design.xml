@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+  "http://www.docbook.org/xml/4.5/docbookx.dtd" [
+  
+<!ELEMENT xi:include (xi:fallback?) >
+<!ATTLIST xi:include
+    xmlns:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude"
+    href       CDATA      #REQUIRED
+    parse      (xml|text) "xml"
+    encoding   CDATA      #IMPLIED >
+<!ELEMENT xi:fallback ANY>
+<!ATTLIST xi:fallback
+    xmlsn:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude" >
+<!ENTITY % local.chapter.class "| xi:include">
+<!ENTITY % local.section.class "| xi:include"> 
+]>
+
+<chapter id="Design">
+  <title>Dragon Design</title>
+
+  <para>Dragon is a library of general purpose components written in Scala that are useful to
+    compiler construction. The Dragon library is used by both the main Augusta compiler and by
+    the experimental Tiger compiler. However, Dragon is independent in the sense that it has no
+    formal dependency on either of the compiler projects; it could be used in other, unrelated
+    projects. As a result Dragon is documented in distinct sections of this document.
+    Potentially the Dragon documentation could be separated into its own document.</para>
+
+</chapter>
