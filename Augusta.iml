@@ -16,6 +16,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="antlr-4.5.1" level="project" />
     <orderEntry type="module" module-name="Dragon" />
+    <orderEntry type="library" name="graph-core-1.9" level="project" />
     <orderEntry type="library" name="scala-2.11" level="application" />
     <orderEntry type="library" scope="TEST" name="scalatest-2.2" level="project" />
   </component>

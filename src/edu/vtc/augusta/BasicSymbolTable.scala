@@ -15,13 +15,13 @@ class BasicSymbolTable extends SymbolTable {
 
   def addObjectName(name: String, typeName: String) {
     if (objectMap.get(name) != None) {
-      throw new SymbolTable.DuplicateObjectNameException(name)
+      throw new SymbolTable.DuplicateObjectNameException("Duplicate object name: " + name)
     }
     else if (typeMap.get(typeName) == None) {
-      throw new SymbolTable.UnknownTypeNameException(typeName)
+      throw new SymbolTable.UnknownTypeNameException("Unknown type name: " + typeName)
     }
-    else if (typeMap.get(typeName) == Some(name)) {
-      throw new SymbolTable.ConflictingNameException(name)
+    else if (typeMap.get(name) != None) {
+      throw new SymbolTable.ConflictingNameException("Already a type: " + name)
     }
     else {
       objectMap.put(name, typeName)
@@ -31,10 +31,10 @@ class BasicSymbolTable extends SymbolTable {
 
   def addTypeName(name: String, representation: AdaTypes.TypeRep) {
     if (typeMap.get(name) != None) {
-      throw new SymbolTable.DuplicateTypeNameException(name)
+      throw new SymbolTable.DuplicateTypeNameException("Duplicate type name: " + name)
     }
-    else if (objectMap.get(name) == Some(name)) {
-      throw new SymbolTable.ConflictingNameException(name)
+    else if (objectMap.get(name) != None) {
+      throw new SymbolTable.ConflictingNameException("Already an object: " + name)
     }
     else {
       typeMap.put(name, representation)
@@ -50,7 +50,7 @@ class BasicSymbolTable extends SymbolTable {
   def getObjectType(name: String): String = {
     objectMap.get(name) match {
       case Some(typeName) => typeName
-      case None => throw new SymbolTable.UnknownObjectNameException(name)
+      case None => throw new SymbolTable.UnknownObjectNameException("Unknown object: " + name)
     }
   }
 
@@ -58,7 +58,7 @@ class BasicSymbolTable extends SymbolTable {
   def getTypeRepresentation(name: String): AdaTypes.TypeRep = {
     typeMap.get(name) match {
       case Some(representation) => representation
-      case None => throw new SymbolTable.UnknownTypeNameException(name)
+      case None => throw new SymbolTable.UnknownTypeNameException("Unknown type: " + name)
     }
   }
 

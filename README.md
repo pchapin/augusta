@@ -28,11 +28,11 @@ related versions would probably also work, but have not been tested.
   libraries. You should set up all libraries mentioned; the IntelliJ module files assume they
   are available.
 
-+ [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.8.0_31)
++ [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.8.0_77)
 
   There are some Java source files in Augusta so a JRE is not sufficient.
 
-+ [Scala](http://www.scala-lang.org/) (2.11.7)
++ [Scala](http://www.scala-lang.org/) (2.11.8)
 
   It is important that you use a Scala version that matches the major release number mentioned
   here. For example, using a Scala version such as 2.10.x or 2.12.x will not work. However, any
@@ -50,7 +50,7 @@ related versions would probably also work, but have not been tested.
   unpack the DocBook XML DTD distribution to any suitable location on your system. Next continue
   with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (15.0.3)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2016.1.2)
 
   We use the Community Edition. You will also need to download and install the Scala plugin from
   the plugin control panel. You may have to configure IntelliJ to find your Java JDK.
@@ -68,7 +68,7 @@ related versions would probably also work, but have not been tested.
   We also recommend that you install the ANTLR v4 grammar support plugin and the Markdown
   editing plugin from the IntelliJ plugins repository.
 
-+ [LLVM](http://llvm.org/) (3.5)
++ [LLVM](http://llvm.org/) (3.8)
 
   Augusta generates code for the Low Level Virtual Machine (LLVM). Only the back-end tools from
   the LLVM project are needed. None of the front-end compilers (gcc, clang, etc) are necessary.

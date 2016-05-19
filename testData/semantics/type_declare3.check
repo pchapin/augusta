@@ -1,0 +1,5 @@
+E: (4, 18) Invalid parent type
+E: (6, 27) Lower bound outside range of parent type or subtype
+E: (7, 32) Upper bound outside range of parent type or subtype
+E: (9, 27) Lower bound outside range of parent type or subtype
+E: (10, 32) Upper bound outside range of parent type or subtype

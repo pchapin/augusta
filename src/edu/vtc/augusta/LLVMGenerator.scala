@@ -3,7 +3,7 @@ package edu.vtc.augusta
 import org.antlr.v4.runtime.tree._
 
 // TODO: Currently this is just a skeleton!
-class LLVMGenerator(symbolTable: BasicSymbolTable) extends AdaBaseVisitor[Void] {
+class LLVMGenerator(symbolTable: SymbolTable) extends AdaBaseVisitor[Void] {
   private val out = System.out
   private var expressionLevel = 0
 

@@ -1,0 +1,5 @@
+E: (4, 4) Duplicate object name: X
+E: (7, 9) Duplicate type name: T
+E: (9, 4) Already a type: T
+E: (10, 9) Already an object: X
+E: (12, 8) Unknown type name: Undefined_Type
