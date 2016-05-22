@@ -26,12 +26,6 @@ and put in this folder as well.
   documentation archive and unzip it in the same place. This will create an `html` folder inside
   `groovy-2.4.3` holding extensive documentation.
 
-+ [Jasim](http://jasmin.sourceforge.net/) (2.4)
-
-  jasmin-2.4.jar. Jasim is an assembler for the Java virtual machine. It is used to generate JVM
-  byte code and class files from JVM assembly language files produced by some of Augusta's
-  components.
-
 + [Kiama](http://code.google.com/p/kiama/) (1.8.0)
 
   kiama_2.11-1.8.0.jar. Kiama is a Scala library for language processing. It is currently used

@@ -15,5 +15,8 @@ build
 *Lexer.java
 *Parser.java
 
+# Testing artifacts
+testData/output.ll
+
 # Folder for holding supporting files (suitable for distribution to new contributors)
 FILES

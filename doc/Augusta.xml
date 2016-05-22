@@ -17,7 +17,7 @@
 
 <!-- FILE        : Augusta.xml
      SUBJECT     : Master document for the Augusta documentation set.
-     AUTHOR      : (C) Copyright 2014 by Peter C. Chapin <PChapin@vtc.vsc.edu>
+     AUTHOR      : (C) Copyright 2016 by Peter C. Chapin <PChapin@vtc.vsc.edu>
 
 This is the documentation for the Augusta Ada compiler. -->
 
@@ -78,7 +78,7 @@ This is the documentation for the Augusta Ada compiler. -->
       compiler construction (such as algebraic data types and pattern matching). Accordingly I
       intend to write Augusta in as purely a functional style as feasible with the hope that
       doing so will make the code more understandable, more reliable, and more amenable to
-      parallelization. In addition Scala gives me access to an enormous collection of Java
+      parallelization. In addition, Scala gives me access to an enormous collection of Java
       libraries, tools, and technologies, many of which are very powerful and highly mature. I
       intend to capitalize on that legacy as much as possible during the development of
       Augusta.</para>
@@ -95,15 +95,16 @@ This is the documentation for the Augusta Ada compiler. -->
       level code generation and optimization to the framework. Thus in theory Augusta supports
       all target architectures supported by LLVM, both now and in the future. This approach also
       allows me to capitalize on future advances made in LLVM technology. However, unlike high
-      level virtual machines such as the JVM or CLR, LLVM should not restrict my implementation
-      options. I believe it will be easier to accurately implement a language like Ada, which is
-      intended to support low level programming, on top of a low level framework.</para>
+      level virtual machines such as the JVM or the CLR, LLVM should not restrict my
+      implementation options. I believe it will be easier to accurately implement a language
+      like Ada, which is intended to support low level programming, on top of a low level
+      framework.</para>
 
     <para>I anticipate that as Augusta matures others will become attracted to the project and
       may join the effort. For this reason, aside from this introduction, the documentation is
       written as if it is being authored by a group of contributors rather than just a single
       person. This will reduce the amount of editing needed when there actually is a group of
-      Augusta contributors!</para>
+      Augusta contributors.</para>
 
     <para>Although I hope others will become interested in this project in the future, I am also
       realistic enough to know that I will most likely be the only contributor for some time.

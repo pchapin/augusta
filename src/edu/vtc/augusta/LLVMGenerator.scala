@@ -1,17 +1,22 @@
 package edu.vtc.augusta
 
+import java.io.{BufferedWriter, FileOutputStream, OutputStreamWriter, PrintWriter}
+
 import org.antlr.v4.runtime.tree._
 
 // TODO: Currently this is just a skeleton!
-class LLVMGenerator(symbolTable: SymbolTable) extends AdaBaseVisitor[Void] {
-  private val out = System.out
+class LLVMGenerator(symbolTable: SymbolTable, reporter: Reporter) extends AdaBaseVisitor[Void] {
+  private val output = new PrintWriter(
+    new BufferedWriter(new OutputStreamWriter(new FileOutputStream("output.ll"), "US-ASCII"))
+  )
   private var expressionLevel = 0
 
   override def visitCompilation_unit(ctx: AdaParser.Compilation_unitContext): Void = {
-    out.println("Hello, World!")
-    out.println("")
+    output.println("Hello, World!")
+    output.println("")
 
     visitChildren(ctx)
+    output.close()
     null
   }
 
@@ -21,10 +26,10 @@ class LLVMGenerator(symbolTable: SymbolTable) extends AdaBaseVisitor[Void] {
       if (expressionLevel > 0) {
         node.getSymbol.getType match {
           case AdaLexer.IDENTIFIER  =>
-            out.print(node.getText)
+            output.print(node.getText)
 
           case AdaLexer.NUMERIC_LITERAL =>
-            out.print(Literals.convertIntegerLiteral(node.getText))
+            output.print(Literals.convertIntegerLiteral(node.getText))
 
           case _ =>
             // Do nothing.

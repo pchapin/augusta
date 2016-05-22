@@ -15,6 +15,7 @@ object Main {
     val tokens = new CommonTokenStream(lexer)
     val parser = new AdaParser(tokens)
     val tree   = parser.compilation_unit
+    // TODO: Abort compilation if there are parse errors.
 
     // Walk the tree created during the parse and analyze it for semantic errors.
     val symbolTable    = new StackedSymbolTable
@@ -22,6 +23,7 @@ object Main {
     val analyzerWalker = new ParseTreeWalker
     analyzerWalker.walk(myAnalyzer, tree)
 
+    // Abort compilation if there are semantic errors.
     if (reporter.getErrorCount > 0) {
       printf("%d errors found; execution aborted!%n", reporter.getErrorCount)
     }
@@ -37,22 +39,9 @@ object Main {
         case Mode.CHECK =>
         // Do nothing more (semantic analysis is all that is necessary).
 
-        case Mode.INTERPRET =>
-          val interpreterWalker = new ParseTreeWalker
-          val myInterpreter = new Interpreter(symbolTable, reporter)
-          interpreterWalker.walk(myInterpreter, tree)
-          myInterpreter.displayResults()
-
-        case Mode.C =>
-          val myCGenerator = new CGenerator(symbolTable, reporter)
-          myCGenerator.visit(tree)
-
         case Mode.LLVM =>
-          println("Generation of LLVM output is not implemented!")
-
-        case Mode.JVM =>
-          val myJVMGenerator = new JVMGenerator(symbolTable, reporter)
-          myJVMGenerator.visit(tree)
+          val myLLVMGenerator = new LLVMGenerator(symbolTable, reporter)
+          myLLVMGenerator.visit(tree)
       }
     }
   }
@@ -61,35 +50,34 @@ object Main {
   def main(args: Array[String]) {
 
     // Analyze the command line.
-    if (args.length != 3) {
-      println("Usage: java -jar Augusta (-k | -i | -c | -l | -j) source-file")
+    if (!(args.length == 1 || args.length == 2)) {
+      println("Usage: java -jar Augusta [-k | -l] source-file")
       System.exit(1)
     }
 
-    val level = args(0).toInt
-    val mode  = args(1) match {
-      case "-k" => Mode.CHECK
-      case "-i" => Mode.INTERPRET
-      case "-c" => Mode.C
-      case "-l" => Mode.LLVM
-      case "-j" => Mode.JVM
-      case _ =>
-        printf("The mode option %s is unknown, defaulting to CHECK%n", args(1))
-        Mode.CHECK
+    val (mode, sourceFile) = if (args.length == 1) {
+      (Mode.LLVM, args(0))
+    }
+    else {
+      val mode = args(0) match {
+        case "-k" => Mode.CHECK
+        case "-l" => Mode.LLVM
+        case _ =>
+          printf("The mode option '%s' is unknown, defaulting to CHECK%n", args(0))
+          Mode.CHECK
+      }
+      (mode, args(1))
     }
 
     // Create a stream that reads from the specified file.
-    val input = new ANTLRFileStream(args(2))
+    val input = new ANTLRFileStream(sourceFile)
     process(input, mode)
 
   }
 
   private object Mode {
-    final val CHECK     = 0
-    final val INTERPRET = 1
-    final val C         = 2
-    final val LLVM      = 3
-    final val JVM       = 4
+    final val CHECK = 0
+    final val LLVM  = 1
   }
 
 }
