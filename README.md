@@ -154,4 +154,4 @@ bugs, contributing code, or generally giving words of support you can follow the
 contact me at one or more of the resources below:
 
 Peter C. Chapin  
-PChapin@vtc.vsc.edu  
+spicacality@gmail.com  
