@@ -1,6 +1,9 @@
 # Augusta Wiki
 
-This is the Augusta wiki. Right now its primary purpose is to support Augusta contributors by providing links to resources and other such things. When Augusta actually has users the nature of this page is likely to change to be more user oriented with contributor resources moved to an appropriate subpage.
+This is the Augusta wiki. Right now its primary purpose is to support Augusta contributors by
+providing links to resources and other such things. When Augusta actually has users the nature
+of this page is likely to change to be more user oriented with contributor resources moved to an
+appropriate subpage.
 
 ## Links
 
@@ -19,7 +22,7 @@ This is the Augusta wiki. Right now its primary purpose is to support Augusta co
 * [Graph for Scala](http://www.scala-graph.org/)
 * [ScalaTest](http://www.scalatest.org/)
 * [Scalaz](https://github.com/scalaz/scalaz)
-* [Kiama](http://code.google.com/p/kiama/): A Scala Library for Language Processing. As of 2014-02-08 the binary release of this library for Scala 2.10 relies on another library (dsinfo) for which no binary releases are available and for which the most current snapshot does not compile under Scala 2.10.
+* [Kiama](http://code.google.com/p/kiama/)
 
 ### LLVM
 

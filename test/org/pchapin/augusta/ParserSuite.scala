@@ -63,15 +63,15 @@ class ParserSuite extends FunSuite with Assertions with Matchers {
 
 
 object ParserSuite {
-  val prefix = "testData" +  File.separator + "syntax" + File.separator + "positive"
+  val prefix: String = "testData" +  File.separator + "syntax" + File.separator + "positive"
 
-  val expressionCases =
+  val expressionCases: Array[String] =
     Array("expr0000.ada", "expr0001.ada", "expr0002.ada", "expr0003.ada") map { prefix + File.separator + _}
 
-  val controlCases =
+  val controlCases: Array[String] =
     Array("control0000.ada", "control0001.ada", "control0002.ada") map { prefix + File.separator + _}
 
-  val wholeFileCases =
+  val wholeFileCases: Array[String] =
     Array("hello1.ada", "hello2.ada", "hello3.ada", "subprogram0001.ada", "subprogram0002.ada") map { prefix + File.separator + _}
 }
 

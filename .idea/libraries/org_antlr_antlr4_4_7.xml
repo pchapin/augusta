@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="org.antlr:antlr4:4.7" type="repository">
+    <properties maven-id="org.antlr:antlr4:4.7" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/antlr4-4.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/antlr4-runtime-4.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/antlr-runtime-3.5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ST4-4.0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.abego.treelayout.core-1.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.json-1.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/icu4j-58.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

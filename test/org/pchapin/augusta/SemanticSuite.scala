@@ -64,12 +64,12 @@ class SemanticSuite extends FunSuite with Assertions with Matchers {
 }
 
 object SemanticSuite {
-  val prefix = "testData" + File.separator + "semantics"
+  val prefix: String = "testData" + File.separator + "semantics"
 
-  val basicCases =
+  val basicCases: Array[String] =
     Array("semantic_errors.ada", "subprogram0001.ada") map { prefix + File.separator + _ }
 
-  val typeDeclarations =
+  val typeDeclarations: Array[String] =
     Array(
       "type_declare1.ada", "type_declare2.ada", "type_declare3.ada",
       "type_declare4.ada") map { prefix + File.separator + _ }

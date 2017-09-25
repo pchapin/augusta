@@ -32,10 +32,10 @@ related versions would probably also work, but have not been tested.
 
   There are some Java source files in Augusta so a JRE is not sufficient.
 
-+ [Scala](http://www.scala-lang.org/) (2.11.8)
++ [Scala](http://www.scala-lang.org/) (2.12.2)
 
   It is important that you use a Scala version that matches the major release number mentioned
-  here. For example, using a Scala version such as 2.10.x or 2.12.x will not work. However, any
+  here. For example, using a Scala version such as 2.11.x or 2.13.x will not work. However, any
   minor release within a major release (the 'x' in the version numbers above) should be fine.
 
 + DocBook tool chain
@@ -50,7 +50,7 @@ related versions would probably also work, but have not been tested.
   unpack the DocBook XML DTD distribution to any suitable location on your system. Next continue
   with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2016.1.2)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2017.2.4)
 
   We use the Community Edition. You will also need to download and install the Scala plugin from
   the plugin control panel. You may have to configure IntelliJ to find your Java JDK.
@@ -78,7 +78,7 @@ related versions would probably also work, but have not been tested.
   At this time LLVM is not strictly necessary as no back-end code generation is currently being
   done.
 
-+ [GNAT](http://libre.adacore.com/) (GPL-2015)
++ [GNAT](http://libre.adacore.com/) (GPL-2017)
 
   The Augusta run time system is largely written in Ada. Since Augusta is currently not mature
   enough to compile it, GNAT is (temporarily) used for run time system development.
@@ -154,4 +154,4 @@ bugs, contributing code, or generally giving words of support you can follow the
 contact me at one or more of the resources below:
 
 Peter C. Chapin  
-spicacality@gmail.com  
+peter@pchapin.org  
