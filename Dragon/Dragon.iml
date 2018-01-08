@@ -10,7 +10,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.bitbucket.inkytonik.kiama:kiama_2.12:2.1.0" level="project" />
     <orderEntry type="library" name="org.scalaz:scalaz-core_2.12:7.2.15" level="project" />
-    <orderEntry type="library" name="scala-sdk-2.12.2" level="application" />
     <orderEntry type="library" scope="TEST" name="org.scalatest:scalatest_2.12:3.0.4" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.12.4" level="application" />
   </component>
 </module>

@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // FILE    : DFASuite.scala
 // SUBJECT : Tests for class DFA
-// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <PChapin@vtc.edu.edu>
+// AUTHOR  : (C) Copyright 2018 by Peter C. Chapin <peter@pchapin.org>
 //
 //-----------------------------------------------------------------------
 package org.pchapin.dragon

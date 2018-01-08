@@ -7,12 +7,12 @@
   <property name="scala.home"         location="${env.SCALA_HOME}"/>
   <property name="scala-library.jar"  location="${scala.home}/lib/scala-library.jar"/>
   <property name="scala-reflect.jar"  location="${scala.home}/lib/scala-reflect.jar"/>
-  <property name="scala-parsers.jar"  location="${scala.home}/lib/scala-parser-combinators_2.11-1.0.4.jar"/>
-  <property name="scala-xml.jar"      location="${scala.home}/lib/scala-xml_2.11-1.0.4.jar"/>
+  <property name="scala-parsers.jar"  location="${scala.home}/lib/scala-parser-combinators_2.12-1.0.5.jar"/>
+  <property name="scala-xml.jar"      location="${scala.home}/lib/scala-xml_2.12-1.0.6.jar"/>
   <property name="scala-compiler.jar" location="${scala.home}/lib/scala-compiler.jar"/>
-  <property name="ANTLR.jar"          location="lib/antlr-4.5.1.jar"/>
-  <property name="graph.jar"          location="lib/graph-core_2.11-1.9.2.jar"/>
-  <property name="scalatest.jar"      location="lib/scalatest_2.11-2.2.4.jar"/>
+  <property name="ANTLR.jar"          location="lib/antlr4-runtime-4.7.jar"/>
+  <property name="graph.jar"          location="lib/graph-core_2.12-1.11.5.jar"/>
+  <property name="scalatest.jar"      location="lib/scalatest_2.12-3.0.4.jar"/>
 
   <target name="init">
     <!-- Get the Scala related tasks. -->

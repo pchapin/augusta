@@ -32,7 +32,7 @@
       <term><ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
           Development Kit</ulink></term>
       <listitem>
-        <para>We use JDK v1.8.0_77 but any 1.8 version would probably work. A full JDK is
+        <para>We use JDK v1.8.0_121 but any 1.8 version would probably work. A full JDK is
           necessary, and not just a JRE, because the Augusta code base includes some Java
           files.</para>
       </listitem>
@@ -41,16 +41,12 @@
     <varlistentry>
       <term><ulink url="http://www.scala-lang.org/">Scala Compiler</ulink></term>
       <listitem>
-        <para>We use Scala v2.11.8. The Scala compiler is executed indirectly via the IntelliJ
+        <para>We use Scala v2.12.4. The Scala compiler is executed indirectly via the IntelliJ
           IDE. Currently no official method of building Augusta outside the IDE is
           provided.</para>
 
-        <para>It is important that you use a Scala version that is matched to the same major
-          version we are using (2.11 in this case). Scala major releases are not binary
-          compatible with each other and also have other significant differences. Switching, for
-          example, to Scala 2.12 will require updating all supporting Scala libraries; it is not
-          a drop-in upgrade from Scala 2.11. However all minor releases within the same major
-          release should be compatible.</para>
+        <para>It is not necessary to download Scala separately. IntelliJ will download the
+          compiler automatically during the build process.</para>
       </listitem>
     </varlistentry>
 
@@ -75,12 +71,9 @@
     <varlistentry>
       <term><ulink url="http://www.jetbrains.com/idea/">IntelliJ IDEA</ulink></term>
       <listitem>
-        <para>We use IntelliJ IDEA, Community Edition, version 2016.1.2 with the IntelliJ Scala
+        <para>We use IntelliJ IDEA, Community Edition, version 2017.3.2 with the IntelliJ Scala
           plugin developed by JetBrains as our integrated development environment. The plugin
           can be installed from inside IntelliJ once the main IDE is installed.</para>
-
-        <para>You will have to set up your Scala SDK in IntelliJ (this basically entails
-          selecting the folder where Scala is installed).</para>
 
         <para>In addition you must configure two path variables in IntelliJ. The first is
           SCALA_HOME and it should point at the folder containing your Scala distribution. It is

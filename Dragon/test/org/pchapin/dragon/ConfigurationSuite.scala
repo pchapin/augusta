@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // FILE    : ConfigurationSuite.scala
 // SUBJECT : Tests for class ConfigurationSettings
-// AUTHOR  : (C) Copyright 2011 by Peter C. Chapin <PChapin@vtc.edu.edu>
+// AUTHOR  : (C) Copyright 2018 by Peter C. Chapin <peter@pchapin.org>
 //
 //-----------------------------------------------------------------------
 package org.pchapin.dragon
@@ -20,20 +20,20 @@ class ConfigurationSuite extends FunSuite with Assertions with Matchers {
            "IntegerItem" -> ConfigurationSettings.basicIntegerValidator _)
 
     val currentSettings = new ConfigurationSettings(configurableItems)
-    assert(currentSettings("StringItem" ) == None)
-    assert(currentSettings("BooleanItem") == None)
-    assert(currentSettings("IntegerItem") == None)
+    assert(currentSettings("StringItem" ).isEmpty)
+    assert(currentSettings("BooleanItem").isEmpty)
+    assert(currentSettings("IntegerItem").isEmpty)
 
     currentSettings.setDefaults(Map("StringItem" -> "Hello", "BooleanItem" -> "F"))
-    assert(currentSettings("StringItem" ) == Some("Hello"))
-    assert(currentSettings("BooleanItem") == Some("false"))
-    assert(currentSettings("IntegerItem") == None)
+    assert(currentSettings("StringItem" ).contains("Hello"))
+    assert(currentSettings("BooleanItem").contains("false"))
+    assert(currentSettings("IntegerItem").isEmpty)
 
     currentSettings.readConfigurationFile(
       "testData" + java.io.File.separator + "example.cfg")
-    assert(currentSettings("StringItem" ) == Some("Item1"))
-    assert(currentSettings("BooleanItem") == Some("true" ))
-    assert(currentSettings("IntegerItem") == Some("1234" ))
+    assert(currentSettings("StringItem" ).contains("Item1"))
+    assert(currentSettings("BooleanItem").contains("true" ))
+    assert(currentSettings("IntegerItem").contains("1234" ))
   }
 
 }

@@ -23,20 +23,17 @@ version numbers given are for the specific versions we're using. In most cases o
 related versions would probably also work, but have not been tested.
 
 + Several third party libraries are used by Augusta. The jar files for those libraries are not
-  included as part of this repository, but can be downloaded from elsewhere. See the README file
-  in the lib folder for more information on obtaining and setting up the required supporting
-  libraries. You should set up all libraries mentioned; the IntelliJ module files assume they
-  are available.
+  included as part of this repository, but are downloaded from the maven repositories by
+  IntelliJ during the build process. See the README file in the lib folder for more information.
 
-+ [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.8.0_77)
++ [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.8.0_121)
 
   There are some Java source files in Augusta so a JRE is not sufficient.
 
-+ [Scala](http://www.scala-lang.org/) (2.12.2)
++ [Scala](http://www.scala-lang.org/) (2.12.4)
 
-  It is important that you use a Scala version that matches the major release number mentioned
-  here. For example, using a Scala version such as 2.11.x or 2.13.x will not work. However, any
-  minor release within a major release (the 'x' in the version numbers above) should be fine.
+  The Scala version required is automatically downloaded by IntelliJ from the maven repositories
+  during the build process. You do not need to have Scala installed first.
 
 + DocBook tool chain
 
@@ -50,7 +47,7 @@ related versions would probably also work, but have not been tested.
   unpack the DocBook XML DTD distribution to any suitable location on your system. Next continue
   with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2017.2.4)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2017.3.2)
 
   We use the Community Edition. You will also need to download and install the Scala plugin from
   the plugin control panel. You may have to configure IntelliJ to find your Java JDK.
@@ -110,10 +107,6 @@ The Augusta runtime system is in the RTS folder. It is written in Ada and is cur
 and tested using GNAT with GPS as the integrated development environment. Load stdlibrary.gpr in
 the RTS/SL/src folder into GPS to build the current version of the standard library. At the time
 of this writing the runtime library in RTS/RL is empty.
-
-To build Augusta you can use IntelliJ's integrated Git support to clone the project to your
-system. Then populate the lib folder (see the README in that folder for more information).
-Finally you should be able to build the project from the usual IntelliJ menu items.
 
 ### Documentation
 

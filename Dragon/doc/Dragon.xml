@@ -17,7 +17,7 @@
 
 <!-- FILE        : Dragon.xml
      SUBJECT     : Master document for the Dragon documentation set.
-     AUTHOR      : (C) Copyright 2014 by Peter C. Chapin <PChapin@vtc.vsc.edu>
+     AUTHOR      : (C) Copyright 2018 by Peter C. Chapin <peter@pchapin.org>
 
 This is the documentation for the Dragon compiler support library. -->
 
@@ -35,7 +35,7 @@ This is the documentation for the Dragon compiler support library. -->
     </author>
     <authorinitials>pcc</authorinitials>
     <copyright>
-      <year>2014</year>
+      <year>2018</year>
       <holder>Peter C. Chapin</holder>
     </copyright>
     <legalnotice>
@@ -50,7 +50,7 @@ This is the documentation for the Dragon compiler support library. -->
     <revhistory>
       <revision>
         <revnumber>1.0</revnumber>
-        <date>2014-05-01</date>
+        <date>2018-05-01</date>
         <authorinitials>pcc</authorinitials>
       </revision>
     </revhistory>

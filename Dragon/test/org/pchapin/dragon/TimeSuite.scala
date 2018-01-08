@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------
 // FILE   : TimeSuite.scala
 // SUMMARY: Tests for class Time.
-// AUTHOR : Peter C. Chapin <PChapin@vtc.vsc.edu>
+// AUTHOR : (C) Copyright 2018 by Peter C. Chapin <peter@pchapin.org>
 // ------------------------------------------------------------------------
 package org.pchapin.dragon
 
