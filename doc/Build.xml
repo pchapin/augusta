@@ -19,11 +19,14 @@
   <para>The tools with specific version numbers shown below are the official tools used by the
     Augusta contributors. Other tools (or other versions of the same tools) may also work.
     Obviously the greater the differences between the tools you attempt to use and those listed
-    below the more problems you are likely to encounter.</para>
+    below, the more problems you are likely to encounter.</para>
 
   <para>Augusta uses a number of libraries. See the README in the <literal>lib</literal> folder
-    for more information. Currently Augusta does not make use of Maven or <ulink
-      url="http://www.scala-sbt.org/">SBT</ulink>. That may change in the future.</para>
+    for more information. Currently IntelliJ is configured to download most of those libraries
+    from Maven repositories. This relieves you of the burden of downloading and installing the
+    libraries manually. However, Augusta does <emphasis>not</emphasis> use Maven for the build
+    itself. All building is done through IntelliJ. In the future Maven or <ulink
+      url="http://www.scala-sbt.org/">sbt</ulink> may be used for the build.</para>
 
   <variablelist>
     <title>Build Tools</title>
@@ -32,9 +35,9 @@
       <term><ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
           Development Kit</ulink></term>
       <listitem>
-        <para>We use JDK v1.8.0_121 but any 1.8 version would probably work. A full JDK is
-          necessary, and not just a JRE, because the Augusta code base includes some Java
-          files.</para>
+        <para>We use JDK v10.0.1. If you use a different JDK than for Java 10, you will have to
+          adjust the IntelliJ project definition. A full JDK is necessary, and not just a JRE,
+          because the Augusta code base includes some Java files.</para>
       </listitem>
     </varlistentry>
 
@@ -42,7 +45,7 @@
       <term><ulink url="http://www.scala-lang.org/">Scala Compiler</ulink></term>
       <listitem>
         <para>We use Scala v2.12.4. The Scala compiler is executed indirectly via the IntelliJ
-          IDE. Currently no official method of building Augusta outside the IDE is
+          IDE. Currently no official method of building Augusta outside of IntelliJ is
           provided.</para>
 
         <para>It is not necessary to download Scala separately. IntelliJ will download the
@@ -62,18 +65,17 @@
 
         <para>IntelliJ can also edit DocBook using its general support for XML. Emacs's nXML
           mode is also useful. To set up IntelliJ for DocBook first download and unpack the
-          DocBook XML DTD distribution on the Augusta <ulink
-            url="https://www.assembla.com/spaces/augusta/documents">Assembla project</ulink>
-          site. Next set up IntelliJ as described below.</para>
+          DocBook XML 4.5 DTD and set up IntelliJ as described below.</para>
       </listitem>
     </varlistentry>
 
     <varlistentry>
       <term><ulink url="http://www.jetbrains.com/idea/">IntelliJ IDEA</ulink></term>
       <listitem>
-        <para>We use IntelliJ IDEA, Community Edition, version 2017.3.2 with the IntelliJ Scala
+        <para>We use IntelliJ IDEA, Community Edition, version 2018.3 with the IntelliJ Scala
           plugin developed by JetBrains as our integrated development environment. The plugin
-          can be installed from inside IntelliJ once the main IDE is installed.</para>
+          can be installed from inside IntelliJ once the main IDE is installed. Some of us use
+          the Ultimate edition of IntelliJ with no problems.</para>
 
         <para>In addition you must configure two path variables in IntelliJ. The first is
           SCALA_HOME and it should point at the folder containing your Scala distribution. It is
@@ -83,7 +85,7 @@
           do validation.</para>
 
         <para>We also recommend installing the ANTLR v4 grammar plugin and the Markdown editing
-          plugin from the IntelliJ plugin repository. While not required these plugins can make
+          plugin from the IntelliJ plugin repository. While not required, these plugins can make
           editing some of the supporting files and documents more pleasant.</para>
       </listitem>
     </varlistentry>
@@ -102,11 +104,11 @@
     </varlistentry>
 
     <varlistentry>
-      <term><ulink url="http://libre.adacore.com/">GNAT</ulink></term>
+      <term><ulink url="http://www.adacore.com/community">GNAT Community 2018</ulink></term>
       <listitem>
-        <para>Currently the Augusta runtime system is compiled with the GNAT GPL 2015 Ada
-          compiler. This is necessary because Augusta is not yet mature enough to compile its
-          runtime system.</para>
+        <para>Currently the Augusta runtime system is compiled with the GNAT Ada compiler. This
+          is necessary because Augusta is not yet mature enough to compile its runtime
+          system.</para>
       </listitem>
     </varlistentry>
 
@@ -132,8 +134,7 @@
 
   <para>You can use IntelliJ's integrated Git support to check out the Augusta project from
       <ulink url="https://github.com/pchapin/augusta.git"/>. Before you can build the project
-    you need to populate the <literal>lib</literal> folder (see the README). You also need to
-    manually generate the Augusta parser by running
+    you to manually generate the Augusta parser by running
       <filename>bin/build-augusta-parser.{bat,sh}</filename> from the root folder of the
     project. You can then use IntelliJ to do a full build of the project.</para>
 

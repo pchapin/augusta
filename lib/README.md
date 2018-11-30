@@ -6,6 +6,10 @@ This folder contains third party libraries used by August and its related projec
 libraries are pulled from the Maven repository by IntelliJ during the build process. The precise
 versions in use are documented in IntelliJ's configuration.
 
+Note that Augusta does *not* use Maven as a build system. Augusta uses IntelliJ for all building
+operations. However, IntelliJ has been configured to access the Maven repositories so that
+developers are not burdened with the need to download and install these libraries manually.
+
 + [ANTLR](http://www.antlr.org/)
 
   Augusta makes use of the ANTLR parser generator to convert grammars into parsers.

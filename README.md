@@ -26,7 +26,7 @@ related versions would probably also work, but have not been tested.
   included as part of this repository, but are downloaded from the maven repositories by
   IntelliJ during the build process. See the README file in the lib folder for more information.
 
-+ [Java Development Kit](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.8.0_121)
++ [Java Development Kit](https://www.oracle.com/technetwork/java/javase/downloads/index.html) (10.1)
 
   There are some Java source files in Augusta so a JRE is not sufficient.
 
@@ -47,10 +47,12 @@ related versions would probably also work, but have not been tested.
   unpack the DocBook XML DTD distribution to any suitable location on your system. Next continue
   with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2017.3.2)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2018.3)
 
-  We use the Community Edition. You will also need to download and install the Scala plugin from
-  the plugin control panel. You may have to configure IntelliJ to find your Java JDK.
+  We officially use the Community Edition, but some of us use the Ultimate edition. You will
+  need to download and install the Scala plugin from the plugin control panel (or during the
+  installation of IntelliJ when you are given the opportunity to install populare plugins). You
+  may have to configure IntelliJ to find your Java JDK.
 
   The Augusta project assumes a suitable Scala SDK has been configured. This can be done from
   inside IntelliJ by pointing the IDE to the folder where Scala has been installed. For the
@@ -67,15 +69,16 @@ related versions would probably also work, but have not been tested.
 
 + [LLVM](http://llvm.org/) (3.8)
 
-  Augusta generates code for the Low Level Virtual Machine (LLVM). Only the back-end tools from
-  the LLVM project are needed. None of the front-end compilers (gcc, clang, etc) are necessary.
-  Detailed instructions for installing the LLVM tools are outside the scope of this document.
-  See the LLVM web site or the file Build.xml in the documentation folder for more information.
+  Augusta generates (will eventually generate) code for the Low Level Virtual Machine (LLVM).
+  Only the back-end tools from the LLVM project are needed. None of the front-end compilers
+  (gcc, clang, etc) are necessary. Detailed instructions for installing the LLVM tools are
+  outside the scope of this document. See the LLVM web site or the file Build.xml in the
+  documentation folder for more information.
 
   At this time LLVM is not strictly necessary as no back-end code generation is currently being
   done.
 
-+ [GNAT](http://libre.adacore.com/) (GPL-2017)
++ [GNAT](http://www.adacore.com/community) (GNAT-Community-2018)
 
   The Augusta run time system is largely written in Ada. Since Augusta is currently not mature
   enough to compile it, GNAT is (temporarily) used for run time system development.
@@ -94,14 +97,14 @@ You will need to do this each time the grammar is updated.
 The Augusta project includes two additional modules named Tiger and Dragon. There is also a
 Scripts module that contains the source code for the Groovy scripts we use.
 
-The Tiger module is an implementation of the Tiger programming language as described in book
+The Tiger module is an implementation of the Tiger programming language as described in the book
 "Modern Compiler Implementation in ML" by Andrew W. Appel. This module is not directly related
 to Augusta and is used as a testing ground for implementation ideas that might be useful in
 Augusta. Solutions to some of the exercises in the book (all in Scala) are also included.
 
 The Dragon module is a library of useful material of interest to compiler writers. It factors
-out code that can be shared between Augusta and Tiger. It also contains other tidbits of general
-interest. The code in Dragon could potentially be used for other compiler projects as well.
+out code that can be shared between Augusta, Tiger, and potentially other compiler projects that
+use Scala as an implementation language. It also contains other tidbits of general interest.
 
 The Augusta runtime system is in the RTS folder. It is written in Ada and is currently compiled
 and tested using GNAT with GPS as the integrated development environment. Load stdlibrary.gpr in
@@ -113,10 +116,9 @@ of this writing the runtime library in RTS/RL is empty.
 The external documentation can be built using your DocBook tool chain. You will find the DocBook
 sources of the documentation in the 'doc' folder. That folder also contains other documentation
 in the form of tutorials and presentations. Relevant reference material that is not developed as
-part of this project, such as the Ada reference manual, can be found on the associated Assembla
-site. A placeholder folder under 'doc' named 'references' can be used to store local copies of
-these additional reference material. See the README file in the references folder for more
-information.
+part of this project, such as the Ada reference manual, can be found elsewhere. A placeholder
+folder under 'doc' named 'references' can be used to store local copies of these additional
+reference materials. See the README file in the references folder for more information.
 
 Two tutorials, also in DocBook format, are provided. One targets Ada programmers wishing to
 learn Scala, and the other targets Scala programmers wishing to learn Ada.
@@ -147,4 +149,4 @@ bugs, contributing code, or generally giving words of support you can follow the
 contact me at one or more of the resources below:
 
 Peter C. Chapin  
-peter@pchapin.org  
+chapinp@acm.org  
