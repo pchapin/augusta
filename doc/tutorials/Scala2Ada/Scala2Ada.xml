@@ -13,7 +13,7 @@
         <postcode>05495</postcode>
         <country>USA</country>
       </address>
-      <email>PChapin@vtc.vsc.edu</email>
+      <email>pchapin@vtc.edu</email>
     </author>
   </info>
 
@@ -21,17 +21,166 @@
     <title>Tutorial</title>
     <chapter>
       <title>Introduction</title>
-      <para>This document is intended to help a Scala programmer learn about Ada. It is a very
-        unfinished work.</para>
+      
+      <para>This document is a tutorial on the Ada programming language. It is primarly intended
+      to help a Scala programmer learn Ada. In particular, this tutorial targets people in the
+      Scala community who might be interested in contributing to Augusta. Thus I make references
+      to concepts in Scala in order to explain how similar concepts are handled by Ada. Because
+      of the special relationship between Scala and Java, this tutorial should also be helpful
+      to Java programmers as well.</para>
+
+      <para>In fact, much of this tutorial should be applicable to programmers with experience
+      in any programming language. While I assume you are familiar with programming concepts in
+      general, previous experience with Scala (or Java) really isn't required to understand most
+      of what is presented here.</para>
     </chapter>
 
     <chapter>
       <title>Overview of Ada</title>
-      <para>Give an overview of Ada from the point of view of a Scala programmer.</para>
+
+      <para>Welcome to the Ada programming language! The purpose of this tutorial is to give you
+      an overview of Ada so that you can understand the general structure of the language, start
+      writing Ada programs quickly, and start understanding the source of the Augusta Ada
+      runtime system. This tutorial does not attempt to cover the entire language. Ada is very
+      large, so complete coverage of all its features would take many more pages than are
+      contained in this document. However, it is my hope that after reading this tutorial you
+      will have a good sense of what Ada is like, appreciate some of its nicer features, and
+      feel interested in learning more. <citation>Barnes2014</citation>,
+      <citation>McCormick2011</citation>, <citation>Ben-Ari2009</citation>,
+      <citation>Burns2007</citation>, <citation>Dale2007</citation>.</para>
+
+      <para>Ada is a powerful language designed to address the following issues:</para>
+
+      <unorderedlist>
+        <listitem><para>The development of very large programs by multiple, loosely connected
+        teams. The language has features to help manage a large number of program components,
+        and to help ensure those components are used consistently.</para></listitem>
+
+        <listitem><para>The development of long lived programs that spend most of their time in
+        the maintenance phase of the software life cycle. The language is designed to promote
+        the readability of programs. You may find Ada to be rather verbose and tedious to write.
+        However, that extra work pays off later by making the code clearer and easier to read
+        when bugs must be fixed or enhancements written.</para></listitem>
+
+        <listitem><para>The development of robust programs where correctness, security, and
+        reliability are priorities. The language has features designed to make programming safer
+        and less error prone. Some of these features involve extra run time checking and thus
+        entail a performance penalty. However, Ada's design is such that the performance penalty
+        is normally not excessive.</para></listitem>
+
+        <listitem><para>The development of embedded systems where low level hardware control,
+        multiple concurrent tasks, and real time requirements are common. The language has
+        features designed to support these things while still retaining as much safety as
+        feasible.</para></listitem>
+      </unorderedlist>
     </chapter>
+
+<!--
+\input{Hello-Ada}
+\input{Control-Structures}
+\input{Types-and-Subtypes}
+\input{Subprograms}
+\input{Arrays-and-Records}
+\input{Packages}
+\input{Abstract-Data-Types}
+\input{Strings}
+\input{Exceptions}
+\input{Discriminated-Types}
+\input{Generics}
+\input{Access-Types}
+\input{Command-Line-Arguments}
+\input{Object-Oriented-Programming}
+\input{Tasking}
+\input{Container-Library}
+\input{Low-Level-Programming}
+-->
+
   </part>
 
-<!--  <part>
+  <part>
     <title>Case Studies</title>
-  </part> -->
+  </part>
+
+  <bibliolist>
+    <title>Bibliography</title>
+    
+    <biblioentry>
+      <abbrev>Barnes2014</abbrev>
+      <authorgroup>
+        <author><personname>
+          <firstname>John</firstname><surname>Barnes</surname>
+        </personname></author>
+      </authorgroup>
+      <copyright>
+        <year>2014</year>
+      </copyright>
+      <biblioid class="isbn">978-1107424814</biblioid>
+      <publisher>
+        <publishername>Cambridge University Press</publishername>
+      </publisher>
+      <citetitle>Programming Ada 2012</citetitle>
+    </biblioentry>
+
+    <biblioentry>
+      <abbrev>Ben-Ari2009</abbrev>
+      <authorgroup>
+        <author><personname>
+          <firstname>Mordechai</firstname><surname>Ben-Ari</surname>
+        </personname></author>
+      </authorgroup>
+      <copyright>
+        <year>2009</year>
+      </copyright>
+      <biblioid class="isbn">978-1-84882-313-6</biblioid>
+      <publisher>
+        <publishername>Springer-Verlag</publishername>
+      </publisher>
+      <citetitle>Ada for Software Engineers</citetitle>
+    </biblioentry>
+    
+    <biblioentry>
+      <abbrev>Burns2009</abbrev>
+      <authorgroup>
+        <author><personname>
+          <firstname>Alan</firstname><surname>Burns</surname>
+        </personname></author>
+        <author><personname>
+          <firstname>Andy</firstname><surname>Wellings</surname>
+        </personname></author>
+      </authorgroup>
+      <copyright>
+        <year>2007</year>
+      </copyright>
+      <biblioid class="isbn">978-0-521-86697-2</biblioid>
+      <publisher>
+        <publishername>Cambridge University Press</publishername>
+      </publisher>
+      <citetitle>Concurrent and Real-Time Programming in Ada</citetitle>
+    </biblioentry>
+    
+    <biblioentry>
+      <abbrev>McCormick2011</abbrev>
+      <authorgroup>
+        <author><personname>
+          <firstname>John</firstname><surname>McCormick</surname>
+        </personname></author>
+        <author><personname>
+          <firstname>Frank</firstname><surname>Singhoff</surname>
+        </personname></author>
+        <author><personname>
+          <firstname>Jerome</firstname><surname>Hugues</surname>
+        </personname></author>
+      </authorgroup>
+      <copyright>
+        <year>2011</year>
+      </copyright>
+      <biblioid class="isbn">978-0-521-19716-8</biblioid>
+      <publisher>
+        <publishername>Cambridge University Press</publishername>
+      </publisher>
+      <citetitle>Building Paralle, Embedded, and Real-Time Applications with Ada</citetitle>
+    </biblioentry>
+
+  </bibliolist>
+  
 </book>
