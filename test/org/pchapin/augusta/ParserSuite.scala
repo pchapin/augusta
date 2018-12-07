@@ -8,8 +8,9 @@ package org.pchapin.augusta
 
 import org.scalatest.{Assertions, FunSuite}
 import org.scalatest.Matchers
-import java.io.{FileInputStream, File}
-import org.antlr.v4.runtime.{CommonTokenStream, ANTLRInputStream}
+import java.io.{File, FileInputStream}
+
+import org.antlr.v4.runtime.{CharStreams, CommonTokenStream}
 
 class ParserSuite extends FunSuite with Assertions with Matchers {
   import ParserSuite._
@@ -27,7 +28,7 @@ class ParserSuite extends FunSuite with Assertions with Matchers {
       val testCase = new File(testCaseName)
       val testFile = new FileInputStream(testCase.getPath)
       try {
-        val lex    = new AdaLexer(new ANTLRInputStream(testFile))
+        val lex    = new AdaLexer(CharStreams.fromStream(testFile))
         val tokens = new CommonTokenStream(lex)
         val parser = new AdaParser(tokens)
         // TODO: Should indicate a failed test if parsing encounters any errors.

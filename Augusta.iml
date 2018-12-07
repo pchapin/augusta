@@ -20,6 +20,6 @@
     <orderEntry type="library" name="org.scala-graph:graph-core_2.12:1.11.5" level="project" />
     <orderEntry type="library" name="org.scalaz:scalaz-core_2.12:7.2.15" level="project" />
     <orderEntry type="library" scope="TEST" name="org.scalatest:scalatest_2.12:3.0.4" level="project" />
-    <orderEntry type="library" name="scala-sdk-2.12.4" level="application" />
+    <orderEntry type="library" name="scala-sdk-2.12.8" level="application" />
   </component>
 </module>

@@ -8,8 +8,9 @@ package org.pchapin.augusta
 
 import org.scalatest.{Assertions, FunSuite}
 import org.scalatest.Matchers
-import java.io.{FileInputStream, File}
-import org.antlr.v4.runtime.{CommonTokenStream, ANTLRInputStream}
+import java.io.{File, FileInputStream}
+
+import org.antlr.v4.runtime.{CharStreams, CommonTokenStream}
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 
 class SemanticSuite extends FunSuite with Assertions with Matchers {
@@ -30,7 +31,7 @@ class SemanticSuite extends FunSuite with Assertions with Matchers {
 
       val testFile  = new FileInputStream(new File(testCaseName))
       try {
-        val lex    = new AdaLexer(new ANTLRInputStream(testFile))
+        val lex    = new AdaLexer(CharStreams.fromStream(testFile))
         val tokens = new CommonTokenStream(lex)
         val parser = new AdaParser(tokens)
         val tree   = parser.compilation_unit()

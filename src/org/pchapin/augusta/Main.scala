@@ -9,7 +9,7 @@ import org.antlr.v4.runtime.tree._
 object Main {
   val reporter = new BasicConsoleReporter
 
-  def process(input: ANTLRFileStream, mode: Int) {
+  def process(input: CharStream, mode: Int) {
     // Parse the input file as Ada
     val lexer  = new AdaLexer(input)
     val tokens = new CommonTokenStream(lexer)
@@ -70,7 +70,7 @@ object Main {
     }
 
     // Create a stream that reads from the specified file.
-    val input = new ANTLRFileStream(sourceFile)
+    val input = CharStreams.fromFileName(sourceFile)
     process(input, mode)
 
   }

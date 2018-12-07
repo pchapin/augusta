@@ -8,7 +8,7 @@ class CFGBuilder(
   symbolTable: SymbolTable,
   reporter   : Reporter) extends AdaBaseVisitor[ControlFlowGraph] {
 
-  import scala.collection.JavaConversions    // ctx is a java.util.List, not a scala.List.
+  import scala.collection.JavaConverters._    // ctx is a java.util.List, not a scala.List.
 
   private def combineStatementSequence(
     statements: Iterable[AdaParser.StatementContext]): ControlFlowGraph = {
@@ -30,7 +30,7 @@ class CFGBuilder(
 
 
   override def visitBlock(ctx: AdaParser.BlockContext): ControlFlowGraph = {
-    combineStatementSequence(JavaConversions.iterableAsScalaIterable(ctx.statement))
+    combineStatementSequence(ctx.statement.asScala)
   }
 
 
@@ -54,7 +54,7 @@ class CFGBuilder(
     val expressionBlock = new BasicBlock(List(), Some(ctx.expression))
     val nullBlock = new BasicBlock(List(), None)
     val ControlFlowGraph(bodyEntry, bodyGraph, bodyExit) =
-      combineStatementSequence(JavaConversions.iterableAsScalaIterable(ctx.statement))
+      combineStatementSequence(ctx.statement.asScala)
     val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, nullBlock) union bodyGraph
     val overallGraph = allNodesGraph +
       LDiEdge(expressionBlock, bodyEntry)('T') +
