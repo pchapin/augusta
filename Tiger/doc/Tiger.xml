@@ -1,33 +1,24 @@
 <?xml version="1.0"?>
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-   "http://www.docbook.org/xml/4.5/docbookx.dtd" [
-
-<!ELEMENT xi:include (xi:fallback?) >
-<!ATTLIST xi:include
-    xmlns:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude"
-    href       CDATA      #REQUIRED
-    parse      (xml|text) "xml"
-    encoding   CDATA      #IMPLIED >
-<!ELEMENT xi:fallback ANY>
-<!ATTLIST xi:fallback
-    xmlsn:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude" >
-<!ENTITY % local.chapter.class "| xi:include">
-<!ENTITY % local.section.class "| xi:include">
-]>
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbookxi.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
 
 <!-- FILE        : Tiger.xml
      SUBJECT     : Master document for the Tiger documentation set.
-     AUTHOR      : (C) Copyright 2018 by Peter C. Chapin <peter@pchapin.org>
+     AUTHOR      : (C) Copyright 2018 by Peter C. Chapin <chapinp@acm.org>
 
 This is the documentation for the Tiger compiler. -->
 
-<book status="draft">
-  <bookinfo>
-    <title>Allegra</title>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+
+  <info>
+    <title>Tiger</title>
     <author>
+      <personname>
       <firstname>Peter</firstname>
       <surname>Chapin</surname>
       <othername role="mi">C.</othername>
+      </personname>
       <affiliation>
         <orgname>Vermont Technical College</orgname>
         <orgdiv>Computer Information Systems Department</orgdiv>
@@ -54,8 +45,8 @@ This is the documentation for the Tiger compiler. -->
         <authorinitials>pcc</authorinitials>
       </revision>
     </revhistory>
-  </bookinfo>
-  <preface id="Introduction">
+  </info>
+  <preface>
     <title>Introduction</title>
 
     <para>Tiger is...</para>

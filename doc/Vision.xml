@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-  "http://www.docbook.org/xml/4.5/docbookx.dtd">
-  
-<chapter id="Vision">
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbookxi.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+
   <title>Augusta Vision Statement</title>
 
   <para>In this section we outline the philosophy and long range goals of Augusta. By doing so
@@ -23,7 +25,8 @@
     </listitem>
 
     <listitem>
-      <para>Augusta should support ASIS.</para>
+      <para>Augusta should support ASIS or whatever similar system is enjoying wide industry
+        support (libadalang?).</para>
     </listitem>
 
     <listitem>
@@ -38,7 +41,7 @@
 
     <listitem>
       <para>Augusta should be a "compiler writer's compiler," optionally exposing various
-        compiler internals that might of interest to the power user.</para>
+        compiler internals that might be of interest to the power user.</para>
     </listitem>
 
     <listitem>

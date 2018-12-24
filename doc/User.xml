@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-  "http://www.docbook.org/xml/4.5/docbookx.dtd">
-  
-<chapter id="User">
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbookxi.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+
   <title>Augusta User Documentation</title>
 
   <para>This chapter contains the user documentation for Augusta. It is divided into sections
@@ -16,14 +18,14 @@
     with the contents of section n-1. In contrast, a reader of section n need not be concerned
     about the contents of section n+1.</para>
 
-  <section id="User.Traditional">
+  <section>
     <title>Traditional Use</title>
 
     <para>In this section we describe the use of Augusta as a traditional, command-line driven
       tool. We describe installation, command-line syntax and options, error message format, and
       the way Augusta interacts with other tools (in particular the LLVM back-end tools).</para>
 
-    <section id="User.Traditional.Installation">
+    <section>
       <title>Installation</title>
       <para>Augusta requires that several prerequisites systems be installed before Augusta is
         installed. These prerequisite systems are listed below with some comments.</para>
@@ -116,7 +118,7 @@
 
     </section>
 
-    <section id="User.Traditional.CommandSyntax">
+    <section>
       <title>Command Line Syntax</title>
       <para>Augusta is invoked using the <command>augusta</command> command. Command-line
         options all begin with a dash. Every other word on the command line is taken to be a
@@ -249,13 +251,13 @@
     </section>
   </section>
 
-  <section id="User.ToolBuilder">
+  <section>
     <title>Tool Building</title>
 
     <para>y</para>
   </section>
 
-  <section id="User.Extensions">
+  <section>
     <title>User Extensions</title>
 
     <para>z</para>

@@ -1,34 +1,23 @@
 <?xml version="1.0"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-  "http://www.docbook.org/xml/4.5/docbookx.dtd" [
-  
-<!ELEMENT xi:include (xi:fallback?) >
-<!ATTLIST xi:include
-    xmlns:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude"
-    href       CDATA      #REQUIRED
-    parse      (xml|text) "xml"
-    encoding   CDATA      #IMPLIED >
-<!ELEMENT xi:fallback ANY>
-<!ATTLIST xi:fallback
-    xmlsn:xi   CDATA      #FIXED     "http://www.w3.org/2001/XInclude" >
-<!ENTITY % local.chapter.class "| xi:include">
-<!ENTITY % local.section.class "| xi:include"> 
-]>
-  
-<chapter id="Design">
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbookxi.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+
   <title>Augusta Design</title>
 
   <para>This chapter contains the design documentation for Augusta. This chapter is only of
     interest to Augusta contributors (or potential contributors). If you are a user of Augusta
     you can ignore this entire chapter.</para>
 
-  <section id="Design.Structure">
+  <section>
     <title>Augusta Structure</title>
 
     <para>In this section we describe the overall structure of Augusta.</para>
 
-    <para>As described in <ulink url="http://library.epfl.ch/en/theses/?nr=3509">Philippe
-        Altherr's dissertation</ulink>, the Scala compiler works by rewriting the input source
+    <para>As described in <link xlink:href="http://library.epfl.ch/en/theses/?nr=3509">Philippe
+        Altherr's dissertation</link>, the Scala compiler works by rewriting the input source
       code, using progressively more primitive constructs, until the result is "trivial" to
       translate into the target machine code (JVM bytecode in the case of the Scala compiler).
       At each rewriting step the intermediate language is a subset of Scala and fully typed.
@@ -43,7 +32,7 @@
         mature.</emphasis></para>
   </section>
 
-  <section id="Design.ProgramLibraries">
+  <section>
     <title>Program Libraries</title>
 
     <para>The Ada standard requires that an implementation guarantees programs are only
@@ -61,14 +50,14 @@
       described elsewhere in this document.</para>
 
     <para>Augusta treats program libraries abstractly through the trait
-        <interface>ProgramLibrary</interface>. This allows multiple concrete implementations to
-      coexist simultaneously. Augusta can access several program libraries during a compilation,
-      and it is possible for the various libraries to be managed differently. For example it may
-      be possible to optimize the handling of a library, such as the standard library, that is
-      known to be read-only. Yet most of Augusta is unconcerned about the details of how each
-      program library is implemented.</para>
+        <interfacename>ProgramLibrary</interfacename>. This allows multiple concrete
+      implementations to coexist simultaneously. Augusta can access several program libraries
+      during a compilation, and it is possible for the various libraries to be managed
+      differently. For example it may be possible to optimize the handling of a library, such as
+      the standard library, that is known to be read-only. Yet most of Augusta is unconcerned
+      about the details of how each program library is implemented.</para>
 
-    <section id="Design.ProgramLibraries.FileSystemLibrary">
+    <section>
       <title>File System Library</title>
 
       <para>At the time of this writing only one type of program library, called a

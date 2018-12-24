@@ -1,10 +1,11 @@
 Augusta
 =======
 
-Augusta is an open source Ada 2012 compiler written in Scala that targets LLVM. This document is
-a quick description of how to get set up for Augusta development. For more information see the
-documentation in the 'doc' folder, particularly the file Build.xml. The GitHub wiki (or the wiki
-folder in this repository) may contain additional information for Augusta contributors.
+Augusta is an open source Ada 2012/2020 compiler written in Scala that targets LLVM. This
+document is a quick description of how to get set up for Augusta development. For more
+information see the documentation in the 'doc' folder, particularly the file Build.xml. The
+GitHub wiki (or the wiki folder in this repository) may contain additional information for
+Augusta contributors.
 
 Augusta is not even remotely usable at this time. However we intend to keep the system in a
 buildable state so it should always be possible to create the Augusta jar file as well as

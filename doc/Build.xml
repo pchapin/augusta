@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
-  "http://www.docbook.org/xml/4.5/docbookx.dtd">
-  
-<chapter id="Build">
+<?xml-model href="http://docbook.org/xml/5.1/rng/docbookxi.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.1/sch/docbook.sch" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xlink="http://www.w3.org/1999/xlink" version="5.1">
+
   <title>Building Augusta</title>
 
   <para>This chapter describes how to build Augusta and its associated documentation and how to
@@ -25,15 +27,16 @@
     for more information. Currently IntelliJ is configured to download most of those libraries
     from Maven repositories. This relieves you of the burden of downloading and installing the
     libraries manually. However, Augusta does <emphasis>not</emphasis> use Maven for the build
-    itself. All building is done through IntelliJ. In the future Maven or <ulink
-      url="http://www.scala-sbt.org/">sbt</ulink> may be used for the build.</para>
+    itself. All building is done through IntelliJ. In the future Maven or <link
+      xlink:href="http://www.scala-sbt.org/">sbt</link> may be used for the build.</para>
 
   <variablelist>
     <title>Build Tools</title>
 
     <varlistentry>
-      <term><ulink url="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
-          Development Kit</ulink></term>
+      <term><link
+          xlink:href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
+          Development Kit</link></term>
       <listitem>
         <para>We use JDK v10.0.1. If you use a different JDK than for Java 10, you will have to
           adjust the IntelliJ project definition. A full JDK is necessary, and not just a JRE,
@@ -42,7 +45,7 @@
     </varlistentry>
 
     <varlistentry>
-      <term><ulink url="http://www.scala-lang.org/">Scala Compiler</ulink></term>
+      <term><link xlink:href="http://www.scala-lang.org/">Scala Compiler</link></term>
       <listitem>
         <para>We use Scala v2.12.4. The Scala compiler is executed indirectly via the IntelliJ
           IDE. Currently no official method of building Augusta outside of IntelliJ is
@@ -54,14 +57,14 @@
     </varlistentry>
 
     <varlistentry>
-      <term><ulink url="http://www.docbook.org/">DocBook</ulink></term>
+      <term><link xlink:href="http://www.docbook.org/">DocBook</link></term>
       <listitem>
         <para>The Augusta documentation is written primarily in DocBook. This is an XML format
           and so is readable (and writable) in an ordinary text editor. However, if you want to
           build nicely formatted documentation or benefit from a more advanced editing features,
-          you will need a tool chain for processing DocBook. We currently use <ulink
-            url="http://oxygenxml.com/">&lt;oXygen/&gt;</ulink> as our primary DocBook editing
-          tool.</para>
+          you will need a tool chain for processing DocBook. We currently use <link
+            xlink:href="http://oxygenxml.com/">&lt;oXygen/&gt;</link> as our primary DocBook
+          editing tool.</para>
 
         <para>IntelliJ can also edit DocBook using its general support for XML. Emacs's nXML
           mode is also useful. To set up IntelliJ for DocBook first download and unpack the
@@ -70,7 +73,7 @@
     </varlistentry>
 
     <varlistentry>
-      <term><ulink url="http://www.jetbrains.com/idea/">IntelliJ IDEA</ulink></term>
+      <term><link xlink:href="http://www.jetbrains.com/idea/">IntelliJ IDEA</link></term>
       <listitem>
         <para>We use IntelliJ IDEA, Community Edition, version 2018.3 with the IntelliJ Scala
           plugin developed by JetBrains as our integrated development environment. The plugin
@@ -91,7 +94,7 @@
     </varlistentry>
 
     <varlistentry>
-      <term><ulink url="http://llvm.org">LLVM</ulink></term>
+      <term><link xlink:href="http://llvm.org">LLVM</link></term>
       <listitem>
         <para>Augusta uses the LLVM v3.8 compiler back-end framework as a target for its code
           generator. Only the back-end tools are needed. Setting up LLVM is outside the current
@@ -104,7 +107,8 @@
     </varlistentry>
 
     <varlistentry>
-      <term><ulink url="http://www.adacore.com/community">GNAT Community 2018</ulink></term>
+      <term><link xlink:href="http://www.adacore.com/community">GNAT Community
+        2018</link></term>
       <listitem>
         <para>Currently the Augusta runtime system is compiled with the GNAT Ada compiler. This
           is necessary because Augusta is not yet mature enough to compile its runtime
@@ -113,11 +117,11 @@
     </varlistentry>
 
     <varlistentry>
-      <term><ulink url="http://jenkins-ci.org/">Jenkins</ulink></term>
+      <term><link xlink:href="http://jenkins-ci.org/">Jenkins</link></term>
       <listitem>
         <para>We use Jenkins as our continuous integration system. Our practice is to run
-          Jenkins from the <ulink url="http://glassfish.java.net/">Glassfish</ulink> application
-          server. You do not need to set up Jenkins if you are a single developer.
+          Jenkins from the <link xlink:href="http://glassfish.java.net/">Glassfish</link>
+          application server. You do not need to set up Jenkins if you are a single developer.
             <emphasis>TODO: Give more details about setting up Glassfish and
           Jenkins.</emphasis></para>
       </listitem>
@@ -127,14 +131,14 @@
 
   <para>In addition to the tools above we may in the future make use of various additional tools
     to improve the quality of the Augusta code base. These tools might include, for example,
-      <ulink url="http://babelfish.arc.nasa.gov/trac/jpf">Java Pathfinder</ulink>, <ulink
-      url="http://libre.adacore.com/libre/tools/spark-gpl-edition/">SPARK</ulink>, and <ulink
-      url="https://github.com/mdr/scalariform">Scalariform</ulink>. More information will be
-    provided about setting up these tools when (and if) they are employed.</para>
+      <link xlink:href="http://babelfish.arc.nasa.gov/trac/jpf">Java Pathfinder</link>, <link
+      xlink:href="http://libre.adacore.com/libre/tools/spark-gpl-edition/">SPARK</link>, and
+      <link xlink:href="https://github.com/mdr/scalariform">Scalariform</link>. More information
+    will be provided about setting up these tools when (and if) they are employed.</para>
 
   <para>You can use IntelliJ's integrated Git support to check out the Augusta project from
-      <ulink url="https://github.com/pchapin/augusta.git"/>. Before you can build the project
-    you to manually generate the Augusta parser by running
+      <link xlink:href="https://github.com/pchapin/augusta.git"/>. Before you can build the
+    project you to manually generate the Augusta parser by running
       <filename>bin/build-augusta-parser.{bat,sh}</filename> from the root folder of the
     project. You can then use IntelliJ to do a full build of the project.</para>
 
