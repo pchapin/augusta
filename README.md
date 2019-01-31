@@ -25,16 +25,16 @@ related versions would probably also work, but have not been tested.
 
 + Several third party libraries are used by Augusta. The jar files for those libraries are not
   included as part of this repository, but are downloaded from the maven repositories by
-  IntelliJ during the build process. See the README file in the lib folder for more information.
+  SBT during the build process.
 
-+ [Java Development Kit](https://www.oracle.com/technetwork/java/javase/downloads/index.html) (10.1)
++ [Java Development Kit](https://www.oracle.com/technetwork/java/javase/downloads/index.html) (11.0.1)
 
   There are some Java source files in Augusta so a JRE is not sufficient.
+  
++ [SBT](https://www.scala-sbt.org/) (1.2.8)
 
-+ [Scala](http://www.scala-lang.org/) (2.12.4)
-
-  The Scala version required is automatically downloaded by IntelliJ from the maven repositories
-  during the build process. You do not need to have Scala installed first.
+  SBT is the build tool we use. It knows how to download the various libraries and certain other
+  components that are required (such as Scala).
 
 + DocBook tool chain
 
@@ -60,8 +60,6 @@ related versions would probably also work, but have not been tested.
   scaladoc build to work you need to define the `SCALA_HOME` environment variable at the
   operating system level. It should point at the folder containing your Scala installation.
 
-  Finally for the Augusta.jar artifact to be correctly built you will need to configure the
-  IntelliJ path variable `SCALA_HOME` to point at the folder containing your Scala installation.
   You also need to define the IntelliJ path variable `DOCBOOK_XML` to point at the folder
   containing the DocBook XML 4.5. DTD.
 
@@ -89,11 +87,6 @@ Building
 --------
 
 ### Augusta
-
-The Ada grammar that Augusta uses is currently in a formative state. However it will generate a
-parser. Since the grammar is very much a work in progress the build of the parser is currently
-done manually. In the top level folder of the project run `bin/build-augusta-parser.{bat,sh}`.
-You will need to do this each time the grammar is updated.
 
 The Augusta project includes two additional modules named Tiger and Dragon. There is also a
 Scripts module that contains the source code for the Groovy scripts we use.
