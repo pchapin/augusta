@@ -2,9 +2,9 @@ package org.pchapin.augusta
 
 
 /**
- * A trait describing Allegra symbol tables. Symbols are divided into object names and type
- * names. Note that symbol table objects are mutable. The built-in types Integer and Boolean are
- * known to all symbol tables after they are constructed.
+ * A trait describing Augusta symbol tables. Symbols are divided into object names and type
+ * names. Note that symbol tables are mutable. The built-in types Integer and Boolean are known
+ * to all symbol tables after they are constructed.
  */
 trait SymbolTable {
 
@@ -30,13 +30,15 @@ trait SymbolTable {
   def addTypeName(name: String, representation: AdaTypes.TypeRep): Unit
 
   /**
-   * @return An immutable set containing the names of all the objects in this symbol table.
+   * @return An iterable collection containing the names of all the objects in this symbol
+   * table.
    */
   def getObjectNames: Iterable[String]
 
   /**
    * Looks up the type associated with a given object name. Throws an exception if the object
    * name is not known.
+   * 
    * @param name The name object to look up.
    * @return The name of the type associated with the named object.
    */
@@ -45,6 +47,7 @@ trait SymbolTable {
   /**
    * Looks up the representation of a type given its name. Throws an exception if the type name
    * is not known.
+   * 
    * @param name The name of the type to look up.
    * @return The representation of the named type.
    */

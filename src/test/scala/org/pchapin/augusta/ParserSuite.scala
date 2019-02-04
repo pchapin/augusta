@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------
-// FILE    : ParserSuite.scala
-// SUBJECT : Tests of the Rabbit1 parser.
-// AUTHOR  : (C) Copyright 2014 by Peter C. Chapin <PChapin@vtc.vsc.edu>
-//
-//-----------------------------------------------------------------------
 package org.pchapin.augusta
 
 import org.scalatest.{Assertions, FunSuite}
@@ -19,7 +13,8 @@ class ParserSuite extends FunSuite with Assertions with Matchers {
    * Execute test cases.
    * 
    * @param testCaseNames An array of file names representing the test cases.
-   * @param doParse A function that takes a RabbitParser and executes the parse at a particular start symbol.
+   * @param doParse A function that takes a RabbitParser and executes the parse at a particular
+   * start symbol.
    */
   private def doTests(testCaseNames: Array[String],
                       doParse      : AdaParser => Any) {

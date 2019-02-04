@@ -12,7 +12,7 @@ compilation_unit
     :   procedure_definition;
 
 procedure_definition
-    :   PROCEDURE IDENTIFIER IS declarations block ';';
+    :   PROCEDURE IDENTIFIER IS declarations block IDENTIFIER? ';';
 
 
 // Declaration Grammar
@@ -49,28 +49,34 @@ null_statement
 // ------------------
 
 primary_expression
+    locals [String expressionType, int value = 0]
     :   IDENTIFIER
     |   NUMERIC_LITERAL
     |   '(' expression ')';
 
-multiplicative_expression
-    :   multiplicative_expression MULTIPLY primary_expression
-    |   multiplicative_expression DIVIDE   primary_expression
+unary_expression
+    locals [String expressionType, int value = 0]
+    :   (PLUS | MINUS) primary_expression
     |   primary_expression;
 
-unary_expression
-    :   (PLUS | MINUS) multiplicative_expression
-    |   multiplicative_expression;
-
-additive_expression
-    :   additive_expression PLUS  unary_expression
-    |   additive_expression MINUS unary_expression
+multiplicative_expression
+    locals [String expressionType, int value = 0]
+    :   multiplicative_expression MULTIPLY unary_expression
+    |   multiplicative_expression DIVIDE   unary_expression
     |   unary_expression;
 
+additive_expression
+    locals [String expressionType, int value = 0]
+    :   additive_expression PLUS  multiplicative_expression
+    |   additive_expression MINUS multiplicative_expression
+    |   multiplicative_expression;
+
 expression
+    locals [String expressionType, int value = 0]
     :   additive_expression;
 
 left_expression
+    locals [String expressionType]
     :   IDENTIFIER;
 
 

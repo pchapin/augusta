@@ -34,7 +34,7 @@ object Reporter {
    * Internal compiler errors are handled by throwing instances of this exception. They are not
    * reported in the usual way. Instead the compiler is intended to abort.
    *
-   * @param message A human readable message describing the error.
+   * @param message A human readable, but not user friendly, message describing the error.
    */
   class InternalErrorException(message: String) extends Exception(message)
 }

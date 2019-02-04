@@ -1,9 +1,3 @@
-//-----------------------------------------------------------------------
-// FILE    : SemanticSuite.scala
-// SUBJECT : Tests of the Rabbit1 semantic analyzer.
-// AUTHOR  : (C) Copyright 2014 by Peter C. Chapin <PChapin@vtc.vsc.edu>
-//
-//-----------------------------------------------------------------------
 package org.pchapin.augusta
 
 import org.scalatest.{Assertions, FunSuite}
@@ -37,7 +31,8 @@ class SemanticSuite extends FunSuite with Assertions with Matchers {
         val tree   = parser.compilation_unit()
 
         // Walk the tree created during the parse and analyze it for semantic errors.
-        val symbolTable    = new StackedSymbolTable
+        //val symbolTable    = new StackedSymbolTable
+        val symbolTable    = new BasicSymbolTable
         val myAnalyzer     = new SemanticAnalyzer(symbolTable, reporter)
         val analyzerWalker = new ParseTreeWalker
         analyzerWalker.walk(myAnalyzer, tree)
