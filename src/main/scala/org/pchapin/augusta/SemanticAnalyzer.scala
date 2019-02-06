@@ -82,20 +82,20 @@ class SemanticAnalyzer(
         else if (ctx.NUMERIC_LITERAL != null) ctx.NUMERIC_LITERAL
         else getTopNode(ctx.expression)
 
-      case ctx: Unary_expressionContext =>
-        if      (ctx.PLUS  != null) ctx.PLUS
-        else if (ctx.MINUS != null) ctx.MINUS
-        else getTopNode(ctx.primary_expression)
-
       case ctx: Multiplicative_expressionContext =>
         if      (ctx.MULTIPLY != null) ctx.MULTIPLY
         else if (ctx.DIVIDE   != null) ctx.DIVIDE
-        else getTopNode(ctx.unary_expression)
+        else getTopNode(ctx.primary_expression)
+
+      case ctx: Unary_expressionContext =>
+        if      (ctx.PLUS  != null) ctx.PLUS
+        else if (ctx.MINUS != null) ctx.MINUS
+        else getTopNode(ctx.multiplicative_expression)
 
       case ctx: Additive_expressionContext =>
         if      (ctx.PLUS  != null) ctx.PLUS
         else if (ctx.MINUS != null) ctx.MINUS
-        else getTopNode(ctx.multiplicative_expression)
+        else getTopNode(ctx.unary_expression)
 
       case ctx: ExpressionContext =>
         getTopNode(ctx.additive_expression)
@@ -134,24 +134,13 @@ class SemanticAnalyzer(
   }
 
 
-  override def exitUnary_expression(ctx: AdaParser.Unary_expressionContext): Unit = {
-    if (ctx.PLUS == null && ctx.MINUS == null) {
+  override def exitMultiplicative_expression(ctx: AdaParser.Multiplicative_expressionContext): Unit = {
+    if (ctx.MULTIPLY == null && ctx.DIVIDE == null) {
       ctx.expressionType = ctx.primary_expression.expressionType
     }
     else {
-      val actualType = ctx.primary_expression.expressionType
-        ctx.expressionType = actualType
-    }
-  }
-
-
-  override def exitMultiplicative_expression(ctx: AdaParser.Multiplicative_expressionContext): Unit = {
-    if (ctx.MULTIPLY == null && ctx.DIVIDE == null) {
-      ctx.expressionType = ctx.unary_expression.expressionType
-    }
-    else {
       val actualLeftType = ctx.multiplicative_expression.expressionType
-      val actualRightType = ctx.unary_expression.expressionType
+      val actualRightType = ctx.primary_expression.expressionType
       if (actualLeftType == actualRightType) {
         ctx.expressionType = actualLeftType
       }
@@ -163,13 +152,24 @@ class SemanticAnalyzer(
   }
 
 
-  override def exitAdditive_expression(ctx: AdaParser.Additive_expressionContext): Unit = {
+  override def exitUnary_expression(ctx: AdaParser.Unary_expressionContext): Unit = {
     if (ctx.PLUS == null && ctx.MINUS == null) {
       ctx.expressionType = ctx.multiplicative_expression.expressionType
     }
     else {
+      val actualType = ctx.multiplicative_expression.expressionType
+        ctx.expressionType = actualType
+    }
+  }
+
+
+  override def exitAdditive_expression(ctx: AdaParser.Additive_expressionContext): Unit = {
+    if (ctx.PLUS == null && ctx.MINUS == null) {
+      ctx.expressionType = ctx.unary_expression.expressionType
+    }
+    else {
       val actualLeftType = ctx.additive_expression.expressionType
-      val actualRightType = ctx.multiplicative_expression.expressionType
+      val actualRightType = ctx.unary_expression.expressionType
       if (actualLeftType == actualRightType) {
         ctx.expressionType = actualLeftType
       }
