@@ -54,22 +54,22 @@ primary_expression
     |   NUMERIC_LITERAL
     |   '(' expression ')';
 
-unary_expression
-    locals [String expressionType, int value = 0]
-    :   (PLUS | MINUS) primary_expression
-    |   primary_expression;
-
 multiplicative_expression
     locals [String expressionType, int value = 0]
-    :   multiplicative_expression MULTIPLY unary_expression
-    |   multiplicative_expression DIVIDE   unary_expression
-    |   unary_expression;
+    :   multiplicative_expression MULTIPLY primary_expression
+    |   multiplicative_expression DIVIDE   primary_expression
+    |   primary_expression;
+
+unary_expression
+    locals [String expressionType, int value = 0]
+    :   (PLUS | MINUS) multiplicative_expression
+    |   multiplicative_expression;
 
 additive_expression
     locals [String expressionType, int value = 0]
-    :   additive_expression PLUS  multiplicative_expression
-    |   additive_expression MINUS multiplicative_expression
-    |   multiplicative_expression;
+    :   additive_expression PLUS  unary_expression
+    |   additive_expression MINUS unary_expression
+    |   unary_expression;
 
 expression
     locals [String expressionType, int value = 0]
