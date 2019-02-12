@@ -48,7 +48,7 @@ related versions would probably also work, but have not been tested.
   unpack the DocBook XML DTD distribution to any suitable location on your system. Next continue
   with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2018.3)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2018.3.4)
 
   We officially use the Community Edition, but some of us use the Ultimate edition. You will
   need to download and install the Scala plugin from the plugin control panel (or during the
@@ -66,16 +66,13 @@ related versions would probably also work, but have not been tested.
   We also recommend that you install the ANTLR v4 grammar support plugin and the Markdown
   editing plugin from the IntelliJ plugins repository.
 
-+ [LLVM](http://llvm.org/) (3.8)
++ [LLVM](http://llvm.org/) (7.0.1)
 
   Augusta generates (will eventually generate) code for the Low Level Virtual Machine (LLVM).
   Only the back-end tools from the LLVM project are needed. None of the front-end compilers
   (gcc, clang, etc) are necessary. Detailed instructions for installing the LLVM tools are
   outside the scope of this document. See the LLVM web site or the file Build.xml in the
   documentation folder for more information.
-
-  At this time LLVM is not strictly necessary as no back-end code generation is currently being
-  done.
 
 + [GNAT](http://www.adacore.com/community) (GNAT-Community-2018)
 
@@ -105,6 +102,12 @@ and tested using GNAT with GPS as the integrated development environment. Load s
 the RTS/SL/src folder into GPS to build the current version of the standard library. At the time
 of this writing the runtime library in RTS/RL is empty.
 
+All of these projects can be compiled via SBT. The SBT build control file has all the necessary
+dependencies declared so that building one project should trigger the download of the required
+libraries and the building of required subprojects. The usual SBT tasks can be used to build API
+(interna) documentation, run tests, and so forth. See the [SBT
+documentation](https://www.scala-sbt.org/documentation.html) for more details.
+
 ### Documentation
 
 The external documentation can be built using your DocBook tool chain. You will find the DocBook
@@ -117,18 +120,12 @@ reference materials. See the README file in the references folder for more infor
 Two tutorials, also in DocBook format, are provided. One targets Ada programmers wishing to
 learn Scala, and the other targets Scala programmers wishing to learn Ada.
 
-The internal documentation can be built using scaladoc with the Ant build script provided. You
-can launch targets in this script from inside IntelliJ or you can execute ant at a console
-prompt to build the various documentation targets. There is a separate scaladoc build for each
-module. The resulting documentation is put into the 'doc' folder.
-
 
 Testing
 -------
 
-Each IntelliJ module has an associated collection of test cases. They are stored in the 'test'
-folder of each module. All tests use the ScalaTest testing framework. You can define IntelliJ
-run configurations as appropriate to execute them.
+Each SBT project has associated tests. They are stored in the 'test' folder of each project, as
+usual for SBT. All tests use the ScalaTest testing framework.
 
 Testing of the standard library is currently done with GNAT and the AUnit test framework. After
 loading stdlibrary.gpr into GPS as described above you can build and run the test program from

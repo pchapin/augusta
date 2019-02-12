@@ -48,20 +48,20 @@ class CFGBuilder(
   // }
 
 
-  override def visitIteration_statement(
-    ctx: AdaParser.Iteration_statementContext): ControlFlowGraph = {
-
-    val expressionBlock = new BasicBlock(List(), Some(ctx.expression))
-    val nullBlock = new BasicBlock(List(), None)
-    val ControlFlowGraph(bodyEntry, bodyGraph, bodyExit) =
-      combineStatementSequence(ctx.statement.asScala)
-    val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, nullBlock) union bodyGraph
-    val overallGraph = allNodesGraph +
-      LDiEdge(expressionBlock, bodyEntry)('T') +
-      LDiEdge(expressionBlock, nullBlock)('F') +
-      LDiEdge(bodyExit, expressionBlock)('U')
-    ControlFlowGraph(expressionBlock, overallGraph, nullBlock)
-  }
+  //override def visitIteration_statement(
+  //  ctx: AdaParser.Iteration_statementContext): ControlFlowGraph = {
+  //
+  //  val expressionBlock = new BasicBlock(List(), Some(ctx.expression))
+  //  val nullBlock = new BasicBlock(List(), None)
+  //  val ControlFlowGraph(bodyEntry, bodyGraph, bodyExit) =
+  //    combineStatementSequence(ctx.statement.asScala)
+  //  val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, nullBlock) union bodyGraph
+  //  val overallGraph = allNodesGraph +
+  //    LDiEdge(expressionBlock, bodyEntry)('T') +
+  //    LDiEdge(expressionBlock, nullBlock)('F') +
+  //    LDiEdge(bodyExit, expressionBlock)('U')
+  //  ControlFlowGraph(expressionBlock, overallGraph, nullBlock)
+  //}
 
 
   override def visitNull_statement(

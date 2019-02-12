@@ -10,27 +10,69 @@ import org.antlr.v4.runtime.tree._
 object Main {
   private val reporter = new BasicConsoleReporter
 
+
+  private object Mode {
+    final val CHECK = 0
+    final val LLVM  = 1
+  }
+
+
   /**
     * The entry point of the program.
     * 
     * @param args The command line arguments.
     */
   def main(args: Array[String]): Unit = {
-    if (args.length != 1) {
-      println("Usage: java -jar Augusta.jar source-file")
+    if (!(args.length == 1 || args.length == 2)) {
+      println("Usage: java -jar Augusta.jar [-k | -l] source-file")
+      System.exit(1)
+    }
+
+    val (mode, sourceFile) = if (args.length == 1) {
+      (Mode.LLVM, args(0))
     }
     else {
-      val input  = CharStreams.fromFileName(args(0))
-      val lexer  = new AdaLexer(input)
-      val tokens = new CommonTokenStream(lexer)
-      val parser = new AdaParser(tokens)
-      val tree   = parser.compilation_unit()
-      // TODO: Abort compilation if there are parse errors.
+      val mode = args(0) match {
+        case "-k" => Mode.CHECK
+        case "-l" => Mode.LLVM
+        case _ =>
+          printf("The mode option '%s' is unknown, defaulting to CHECK%n", args(0))
+          Mode.CHECK
+      }
+      (mode, args(1))
+    }
 
-      val symbolTable    = new BasicSymbolTable
-      val myAnalyzer     = new SemanticAnalyzer(symbolTable, reporter)
-      val analyzerWalker = new ParseTreeWalker
-      analyzerWalker.walk(myAnalyzer, tree)
+    val input  = CharStreams.fromFileName(args(0))
+    val lexer  = new AdaLexer(input)
+    val tokens = new CommonTokenStream(lexer)
+    val parser = new AdaParser(tokens)
+    val tree   = parser.compilation_unit()
+    // TODO: Abort compilation if there are parse errors.
+
+    val symbolTable    = new BasicSymbolTable
+    val myAnalyzer     = new SemanticAnalyzer(symbolTable, reporter)
+    val analyzerWalker = new ParseTreeWalker
+    analyzerWalker.walk(myAnalyzer, tree)
+
+    // Abort compilation if there are semantic errors.
+    if (reporter.getErrorCount > 0) {
+      printf("%d errors found; execution aborted!%n", reporter.getErrorCount)
+    }
+    else {
+      // Build a control flow graph.
+      val graphBuilder = new CFGBuilder(symbolTable, reporter)
+      val rawCFG = graphBuilder.visit(tree)
+      val CFG = CGFBuilder.optimize(rawCFG)
+
+      // Do what must be done.
+      mode match {
+        case Mode.CHECK =>
+          // Do nothing more (semantic analysis is all that is necessary).
+
+        case Mode.LLVM =>
+          val myLLVMGenerator = new LLVMGenerator(symbolTable, reporter)
+          myLLVMGenerator.visit(tree)
+      }
     }
   }
 
