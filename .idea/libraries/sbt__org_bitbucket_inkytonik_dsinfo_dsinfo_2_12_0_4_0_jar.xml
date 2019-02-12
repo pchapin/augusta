@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.bitbucket.inkytonik.dsinfo:dsinfo_2.12:0.4.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.bitbucket.inkytonik.dsinfo/dsinfo_2.12/jars/dsinfo_2.12-0.4.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.bitbucket.inkytonik.dsinfo/dsinfo_2.12/srcs/dsinfo_2.12-0.4.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

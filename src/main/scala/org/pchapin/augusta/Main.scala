@@ -42,7 +42,7 @@ object Main {
       (mode, args(1))
     }
 
-    val input  = CharStreams.fromFileName(args(0))
+    val input  = CharStreams.fromFileName(sourceFile)
     val lexer  = new AdaLexer(input)
     val tokens = new CommonTokenStream(lexer)
     val parser = new AdaParser(tokens)

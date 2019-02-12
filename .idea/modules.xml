@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Augusta.iml" filepath="$PROJECT_DIR$/Augusta.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Dragon/Dragon.iml" filepath="$PROJECT_DIR$/Dragon/Dragon.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Scripts/Scripts.iml" filepath="$PROJECT_DIR$/Scripts/Scripts.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Tiger/Tiger.iml" filepath="$PROJECT_DIR$/Tiger/Tiger.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Augusta.iml" filepath="$PROJECT_DIR$/.idea/modules/Augusta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Augusta-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Augusta-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Dragon.iml" filepath="$PROJECT_DIR$/.idea/modules/Dragon.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Tiger.iml" filepath="$PROJECT_DIR$/.idea/modules/Tiger.iml" />
     </modules>
   </component>
 </project>
