@@ -14,13 +14,13 @@ class BasicFileReporter(fileName: String) extends Reporter {
 
   def reportError(line: Int, column: Int, message: String) {
     errorCount += 1
-    output.printf("E: (%d, %d) %s%n", new Integer(line), new Integer(column), message)
+    output.printf("error: (%d, %d) %s%n", new Integer(line), new Integer(column), message)
   }
 
 
   def reportWarning(line: Int, column: Int, message: String) {
     warningCount += 1
-    output.printf("W: (%d, %d) %s%n", new Integer(line), new Integer(column), message)
+    output.printf("warning: (%d, %d) %s%n", new Integer(line), new Integer(column), message)
   }
 
 

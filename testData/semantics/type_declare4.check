@@ -1,5 +1,5 @@
-E: (7, 28) Invalid element type
-E: (9, 21) Invalid index type
-E: (10, 21) Invalid index type
-E: (11, 21) Unknown type: Undefined_Index_Type
-E: (12, 28) Unknown type: Undefined_Element_Type
+error: (7, 28) Invalid element type
+error: (9, 21) Invalid index type
+error: (10, 21) Invalid index type
+error: (11, 21) Unknown type: Undefined_Index_Type
+error: (12, 28) Unknown type: Undefined_Element_Type

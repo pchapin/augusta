@@ -1,6 +1,6 @@
-E: (17, 18) Operands must have type Integer
-E: (18, 12) Types must match across assignment
-E: (19, 12) Types must match across assignment
-E: (20, 20) Boolean operand(s) not allowed
-E: (21, 12) Types must match across assignment
-E: (16, 9) Controlling expression of conditional must have type Boolean
+error: (17, 18) Operands must have type Integer
+error: (18, 12) Types must match across assignment
+error: (19, 12) Types must match across assignment
+error: (20, 20) Boolean operand(s) not allowed
+error: (21, 12) Types must match across assignment
+error: (16, 9) Controlling expression of conditional must have type Boolean
