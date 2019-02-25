@@ -1,3 +1,4 @@
+E: (3, 11) The name of the main procedure must be "Main"
 E: (6, 18) Unknown object: Z
 E: (8, 3) Duplicate object name: X
 E: (9, 7) Unknown type name: String

@@ -68,6 +68,6 @@ object ParserSuite {
     Array("control0000.ada", "control0001.ada", "control0002.ada") map { prefix + File.separator + _}
 
   val wholeFileCases: Array[String] =
-    Array("hello1.ada", "hello2.ada", "hello3.ada", "subprogram0001.ada", "subprogram0002.ada") map { prefix + File.separator + _}
+    Array("hello1.ada", "hello2.ada" /*, "hello3.ada", "subprogram0001.ada", "subprogram0002.ada" */) map { prefix + File.separator + _}
 }
 

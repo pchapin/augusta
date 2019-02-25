@@ -36,10 +36,21 @@ block
 
 statement
     :   assignment_statement
+    |   conditional_statement
+    |   iteration_statement
     |   null_statement;
 
 assignment_statement
-    :   left_expression ':=' expression ';';
+    :   left_expression ASSIGNMENT expression ';';
+
+conditional_statement
+    :   IF expression THEN statement+
+       (ELSIF expression THEN statement+)*
+       (ELSE statement+)?
+        END IF ';';
+
+iteration_statement
+    :   WHILE expression LOOP statement+ END LOOP ';';
 
 null_statement
     :   NULL ';';
@@ -49,31 +60,37 @@ null_statement
 // ------------------
 
 primary_expression
-    locals [String expressionType, int value = 0]
+    locals [String expressionType]
     :   IDENTIFIER
     |   NUMERIC_LITERAL
+    |   BOOLEAN_LITERAL
     |   '(' expression ')';
 
 multiplicative_expression
-    locals [String expressionType, int value = 0]
-    :   multiplicative_expression MULTIPLY primary_expression
-    |   multiplicative_expression DIVIDE   primary_expression
+    locals [String expressionType]
+    :   multiplicative_expression (MULTIPLY | DIVIDE) primary_expression
     |   primary_expression;
 
 unary_expression
-    locals [String expressionType, int value = 0]
+    locals [String expressionType]
     :   (PLUS | MINUS) multiplicative_expression
     |   multiplicative_expression;
 
 additive_expression
-    locals [String expressionType, int value = 0]
-    :   additive_expression PLUS  unary_expression
-    |   additive_expression MINUS unary_expression
+    locals [String expressionType]
+    :   additive_expression (PLUS | MINUS)  unary_expression
     |   unary_expression;
 
+relational_expression
+    locals [String expressionType]
+    :   relational_expression
+          (EQUAL | NOT_EQUAL | LESS | LESS_EQUAL | GREATER | GREATER_EQUAL)
+            additive_expression
+    |   additive_expression;
+
 expression
-    locals [String expressionType, int value = 0]
-    :   additive_expression;
+    locals [String expressionType]
+    :   relational_expression;
 
 left_expression
     locals [String expressionType]
@@ -166,6 +183,7 @@ WITH         : [Ww][Ii][Tt][Hh];
 XOR          : [Xx][Oo][Rr];
 
 // Various operator symbols.
+ASSIGNMENT    : ':=';
 DIVIDE        : '/';
 DOTDOT        : '..';
 EQUAL         : '=';
@@ -177,6 +195,9 @@ MINUS         : '-';
 MULTIPLY      : '*';
 NOT_EQUAL     : '/=';
 PLUS          : '+';
+
+BOOLEAN_LITERAL
+    :   ([Tt][Rr][Uu][Ee]) | ([Ff][Aa][Ll][Ss][Ee]);
 
 IDENTIFIER
     :   [a-zA-Z][a-zA-Z0-9_]*;

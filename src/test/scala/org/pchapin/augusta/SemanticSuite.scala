@@ -52,10 +52,14 @@ class SemanticSuite extends FunSuite with Assertions with Matchers {
     doTests(SemanticSuite.basicCases)
   }
 
-  test("Semantics: Type Declarations") {
-    doTests(basicCases)
-    doTests(typeDeclarations)
+  test("Semantics: Basic Type Checking") {
+    doTests(SemanticSuite.basicTypeCheckingCases)
   }
+
+  //test("Semantics: Type Declarations") {
+  //  doTests(basicCases)
+  //  doTests(typeDeclarations)
+  //}
 
 }
 
@@ -63,7 +67,10 @@ object SemanticSuite {
   val prefix: String = "testData" + File.separator + "semantics"
 
   val basicCases: Array[String] =
-    Array("semantic_errors.ada", "subprogram0001.ada") map { prefix + File.separator + _ }
+    Array("semantic_errors.ada" /*, "subprogram0001.ada" */) map { prefix + File.separator + _ }
+
+  val basicTypeCheckingCases: Array[String] =
+    Array("type_checking1.ada") map { prefix + File.separator + _ }
 
   val typeDeclarations: Array[String] =
     Array(

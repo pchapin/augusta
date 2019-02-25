@@ -10,21 +10,36 @@ class CFGBuilder(
 
   import scala.collection.JavaConverters._    // ctx is a java.util.List, not a scala.List.
 
+  /**
+    * Combines statements in a straight line statement sequence to create a CFG where the CFG
+    * for each of the statements are connected in order. Note that the statements in the
+    * sequence need not be simple statements. Entire CFGs are combined. However, if the sequence
+    * contains only assignment statements, no attempt is made to put all assignment statements
+    * into the same basic block. That can potentially be done later as an optimization.
+    *
+    * @param statements An iterable collection containing the statement sequence to combine.
+    * @return An overall, non-optimized CFG built from the CFGs of the individual statements.
+    */
   private def combineStatementSequence(
     statements: Iterable[AdaParser.StatementContext]): ControlFlowGraph = {
+    // TODO: Think about combining sequential assignment statements into one basic block.
 
     val graphList = statements map { visit(_) }
     graphList reduce { (left: ControlFlowGraph, right: ControlFlowGraph) =>
       (left, right) match {
-        case (ControlFlowGraph(leftEntry, leftGraph, leftExit), ControlFlowGraph(rightEntry, rightGraph, rightExit)) =>
-          ControlFlowGraph(leftEntry, (leftGraph union rightGraph) + LDiEdge(leftExit, rightEntry)('U'), rightExit)
+        case (ControlFlowGraph(leftEntry,  leftGraph,  leftExit),
+              ControlFlowGraph(rightEntry, rightGraph, rightExit)) =>
+          ControlFlowGraph(
+            leftEntry,
+            (leftGraph union rightGraph) + LDiEdge(leftExit, rightEntry)('U'),
+            rightExit)
       }
     }
   }
 
   override def visitProcedure_definition(
     ctx: AdaParser.Procedure_definitionContext): ControlFlowGraph = {
-    // TODO: Initialized declarations should be the first basic block of the procedure's CFG.
+    // TODO: Initialized declarations should form the first basic block of the procedure's CFG.
     visit(ctx.block)
   }
 
@@ -42,26 +57,29 @@ class CFGBuilder(
   }
 
 
-  // TODO: Implement the CFG construction of conditional statements.
-  // override def visitConditional_statement(
-  //   ctx: RabbitParser.Conditional_statementContext): ControlFlowGraph = {
-  // }
+  override def visitConditional_statement(
+     ctx: AdaParser.Conditional_statementContext): ControlFlowGraph = {
+
+    // TODO: Implement the CFG construction of conditional statements.
+    val nullBlock = new BasicBlock(List(), None)
+    ControlFlowGraph(nullBlock, Graph[BasicBlock, LDiEdge](nullBlock), nullBlock)
+  }
 
 
-  //override def visitIteration_statement(
-  //  ctx: AdaParser.Iteration_statementContext): ControlFlowGraph = {
-  //
-  //  val expressionBlock = new BasicBlock(List(), Some(ctx.expression))
-  //  val nullBlock = new BasicBlock(List(), None)
-  //  val ControlFlowGraph(bodyEntry, bodyGraph, bodyExit) =
-  //    combineStatementSequence(ctx.statement.asScala)
-  //  val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, nullBlock) union bodyGraph
-  //  val overallGraph = allNodesGraph +
-  //    LDiEdge(expressionBlock, bodyEntry)('T') +
-  //    LDiEdge(expressionBlock, nullBlock)('F') +
-  //    LDiEdge(bodyExit, expressionBlock)('U')
-  //  ControlFlowGraph(expressionBlock, overallGraph, nullBlock)
-  //}
+  override def visitIteration_statement(
+    ctx: AdaParser.Iteration_statementContext): ControlFlowGraph = {
+
+    val expressionBlock = new BasicBlock(List(), Some(ctx.expression))
+    val nullBlock = new BasicBlock(List(), None)
+    val ControlFlowGraph(bodyEntry, bodyGraph, bodyExit) =
+      combineStatementSequence(ctx.statement.asScala)
+    val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, nullBlock) union bodyGraph
+    val overallGraph = allNodesGraph +
+      LDiEdge(expressionBlock, bodyEntry)('T') +
+      LDiEdge(expressionBlock, nullBlock)('F') +
+      LDiEdge(bodyExit, expressionBlock)('U')
+    ControlFlowGraph(expressionBlock, overallGraph, nullBlock)
+  }
 
 
   override def visitNull_statement(
