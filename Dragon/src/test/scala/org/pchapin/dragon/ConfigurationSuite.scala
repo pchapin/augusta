@@ -30,7 +30,7 @@ class ConfigurationSuite extends FunSuite with Assertions with Matchers {
     assert(currentSettings("IntegerItem").isEmpty)
 
     currentSettings.readConfigurationFile(
-      "testData" + java.io.File.separator + "example.cfg")
+      "Dragon" + java.io.File.separator + "testData" + java.io.File.separator + "example.cfg")
     assert(currentSettings("StringItem" ).contains("Item1"))
     assert(currentSettings("BooleanItem").contains("true" ))
     assert(currentSettings("IntegerItem").contains("1234" ))

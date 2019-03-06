@@ -117,7 +117,7 @@ class ConfigurationSettings(private val configurableItems: Map[String, String =>
     }
     catch {
       // Explicitly ignore the exception if the configuration file can't be opened.
-      case e: FileNotFoundException => { }
+      case _: FileNotFoundException =>
     }
     finally {
       if (inputFile != null) inputFile.close()
@@ -133,7 +133,7 @@ class ConfigurationSettings(private val configurableItems: Map[String, String =>
    *
    * @throws BadNameException if a non-configurable name is used.
    */
-  def apply(name: String) = {
+  def apply(name: String): Option[String] = {
     if (!configurableItems.contains(name))
       throw new BadNameException("Attempt to look up unknown configuration item: " + name)
     if (settings.contains(name))
@@ -187,7 +187,7 @@ object ConfigurationSettings {
    * @param raw The string to validate.
    * @throws BadValidationException if the raw string is not in the form described above.
    */
-  def basicBooleanValidator(raw: String) = {
+  def basicBooleanValidator(raw: String): String = {
     val upperRaw = raw.toUpperCase()
     if      (upperRaw == "TRUE"  || upperRaw == "T") "true"
     else if (upperRaw == "FALSE" || upperRaw == "F") "false"
@@ -196,7 +196,7 @@ object ConfigurationSettings {
   }
 
   // TODO: Do some real validation here.
-  def basicIntegerValidator(raw: String) = raw
+  def basicIntegerValidator(raw: String): String = raw
 
   /*
    * Validates simple strings. Every string is considered valid.
@@ -204,7 +204,7 @@ object ConfigurationSettings {
    * @param raw The string to validate.
    * @throws BadValidationException if raw is a null reference.
    */
-  def basicStringValidator(raw: String) =
+  def basicStringValidator(raw: String): String =
     if (raw != null)
       raw
     else
@@ -217,7 +217,7 @@ object ConfigurationSettings {
    * existent file. More powerful validators can be defined that do check these features if
    * desired.
    */
-  def basicPathValidator(raw: String) = {
+  def basicPathValidator(raw: String): String = {
     // TODO: Be sure each character is a valid file name character.
     raw.map( ch =>
       if (ch == '/' || ch == '\\') File.separatorChar else ch

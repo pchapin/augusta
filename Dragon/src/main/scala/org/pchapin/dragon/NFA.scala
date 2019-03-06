@@ -8,9 +8,9 @@ package org.pchapin.dragon
   *
   * NFAs represented by this class contain only a single final state. While this is a restriction
   * over the formal definition of an NFA, it is all that is necessary in this application. The
-  * restriction does not restrict expressiveness; for an NFA with multiple final states, a new
-  * NFA could be built that has a single final state reachable from the original final states
-  * via epsilon transitions.
+  * restriction does not limit expressiveness; for an NFA with multiple final states, a new NFA
+  * could be built that has a single final state reachable from the original final states via
+  * epsilon transitions.
   */
 class NFA(
   private val stateLower: Int,
@@ -18,6 +18,57 @@ class NFA(
   private val transitionFunction: Map[TransitionFunctionArgument, Set[Int]]) {
 
   import NFA._
+
+  type TransitionFunctionType = Map[TransitionFunctionArgument, Set[Int]]
+
+  /**
+    * Blends the 'other' transition function into 'target' while renumbering states as necessary.
+    * The combined transition function does not include any transitions from between the two
+    * collection of states; they would have to be added later.
+    *
+    * For example, suppose 'target' is from an NFA with states numbered 11 .. 20 (inclusive) and
+    * 'other' is from an NFA with states numbered 51 .. 55 (inclusive). It is not necessary for
+    * all of these states to actually participate in the transition function(s). In this case,
+    * otherStateLower would be 51 and newStateLower would be 21. The merged transition function
+    * would use states 11 .. 25.
+    *
+    * More commonly the NFAs might be using overlapping ranges of states such as 0 .. 9 and
+    * 0 .. 14. In that case otherStateLower would be 0 and newStateLower would be 10, resulting
+    * in a transition function that ranges (potentially) over state numbers 0 .. 24.
+    *
+    * @param target The base transition function. No states are renumbered.
+    * @param other The transition function that is added to target. State renumbering occurs.
+    * @param otherStateLower The "start state" of the 'other' transition function. This state
+    * is a reference point. It is not necessary for there to be a transition from this state in
+    * the 'other' transition function.
+    * @param newStateLower The new effective start state of the transitions that are renumbered.
+    * As with otherStateLower this is a reference point only.
+    * @return A new, combined transition function.
+    */
+  private def mergeTransitionFunctions(
+    target: TransitionFunctionType,
+    other : TransitionFunctionType,
+    otherStateLower: Int,
+    newStateLower  : Int): TransitionFunctionType = {
+
+    // Create transformed associations for the 'other' transition function, modifying the state
+    // numbers in the process.
+    val newAssociations = for ((otherArgument, otherResult) <- other) yield {
+
+      // Convert state numbers in the other NFA's transition function argument.
+      val newArgument =
+        TransitionFunctionArgument(
+          otherArgument.state - otherStateLower + newStateLower,
+          otherArgument.inputCharacter)
+
+      // Convert state numbers in the other NFA's transition function result set.
+      val newResult = otherResult map { state => state - otherStateLower + newStateLower }
+      newArgument -> newResult
+    }
+
+    target ++ newAssociations
+  }
+
 
   /**
     * Returns an NFA that is the concatenation of this NFA followed by the other NFA. Neither
@@ -27,29 +78,22 @@ class NFA(
     val secondEntry = stateUpper + 1
     val newLower = stateLower
     val newUpper = stateUpper + (other.stateUpper - other.stateLower + 1)
-    var newTransition = transitionFunction
 
-    // Copy the other transition function into newTransition, modifying the state numbers.
-    for ((oldArgument, oldResult) <- other.transitionFunction) {
-      // Convert state numbers in the other NFA's transition function arguments.
-      val newArgument =
-        TransitionFunctionArgument(
-          oldArgument.state - other.stateLower + secondEntry,
-          oldArgument.inputCharacter)
-
-      // Convert state numbers in the other NFA's transition function result sets.
-      val newResult = oldResult map { state => state - other.stateLower + secondEntry }
-      newTransition = newTransition + (newArgument -> newResult)
-    }
+    val newTransitionFunction =
+      mergeTransitionFunctions(
+        transitionFunction,
+        other.transitionFunction,
+        other.stateLower,
+        secondEntry)
 
     // Add an epsilon transition between the original final state and the other start state.
     // TODO: This will overwrite any existing epsilon transition from stateUpper!
     val extraArgument = TransitionFunctionArgument(stateUpper, '\u0000')
-    var extraResult = Set[Int](secondEntry)
-    newTransition = newTransition + (extraArgument -> extraResult)
+    val extraResult = Set[Int](secondEntry)
+    val augmentedTransitionFunction = newTransitionFunction + (extraArgument -> extraResult)
 
     // Create the new NFA.
-    new NFA(newLower, newUpper, newTransition)
+    new NFA(newLower, newUpper, augmentedTransitionFunction)
   }
 
 
@@ -77,14 +121,10 @@ class NFA(
     * state as the target of each transition.
     */
   def isDFA: Boolean = {
-    for ((key: TransitionFunctionArgument, value: Set[Int]) <- transitionFunction) {
-      // Make sure each set has exactly one element.
-      if (value.size != 1) return false
-
-      // Make sure no epsilon transitions occur.
-      if (key.inputCharacter == '\u0000') return false
-    }
-    true
+    transitionFunction forall { association => {
+      val (key, value) = association
+      key.inputCharacter != '\u0000' && value.size == 1
+    }}
   }
 
 
@@ -123,15 +163,17 @@ class NFA(
     for (i <- 0 to text.length()) {
       val argument = TransitionFunctionArgument(currentState, text.charAt(i))
 
-      // If there is no explicit transition for this (state, character) input, then make
-      // a transition to an implicit error state that is non-accepting and that absorbs
-      // all following characters. The text does not match.
+      // If there is no explicit transition for this (state, character) input, then make a
+      // transition to an implicit error state that is non-accepting and that absorbs all
+      // following characters. The text does not match.
+      // TODO: Rewrite to eliminate the return.
       if (!transitionFunction.contains(argument)) return false
 
-      // The result of the transition function must have exactly one state.
-      val nextStateSet = transitionFunction.get(argument)
+      // The result of the transition function must have exactly one state, so it will be a Set
+      // containing exactly one element.
+      val nextStateSet = transitionFunction(argument)
       val it = nextStateSet.iterator
-      //currentState = it.next()
+      currentState = it.next()
     }
 
     // Are we in the accepting state at the end?

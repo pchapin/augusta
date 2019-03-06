@@ -5,7 +5,7 @@ package org.pchapin.augusta
  * arbitrary expressions on the right hand side (and not, for example, SSA form assignments).
  * Similarly the expression used at the end of the basic block is an arbitrary expression.
  *
- * @param assignments A list of Rabbit1 assignment statements forming the basic block.
+ * @param assignments A list of Augusta assignment statements forming the basic block.
  * @param condition The condition at the end of the basic block or None if the block ends with
  * an unconditional jump.
  * @param upwardlyExposed The set of variables used in this block before being defined.
