@@ -7,4 +7,4 @@ package org.pchapin.dragon
   * @param inputCharacter The input character. The special value \u0000 represents the epsilon
   * symbol.
   */
-case class TransitionFunctionArgument(state: Int, inputCharacter: Char)
+case class NFATransitionFunctionArgument(state: Int, inputCharacter: Char)

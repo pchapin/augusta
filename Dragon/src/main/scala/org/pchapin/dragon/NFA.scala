@@ -15,11 +15,9 @@ package org.pchapin.dragon
 class NFA(
   private val stateLower: Int,
   private val stateUpper: Int,
-  private val transitionFunction: Map[TransitionFunctionArgument, Set[Int]]) {
+  private val transitionFunction: Map[NFATransitionFunctionArgument, Set[Int]]) {
 
-  import NFA._
-
-  type TransitionFunctionType = Map[TransitionFunctionArgument, Set[Int]]
+  type TransitionFunctionType = Map[NFATransitionFunctionArgument, Set[Int]]
 
   /**
     * Blends the 'other' transition function into 'target' while renumbering states as necessary.
@@ -57,7 +55,7 @@ class NFA(
 
       // Convert state numbers in the other NFA's transition function argument.
       val newArgument =
-        TransitionFunctionArgument(
+        NFATransitionFunctionArgument(
           otherArgument.state - otherStateLower + newStateLower,
           otherArgument.inputCharacter)
 
@@ -88,7 +86,7 @@ class NFA(
 
     // Add an epsilon transition between the original final state and the other start state.
     // TODO: This will overwrite any existing epsilon transition from stateUpper!
-    val extraArgument = TransitionFunctionArgument(stateUpper, '\u0000')
+    val extraArgument = NFATransitionFunctionArgument(stateUpper, '\u0000')
     val extraResult = Set[Int](secondEntry)
     val augmentedTransitionFunction = newTransitionFunction + (extraArgument -> extraResult)
 
@@ -132,57 +130,9 @@ class NFA(
     * Returns a DFA obtained from Subset Construction on this NFA. Note that the return value
     * will be such that isDFA() is true.
     */
-  def toDFA: NFA = {
+  def toDFA: DFA = {
     // TODO: This method body is just a place holder!
-    new NFA(stateLower, stateUpper, transitionFunction)
+    new DFA(stateLower, stateUpper, Map())
   }
 
-
-  /**
-    * This method implements a state minimization algorithm (Hopcroft's Algorithm) to minimize
-    * the number of states in a DFA. Note that the "NFA" must be a DFA (that is, isDFA must
-    * return 'true') before this method is called.
-    *
-    * @return An DFA that recognizes the same language but that contains a minimal number of states.
-    */
-  def minimize: NFA = {
-    // TODO: This method body is just a place holder!
-    new NFA(stateLower, stateUpper, transitionFunction)
-  }
-
-
-  /**
-    * Returns true if this NFA accepts the given text; false otherwise.
-    */
-  def `match`(text: String): Boolean = {
-    if (!isDFA) {
-      throw new SimulationException("Simulating an NFA without conversion to a DFA")
-    }
-
-    var currentState = stateLower;  // The start state.
-    for (i <- 0 to text.length()) {
-      val argument = TransitionFunctionArgument(currentState, text.charAt(i))
-
-      // If there is no explicit transition for this (state, character) input, then make a
-      // transition to an implicit error state that is non-accepting and that absorbs all
-      // following characters. The text does not match.
-      // TODO: Rewrite to eliminate the return.
-      if (!transitionFunction.contains(argument)) return false
-
-      // The result of the transition function must have exactly one state, so it will be a Set
-      // containing exactly one element.
-      val nextStateSet = transitionFunction(argument)
-      val it = nextStateSet.iterator
-      currentState = it.next()
-    }
-
-    // Are we in the accepting state at the end?
-    currentState == stateUpper
-  }
-
-}
-
-
-object NFA {
-  class SimulationException(message: String) extends Exception(message)
 }
