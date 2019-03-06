@@ -25,9 +25,9 @@
 
   <para>Augusta uses a number of libraries. Currently <link
       xlink:href="http://www.scala-sbt.org/">SBT</link>, our primary build tool, is used to
-    download the libraries from Maven repositories. The <filename>lib</filename> folder holds
-    library jar files that are not downloaded via SBT. Although there are currently no libraries
-    that are not managed by SBT, the folder exists as a placeholder for future use.</para>
+    download the libraries. The <filename>lib</filename> folder holds library jar files that are
+    not downloaded via SBT. Although there are currently no libraries that are not managed by
+    SBT, the folder exists as a placeholder for future use.</para>
 
   <variablelist>
     <title>Build Tools</title>
@@ -37,7 +37,7 @@
           xlink:href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
           Development Kit</link></term>
       <listitem>
-        <para>We use JDK v11.0.1. If you use a different JDK than for Java 11, you will have to
+        <para>We use JDK v11.x.y. If you use a different JDK than for Java 11, you will have to
           adjust the IntelliJ project definition. A full JDK is necessary, and not just a JRE,
           because the Augusta code base includes some Java files.</para>
       </listitem>
@@ -71,14 +71,18 @@
     <varlistentry>
       <term><link xlink:href="http://www.jetbrains.com/idea/">IntelliJ IDEA</link></term>
       <listitem>
-        <para>We use IntelliJ IDEA, Community Edition, version 2018.3.4 with the IntelliJ Scala
-          plugin developed by JetBrains as our integrated development environment. The plugin
-          can be installed from inside IntelliJ once the main IDE is installed. Some of us use
-          the Ultimate edition of IntelliJ with no problems.</para>
+        <para>Officially we use IntelliJ IDEA, Community Edition, version 2018.3.5 with the
+          IntelliJ Scala plugin developed by JetBrains as our integrated development
+          environment. The plugin can be installed from inside IntelliJ once the main IDE is
+          installed. Some of us use the Ultimate edition of IntelliJ with no problems.</para>
 
-        <para>In addition you must configure a path variables in IntelliJ. It is DOCBOOK_XML and
-          it should point at the folder containing your DocBook schema. It is used by IntelliJ's
-          DocBook editor to locate the schema so it can do validation.</para>
+        <para>Unofficially some of us use the Ultimate edition of IntelliJ IDEA. It is also
+          entirely feasible to do Augusta development without an IDE and use instead just a text
+          editor and the SBT command console.</para>
+
+        <para>In addition you might consider configuring a path variables in IntelliJ. It is
+          DOCBOOK_XML and it should point at the folder containing your DocBook schema. It is
+          used by IntelliJ's DocBook editor to locate the schema so it can do validation.</para>
 
         <para>We also recommend installing the ANTLR v4 grammar plugin and the Markdown editing
           plugin from the IntelliJ plugin repository. While not required, these plugins can make

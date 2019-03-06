@@ -16,6 +16,22 @@ possible to do Augusta development on any system that supports the prerequisites
 means any system that supports Java and LLVM.
 
 
+Disclaimer
+----------
+
+First let me assure you that we are completely aware that the goal of writing a full featured
+Ada compiler is unrealistic for us at this time. We are not so naive as to think it is feasible
+given our limited resources. Our true goals are:
+
++ Having fun working on a compiler for a semi-realistic, even if minimal, language based on Ada.
+
++ Creating educational opportunities for other hobbyists and students.
+
+This project is done entirely for fun and to learn. To the extent that it satisfies those goals,
+we will judge it as a success. If, at some future time, this project ever attracts enough
+attention and resources to significantly push it foward... well, we can revisit our goals then.
+
+
 Prerequisites
 -------------
 
@@ -24,10 +40,9 @@ version numbers given are for the specific versions we're using. In most cases o
 related versions would probably also work, but have not been tested.
 
 + Several third party libraries are used by Augusta. The jar files for those libraries are not
-  included as part of this repository, but are downloaded from the maven repositories by
-  SBT during the build process.
+  included as part of this repository, but are downloaded by SBT during the build process.
 
-+ [Java Development Kit](https://www.oracle.com/technetwork/java/javase/downloads/index.html) (11.0.1)
++ [Java Development Kit](https://www.oracle.com/technetwork/java/javase/downloads/index.html) (11.x.y)
 
   There are some Java source files in Augusta so a JRE is not sufficient.
   
@@ -39,26 +54,26 @@ related versions would probably also work, but have not been tested.
 + DocBook tool chain
 
   The documentation for Augusta is written in an XML vocabulary called DocBook. The source files
-  for the documentation can be read directly in a text editor. If you want to convert the
-  documentation into some other format (HTML, PDF, etc) you will need a DocBook tool chain. We
-  use the commercial XML editor <oXygen/>. Open source alternatives exist.
+  for the documentation can be read and edited directly in a text editor if necessary. If you
+  want to convert the documentation into some other format (HTML, PDF, etc) you will need a
+  DocBook tool chain. We use the commercial XML editor <oXygen/>. Open source alternatives
+  exist.
 
-  It is possible to view and edit the XML source of the documentation from inside IntelliJ.
-  Depending on your needs this may be sufficient. To do this you will first need to download and
-  unpack the DocBook XML DTD distribution to any suitable location on your system. Next continue
-  with the installation of IntelliJ as described below.
+  It is possible to view and edit the XML source of the documentation from inside IntelliJ (see
+  below). Depending on your needs this may be sufficient. To do this you will first need to
+  download and unpack the DocBook XML DTD distribution to any suitable location on your system.
+  Next continue with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2018.3.4)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2018.3.5)
 
-  We officially use the Community Edition, but some of us use the Ultimate edition. You will
+  Officially we use the Community Edition, but some of us use the Ultimate edition. You will
   need to download and install the Scala plugin from the plugin control panel (or during the
-  installation of IntelliJ when you are given the opportunity to install populare plugins). You
+  installation of IntelliJ when you are given the opportunity to install popular plugins). You
   may have to configure IntelliJ to find your Java JDK.
 
   The Augusta project assumes a suitable Scala SDK has been configured. This can be done from
-  inside IntelliJ by pointing the IDE to the folder where Scala has been installed. For the
-  scaladoc build to work you need to define the `SCALA_HOME` environment variable at the
-  operating system level. It should point at the folder containing your Scala installation.
+  inside IntelliJ by pointing the IDE to the folder where Scala has been installed. If Scala has
+  been downloaded by SBT, that location will most likely be in the <tt>.ivy2</tt> cache folder.
 
   You also need to define the IntelliJ path variable `DOCBOOK_XML` to point at the folder
   containing the DocBook XML 4.5. DTD.
@@ -85,8 +100,7 @@ Building
 
 ### Augusta
 
-The Augusta project includes two additional modules named Tiger and Dragon. There is also a
-Scripts module that contains the source code for the Groovy scripts we use.
+The Augusta project includes two additional modules named Tiger and Dragon.
 
 The Tiger module is an implementation of the Tiger programming language as described in the book
 "Modern Compiler Implementation in ML" by Andrew W. Appel. This module is not directly related
@@ -105,7 +119,7 @@ of this writing the runtime library in RTS/RL is empty.
 All of these projects can be compiled via SBT. The SBT build control file has all the necessary
 dependencies declared so that building one project should trigger the download of the required
 libraries and the building of required subprojects. The usual SBT tasks can be used to build API
-(interna) documentation, run tests, and so forth. See the [SBT
+(internal) documentation, run tests, and so forth. See the [SBT
 documentation](https://www.scala-sbt.org/documentation.html) for more details.
 
 ### Documentation
