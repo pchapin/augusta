@@ -18,10 +18,10 @@
 package org.slem
 
 import org.bitbucket.inkytonik.kiama.util.Emitter
+import org.bitbucket.inkytonik.kiama.attribution.Attribution
 
-class IRTreeEncoder(emitter: Emitter) {
+class IRTreeEncoder(emitter: Emitter) extends Attribution {
 
-  import org.bitbucket.inkytonik.kiama.attribution.Attribution._
   import org.slem.IRTree._
   import java.io.FileWriter
 
@@ -166,7 +166,7 @@ class IRTreeEncoder(emitter: Emitter) {
     encodeType(a.ty)
     emit(" ")
     if (a.value == null) {
-      emit(a -> paramName)
+      emit(paramName(a))
     }
     else {
       encodeValue(a.value)
@@ -214,7 +214,7 @@ class IRTreeEncoder(emitter: Emitter) {
         val imax = n.elements.size
         val i = 1
         for (e <- n.elements) {
-          encodeType(e -> resultType)
+          encodeType(resultType(e))
           emit(" ")
           encodeValue(e)
           if (i < imax) {
@@ -228,7 +228,7 @@ class IRTreeEncoder(emitter: Emitter) {
         val imax = n.elements.size
         val i = 1
         for (e <- n.elements) {
-          encodeType(e -> resultType)
+          encodeType(resultType(e))
           emit(" ")
           encodeValue(e)
           if (i < imax) {
@@ -248,7 +248,7 @@ class IRTreeEncoder(emitter: Emitter) {
         val imax = n.elements.size
         val i = 1
         for (e <- n.elements) {
-          encodeType(e -> resultType)
+          encodeType(resultType(e))
           emit(" ")
           encodeValue(e)
           if (i < imax) {
@@ -262,18 +262,18 @@ class IRTreeEncoder(emitter: Emitter) {
   }
 
   def encodeLabel(l: L_Label) = {
-    emit(l -> labelname)
+    emit(labelname(l))
   }
 
   def encodeValue(v: L_Value): Int = {
     v match {
-      case n: L_Instruction         => emit(n -> ssa)
-      case n: L_Argument            => emit(n -> paramName)
-      case n: L_GlobalVariable      => emit(n -> gvarname)
+      case n: L_Instruction         => emit(ssa(n))
+      case n: L_Argument            => emit(paramName(n))
+      case n: L_GlobalVariable      => emit(gvarname(n))
       case n: L_Constant            => encodeConstant(n)
       case n: L_FunctionReference   => encodeValue(n.funcPtr)
-      case n: L_FunctionDefinition  => emit(n -> funcname)
-      case n: L_FunctionDeclaration => emit(n -> funcname)
+      case n: L_FunctionDefinition  => emit(funcname(n))
+      case n: L_FunctionDeclaration => emit(funcname(n))
       case _ => emit("UnknownValue : " + v)
     }
     0
@@ -283,56 +283,56 @@ class IRTreeEncoder(emitter: Emitter) {
   def encodeInstruction(b: L_Instruction) = {
     b match {
       case n: L_BinOpInstruction =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = ")
         emitw(n.instructionString)
-        encodeType(n.LHS -> resultType)
+        encodeType(resultType(n.LHS))
         emit(" ")
         encodeValue(n.LHS)
         emit(", ")
         encodeValue(n.RHS)
 
       case n: L_ExtractElement =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = extractelement ")
-        encodeType(n.vec -> resultType)
+        encodeType(resultType(n.vec))
         emit(" ")
         encodeValue(n.vec)
         emit(", i32 ")
         emit("" + n.idx)
 
       case n: L_InsertElement =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = insertelement ")
-        encodeType(n.vec -> resultType)
+        encodeType(resultType(n.vec))
         emit(" ")
         encodeValue(n.vec)
         emit(", ")
-        encodeType(n.elt -> resultType)
+        encodeType(resultType(n.elt))
         emit(" ")
         encodeValue(n.elt)
         emit(", i32 ")
         encodeValue(n.idx)
 
       case n: L_ShuffleVector =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = shufflevector ")
-        encodeType(n.v1 -> resultType)
+        encodeType(resultType(n.v1))
         emit(" ")
         encodeValue(n.v1)
         emit(", ")
-        encodeType(n.v2 -> resultType)
+        encodeType(resultType(n.v2))
         emit(" ")
         encodeValue(n.v2)
         emit(", ")
-        encodeType(n.mask -> resultType)
+        encodeType(resultType(n.mask))
         emit(" ")
         encodeValue(n.mask)
 
       case n: L_ExtractValue =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = extractvalue ")
-        encodeType(n.value -> resultType)
+        encodeType(resultType(n.value))
         emit(" ")
         encodeValue(n.value)
         for (idx <- n.indexes) {
@@ -341,20 +341,20 @@ class IRTreeEncoder(emitter: Emitter) {
         }
 
       case n: L_InsertValue =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = insertvalue ")
-        encodeType(n.value -> resultType)
+        encodeType(resultType(n.value))
         emit(" ")
         encodeValue(n.value)
         emit(", ")
-        encodeType(n.elt -> resultType)
+        encodeType(resultType(n.elt))
         emit(" ")
         encodeValue(n.elt)
         emit(", ")
         encodeValue(n.idx)
 
       case n: L_Alloca =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = alloca ")
         encodeType(n.typ)
         if (n.hasNumElements) {
@@ -368,7 +368,7 @@ class IRTreeEncoder(emitter: Emitter) {
         }
 
       case n: L_Load =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = ")
         if (n.isVolatile) {
           emit("volatile ")
@@ -389,11 +389,11 @@ class IRTreeEncoder(emitter: Emitter) {
           emit("volatile ")
         }
         emitw("store")
-        encodeType(n.value -> resultType)
+        encodeType(resultType(n.value))
         emit(" ")
         encodeValue(n.value)
         emit(", ")
-        encodeType(n.pointer -> resultType)
+        encodeType(resultType(n.pointer))
         emit(" ") //pointer bug.
         encodeValue(n.pointer)
         if (n.hasAlign) {
@@ -404,7 +404,7 @@ class IRTreeEncoder(emitter: Emitter) {
         }
 
       case n: L_GetElementPtr =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = getelementptr ")
         if (n.inBounds) {
           emit("inbounds ")
@@ -414,7 +414,7 @@ class IRTreeEncoder(emitter: Emitter) {
         encodeValue(n.pval)
         for (ti <- n.typeIndexes) {
           emit(", ")
-          encodeType(ti -> resultType)
+          encodeType(resultType(ti))
           emit(" ")
           encodeValue(ti)
           /*
@@ -425,36 +425,36 @@ class IRTreeEncoder(emitter: Emitter) {
         }
 
       case n: L_ConversionOperation =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = " + n.instructionString + " ")
-        encodeType(n.value -> resultType)
+        encodeType(resultType(n.value))
         emit(" ")
         encodeValue(n.value)
         emit(" to ")
         encodeType(n.targetType)
 
       case n: L_ICMP =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = icmp " + n.compCode + " ")
-        encodeType(n.LHS -> resultType)
+        encodeType(resultType(n.LHS))
         emit(" ")
         encodeValue(n.LHS)
         emit(", ")
         encodeValue(n.RHS)
 
       case n: L_FCMP =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = icmp " + n.compCode + " ")
-        encodeType(n.LHS -> resultType)
+        encodeType(resultType(n.LHS))
         emit(" ")
         encodeValue(n.LHS)
         emit(", ")
         encodeValue(n.RHS)
 
       case n: L_Phi =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = phi ")
-        encodeType(n.valueLabels.head -> resultType)
+        encodeType(resultType(n.valueLabels.head))
         for (vlab <- n.valueLabels) {
           emit(" [ ")
           encodeValue(vlab.value)
@@ -464,22 +464,22 @@ class IRTreeEncoder(emitter: Emitter) {
         }
 
       case n: L_Select =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = select ")
-        encodeType(n.cond -> resultType)
+        encodeType(resultType(n.cond))
         emit(" ")
         encodeValue(n.cond)
         emit(", ")
-        encodeType(n.val1 -> resultType)
+        encodeType(resultType(n.val1))
         emit(" ")
         encodeValue(n.val1)
         emit(", ")
-        encodeType(n.val2 -> resultType)
+        encodeType(resultType(n.val2))
         emit(" ")
         encodeValue(n.val2)
 
       case n: L_Call =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = ")
         if (n.tail) {
           emitw("tail")
@@ -513,7 +513,7 @@ class IRTreeEncoder(emitter: Emitter) {
         }
 
       case n: L_Va_Arg =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = va_arg ")
         encodeValue(n.argPtr)
         emit("* ")
@@ -529,10 +529,10 @@ class IRTreeEncoder(emitter: Emitter) {
     t match {
       case n: L_Ret =>
         emitw("ret")
-        n.rvalue -> resultType match {
+        resultType(n.rvalue) match {
           case n2: L_VoidType => emit("void")
           case _ =>
-            encodeType(n.rvalue -> resultType)
+            encodeType(resultType(n.rvalue))
             emit(" ")
             encodeValue(n.rvalue)
         }
@@ -543,7 +543,7 @@ class IRTreeEncoder(emitter: Emitter) {
 
       case n: L_BrCond =>
         emitw("br")
-        encodeType(n.cond -> resultType)
+        encodeType(resultType(n.cond))
         emit(" ")
         encodeValue(n.cond)
         emit(", label %")
@@ -553,14 +553,14 @@ class IRTreeEncoder(emitter: Emitter) {
 
       case n: L_Switch =>
         emitw("switch")
-        encodeType(n.value -> resultType)
+        encodeType(resultType(n.value))
         emit(" ")
         encodeValue(n.value)
         emit(" label %")
         encodeLabel(n.default)
         emit("[ ")
         for (valLab <- n.cases) {
-          encodeType(valLab.value -> resultType)
+          encodeType(resultType(valLab.value))
           emit(" ")
           encodeValue(valLab.value)
           emit(", label %")
@@ -570,7 +570,7 @@ class IRTreeEncoder(emitter: Emitter) {
 
       case n: L_IndirectBr =>
         emitw("indirectbr")
-        encodeType(n.address -> resultType)
+        encodeType(resultType(n.address))
         emit("* ")
         encodeValue(n.address)
         emit(", [")
@@ -581,7 +581,7 @@ class IRTreeEncoder(emitter: Emitter) {
         emit(" ]")
 
       case n: L_Invoke =>
-        emit(n -> ssa)
+        emit(ssa(n))
         emit(" = invoke ")
         if (n.callConv.size > 0) {
           emit(n.callConv)
@@ -615,7 +615,7 @@ class IRTreeEncoder(emitter: Emitter) {
     }
   }
 
-  def encodeBlock(b: L_Block) = {
+  def encodeBlock(b: L_Block): Unit = {
     encodeLabel(b.label)
     emitln(":")
     for (instr <- b.instructions) {
@@ -629,7 +629,7 @@ class IRTreeEncoder(emitter: Emitter) {
     emitln()
   }
 
-  def encodeFunctionDefinition(f: L_FunctionDefinition) = {
+  def encodeFunctionDefinition(f: L_FunctionDefinition): Unit = {
     currentParamNum = 0
     currentSSA = 0
     emitw("define")
@@ -641,7 +641,7 @@ class IRTreeEncoder(emitter: Emitter) {
     }
     encodeType(f.returnType)
     emit(" ")
-    emit(f -> funcname)
+    emit(funcname(f))
     emit("(")
 
     val imax = f.arguments.size
@@ -677,7 +677,7 @@ class IRTreeEncoder(emitter: Emitter) {
     emitln("")
   }
 
-  def encodeFunctionDeclaration(f: L_FunctionDeclaration) = {
+  def encodeFunctionDeclaration(f: L_FunctionDeclaration): Unit = {
     currentParamNum = 0
     currentSSA = 0
     emitw("declare")
@@ -689,13 +689,13 @@ class IRTreeEncoder(emitter: Emitter) {
     }
     encodeType(f.returnType)
     emit(" ")
-    emit(f -> funcname)
+    emit(funcname(f))
     emit("(")
 
     val imax = f.arguments.size
     var i = 1
     for (a <- f.arguments) {
-      encodeType(a -> resultType)
+      encodeType(resultType(a))
       if (i < imax) {
         emit(", ")
       }
@@ -789,8 +789,8 @@ class IRTreeEncoder(emitter: Emitter) {
     0
   }
 
-  def encodeGlobalVariable(g: L_GlobalVariable) = {
-    emit(g -> gvarname)
+  def encodeGlobalVariable(g: L_GlobalVariable): Unit = {
+    emit(gvarname(g))
     emit(" =")
     if (g.linkage.size > 0)
       emit(" " + g.linkage)
@@ -801,7 +801,7 @@ class IRTreeEncoder(emitter: Emitter) {
       emit(" constant")
     }
     emit(" ")
-    encodeType(g.value -> resultType)
+    encodeType(resultType(g.value))
     emit(" ")
     encodeValue(g.value)
     if (g.section.size > 0) {

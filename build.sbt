@@ -33,7 +33,6 @@ lazy val dragon = (project in file("Dragon"))
   .settings(
     name := "Dragon",
     libraryDependencies ++= dragonDeps,
-
     excludeFilter in unmanagedSources := HiddenFileFilter || "*slem*"
   )
 

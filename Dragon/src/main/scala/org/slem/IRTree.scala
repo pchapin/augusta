@@ -17,13 +17,15 @@
 
 package org.slem
 
-object IRTree {
+import scala.language.implicitConversions
+//import org.bitbucket.inkytonik.kiama.attribution.Attributable
+import org.bitbucket.inkytonik.kiama.attribution.Attribution
 
-  import org.bitbucket.inkytonik.kiama.attribution.Attributable
-  import org.bitbucket.inkytonik.kiama.attribution.Attribution._
+object IRTree extends Attribution {
+
 
   //////////// BASICS ////////////
-  sealed abstract class L_Node extends Attributable
+  sealed abstract class L_Node //extends Attribution
 
   case class L_Module(globals: List[L_Global]) extends L_Node
   case class L_Program(modules: List[L_Module]) extends L_Node
@@ -97,7 +99,7 @@ object IRTree {
     returnAttributes: List[String] = List(),     // Optional
     funcAttributes  : List[String] = List(),     // Optional
     section         : String = "",               // Optional
-    alignment       : Int = 0,                             // Optional
+    alignment       : Int = 0,                   // Optional
     garbageCollector: String = ""                // Optional
     ) extends L_Function
 
@@ -106,12 +108,12 @@ object IRTree {
                         attrs  : List[String] = List(),
                         argName: String = "") extends L_Node with L_Value
   implicit def valueToArgument(valuein: L_Value): L_Argument =
-    L_Argument(valuein->resultType, value = valuein)
+    L_Argument(resultType(valuein), value = valuein)
   implicit def typeToArgument(typ: L_Type): L_Argument =
     L_Argument(typ)
 
   def L_NamedArgument(valuein: L_Value, namein: String): L_Argument = {
-    new L_Argument(valuein->resultType, value = valuein, argName = namein)
+    L_Argument(resultType(valuein), value = valuein, argName = namein)
   }
 
   //////////// TYPES ////////////
@@ -152,7 +154,7 @@ object IRTree {
     L_Float("" + f)
 
   case class L_Double(value: String) extends L_Constant
-  implicit def doubltToConst(d: Double): L_Double =
+  implicit def doubleToConst(d: Double): L_Double =
     L_Double("" + d)
 
   case class L_NullPointer(pty: L_Type) extends L_Constant
