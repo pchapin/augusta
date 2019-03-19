@@ -615,10 +615,10 @@ object IRTree extends Attribution {
       case n: L_NullPointer => n.pty
 
       // COMPLEX CONSTANTS
-      case n: L_Structure   => L_StructureType(n.elements.map(e => e->resultType))
-      case n: L_Array       => L_ArrayType(n.elements.size, n.elements.head->resultType)
+      case n: L_Structure   => L_StructureType(n.elements.map(e => resultType(e)))
+      case n: L_Array       => L_ArrayType(n.elements.size, resultType(n.elements.head))
       case n: L_String      => L_ArrayType(n.s.size - (n.s.filter(c => (c == '\\')).size * 2), L_IntType(8))
-      case n: L_Vector      => L_VectorType(n.elements.size, n.elements.head->resultType)
+      case n: L_Vector      => L_VectorType(n.elements.size, resultType(n.elements.head))
       case n: L_ZeroInitialiser => n.typ
 
       // BINARY OPERATOR INSTRUCTIONS
@@ -649,7 +649,7 @@ object IRTree extends Attribution {
       case n: L_Or          => (n.LHS)->resultType
       case n: L_Xor         => (n.LHS)->resultType
       */
-      case n: L_BinOpInstruction => n.LHS -> resultType
+      case n: L_BinOpInstruction => resultType(n.LHS)
 
       // MEMORY INSTRUCTIONS
       case n: L_Alloca         => L_PointerType(n.typ) // TODO: FIX THIS!!! Assumes that all stack memory locations are in 32 bits.
@@ -716,31 +716,31 @@ object IRTree extends Attribution {
       case n: L_Phi         =>
         if(n.valueLabels.size > 0) {
           val firstElement = n.valueLabels.head
-          firstElement.value -> resultType
+          resultType(firstElement.value)
         }
         else {
           L_VoidType()
         }
 
-      case n: L_Select      => n.val1 -> resultType
+      case n: L_Select      => resultType(n.val1)
       case n: L_Call        => n.typ //TODO : Check this.
       case n: L_Va_Arg      => n.argType
       case n: L_Invoke      => n.funcTypePtr
 
       // VECTOR OPERATIONS
       case n: L_ExtractElement =>
-        val vecType = n.vec -> resultType
+        val vecType = resultType(n.vec)
         vecType match {
           case v: L_VectorType => v.elementType
           case _ => L_VoidType() // Type error.
         }
 
-      case n: L_InsertElement  => n.vec -> resultType
+      case n: L_InsertElement  => resultType(n.vec)
       case n: L_ShuffleVector  =>
-        val vecType   = n.v1 -> resultType
+        val vecType   = resultType(n.v1)
         vecType match {
           case v: L_VectorType =>
-            val vecLength = n.mask -> resultType
+            val vecLength = resultType(n.mask)
             vecLength match {
               case v2: L_VectorType =>
                 L_VectorType(v2.numElements, v.elementType)
@@ -757,7 +757,7 @@ object IRTree extends Attribution {
           L_VoidType() // Type error.
         }
         else {
-          var out = n.value -> resultType
+          var out = resultType(n.value)
           for(idx <- n.indexes) {
             out match {
               case n2: L_ArrayType     => out = n2.elementType
@@ -768,9 +768,9 @@ object IRTree extends Attribution {
           out
         }
 
-      case n: L_InsertValue    => n.value -> resultType
+      case n: L_InsertValue    => resultType(n.value)
       case n: L_Argument       => n.ty
-      case n: L_GlobalVariable => n.value -> resultType
+      case n: L_GlobalVariable => resultType(n.value)
       case _                   => L_VoidType() // Type error.
     }
   }

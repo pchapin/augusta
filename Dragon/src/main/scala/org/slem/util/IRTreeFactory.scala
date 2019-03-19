@@ -83,7 +83,7 @@ object IRTreeFactory {
   def L_Macro_PrintLine(value: L_Int): List[L_Instruction] = {
     import_printline_int_str()
     import_printf_int()
-    val printfGetPtr = L_GetElementPtr(L_PointerType(printline_int_str -> resultType), printline_int_str, List(0, 0))
+    val printfGetPtr = L_GetElementPtr(L_PointerType(resultType(printline_int_str)), printline_int_str, List(0, 0))
     val printfCall = L_Call(L_IntType(32), printf_int, List(printfGetPtr, value))
     List(printfGetPtr, printfCall)
   }
@@ -92,7 +92,7 @@ object IRTreeFactory {
   def L_Macro_Print(value: L_Int): List[L_Instruction] = {
     import_print_int_str()
     import_printf_int()
-    val printfGetPtr = L_GetElementPtr(L_PointerType(print_int_str -> resultType), print_int_str, List(0, 0))
+    val printfGetPtr = L_GetElementPtr(L_PointerType(resultType(print_int_str)), print_int_str, List(0, 0))
     val printfCall = L_Call(L_IntType(32), printf_int, List(printfGetPtr, value))
     List(printfGetPtr, printfCall)
   }

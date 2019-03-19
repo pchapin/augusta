@@ -32,7 +32,7 @@ lazy val tiger = (project in file("Tiger"))
 lazy val dragon = (project in file("Dragon"))
   .settings(
     name := "Dragon",
-    libraryDependencies ++= dragonDeps,
-    excludeFilter in unmanagedSources := HiddenFileFilter || "*slem*"
+    libraryDependencies ++= dragonDeps
+    //excludeFilter in unmanagedSources := HiddenFileFilter || "*slem*"
   )
 
