@@ -127,13 +127,13 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     "%" + (currentSSA - 1)
   }
 
-  def reset() = {
+  def reset(): Unit = {
     fileout = ""
     currentParamNum = 0
     currentSSA = 0
   }
 
-  def encodeTree(p: L_Program) = {
+  def encodeTree(p: L_Program): Unit = {
     reset()
     for (m <- p.modules) {
       for (g <- m.globals) {
@@ -145,13 +145,13 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     }
   }
 
-  def writeFile() = {
+  def writeFile(): Unit = {
     val fw = new FileWriter("LLVMIR/newprog.ll")
     fw.write(fileout)
     fw.close()
   }
 
-  def encodeGlobal(g: L_Global): Int = {
+  def encodeGlobal(g: L_Global): Unit = {
     g match {
       case v: L_GlobalVariable => encodeGlobalVariable(v)
       case f: L_FunctionReference => encodeGlobal(f.funcPtr)
@@ -159,10 +159,10 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
       case f: L_FunctionDefinition => encodeFunctionDefinition(f)
       case _ =>
     }
-    0
+    //0
   }
 
-  def encodeArgument(a: L_Argument) = {
+  def encodeArgument(a: L_Argument): Unit = {
     encodeType(a.ty)
     emit(" ")
     if (a.value == null) {
@@ -178,7 +178,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     }
   }
 
-  def encodeConstant(c: L_Constant) {
+  def encodeConstant(c: L_Constant): Unit = {
     c match {
       //Simple Constants
       case n: L_Boolean =>
@@ -240,7 +240,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
       case n: L_String =>
         emit("c" + '"' + n.s + '"')
 
-      case n: L_ZeroInitialiser =>
+      case n: L_ZeroInitializer =>
         emit("zeroinitialiser")
 
       case n: L_Vector =>
@@ -261,11 +261,11 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     }
   }
 
-  def encodeLabel(l: L_Label) = {
+  def encodeLabel(l: L_Label): Unit = {
     emit(labelname(l))
   }
 
-  def encodeValue(v: L_Value): Int = {
+  def encodeValue(v: L_Value): Unit = {
     v match {
       case n: L_Instruction         => emit(ssa(n))
       case n: L_Argument            => emit(paramName(n))
@@ -276,11 +276,11 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
       case n: L_FunctionDeclaration => emit(funcname(n))
       case _ => emit("UnknownValue : " + v)
     }
-    0
+    //0
   }
 
 
-  def encodeInstruction(b: L_Instruction) = {
+  def encodeInstruction(b: L_Instruction): Unit = {
     b match {
       case n: L_BinOpInstruction =>
         emit(ssa(n))
@@ -485,7 +485,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
           emitw("tail")
         }
         emitw("call")
-        if (n.callConvention.size > 0) {
+        if (n.callConvention.nonEmpty) {
           emitw(n.callConvention)
         }
         for (ra <- n.returnAttributes) {
@@ -493,7 +493,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
         }
         encodeType(n.typ)
         emit(" ")
-        if (n.fnty.size > 0) {
+        if (n.fnty.nonEmpty) {
           emit(n.fnty + "* ") // TODO : implement function type pointers properly.
         }
         encodeValue(n.fnptrval)
@@ -525,7 +525,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     }
   }
 
-  def encodeTerminator(t: L_TerminatorInstruction) = {
+  def encodeTerminator(t: L_TerminatorInstruction): Unit = {
     t match {
       case n: L_Ret =>
         emitw("ret")
@@ -583,7 +583,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
       case n: L_Invoke =>
         emit(ssa(n))
         emit(" = invoke ")
-        if (n.callConv.size > 0) {
+        if (n.callConv.nonEmpty) {
           emit(n.callConv)
         }
         for (ra <- n.retAttrs) {
@@ -658,13 +658,13 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     for (funcAtt <- f.funcAttributes) {
       emitw(funcAtt)
     }
-    if (f.section.size > 0) {
+    if (f.section.nonEmpty) {
       emitw("section " + '"' + f.section + '"')
     }
     if (f.alignment != 0) {
       emitw("align " + f.alignment)
     }
-    if (f.garbageCollector.size > 0) {
+    if (f.garbageCollector.nonEmpty) {
       emitw("gc " + '"' + f.garbageCollector + '"')
     }
     emitln("{")
@@ -706,13 +706,13 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     if (f.alignment != 0) {
       emitw("align " + f.alignment)
     }
-    if (f.garbageCollector.size > 0) {
+    if (f.garbageCollector.nonEmpty) {
       emitw("gc " + '"' + f.garbageCollector + '"')
     }
     emitln("")
   }
 
-  def encodeType(t: L_Type): Int = {
+  def encodeType(t: L_Type): Unit = {
     t match {
       // Basic types.
       case n: L_IntType      => emit("i" + n.size)
@@ -724,7 +724,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
       case n: L_VoidType     => emit("void")
       case n: L_MetadataType => emit("metadata")
       case n: L_LabelType    => emit("label")
-      case n: L_VarArgsType   => emit("...")
+      case n: L_VarArgsType  => emit("...")
 
       // Derived types.
       case n: L_ArrayType =>
@@ -786,13 +786,13 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
 
       case _ => "Unknown Type : " + t
     }
-    0
+    //0
   }
 
   def encodeGlobalVariable(g: L_GlobalVariable): Unit = {
     emit(gvarname(g))
     emit(" =")
-    if (g.linkage.size > 0)
+    if (g.linkage.nonEmpty)
       emit(" " + g.linkage)
     if (g.addressSpace != 0) {
       emit(" addrspace(" + g.addressSpace + ")")
@@ -804,7 +804,7 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     encodeType(resultType(g.value))
     emit(" ")
     encodeValue(g.value)
-    if (g.section.size > 0) {
+    if (g.section.nonEmpty) {
       emit(", section " + g.section)
     }
     if (g.alignment != 0) {
@@ -814,22 +814,22 @@ class IRTreeEncoder(emitter: Emitter) extends Attribution {
     emitln()
   }
 
-  def emitln() = {
+  def emitln(): Unit = {
     emit("\n")
   }
 
-  def emitln(s: String) = {
+  def emitln(s: String): Unit = {
     emit(s + "\n")
   }
 
-  def emit(s: String) = {
+  def emit(s: String): Unit = {
     emitter.emit(s)
     if (fileOutputEnabled) {
       appendFile(s)
     }
   }
 
-  def emitw(s: String) = {
+  def emitw(s: String): Unit = {
     if (s.length > 0) {
       emit(s + " ")
     }

@@ -18,7 +18,6 @@
 package org.slem
 
 import scala.language.implicitConversions
-//import org.bitbucket.inkytonik.kiama.attribution.Attributable
 import org.bitbucket.inkytonik.kiama.attribution.Attribution
 
 object IRTree extends Attribution {
@@ -164,15 +163,13 @@ object IRTree extends Attribution {
   case class L_Array(elements: List[L_Value]) extends L_Constant
   case class L_String(s: String) extends L_Constant
   case class L_Vector(elements: List[L_Value]) extends L_Constant
-  case class L_ZeroInitialiser(typ: L_Type) extends L_Constant
+  case class L_ZeroInitializer(typ: L_Type) extends L_Constant
 
   // TODO - implement metadata nodes.
   //case class L_MetadataNode() extends L_Constant
 
   //////////// BINARY OPERATOR INSTRUCTIONS ////////////
-  abstract class L_BinOpInstruction(LHSin: L_Value, RHSin: L_Value) extends L_Instruction with L_Value {
-    val LHS = LHSin
-    val RHS = RHSin
+  abstract class L_BinOpInstruction(val LHS: L_Value, val RHS: L_Value) extends L_Instruction with L_Value {
     val instructionString = "Unknown Binary Instruction"
   }
 
@@ -293,8 +290,8 @@ object IRTree extends Attribution {
                       numElementsType: L_Type = null,
                       numElements    : L_Value = null,
                       alignment      : Long = 0) extends L_Instruction with L_Value {
-    val hasNumElements = numElementsType != null
-    val hasAlign = alignment != 0
+    val hasNumElements: Boolean = numElementsType != null
+    val hasAlign: Boolean = alignment != 0
 
     /*
 
@@ -327,7 +324,7 @@ object IRTree extends Attribution {
                     alignment   : Long = 0,
                     nonTemporal : Boolean = false,
                     nonTempIndex: Long = 0) extends L_Instruction with L_Value {
-      val hasAlign = alignment != 0
+      val hasAlign: Boolean = alignment != 0
   /*
     //Deprecated - subject to further testing
     var hasAlign = true
@@ -360,7 +357,7 @@ object IRTree extends Attribution {
                      alignment   : Long = 0,
                      nonTemporal : Boolean = false,
                      nonTempIndex: Long = 0) extends L_Instruction {
-      val hasAlign = alignment != 0
+      val hasAlign: Boolean = alignment != 0
   /*
     // Deprecated - subject to further testing.
 
@@ -406,7 +403,7 @@ object IRTree extends Attribution {
         case t: L_ArrayType =>
           val nextType = t.elementType
           val idxTail = indexes.tail
-          if(idxTail.size > 0) {
+          if(idxTail.nonEmpty) {
             getResultType(nextType, idxTail)
           }
           else {
@@ -416,7 +413,7 @@ object IRTree extends Attribution {
         case t: L_VectorType =>
           val nextType = t.elementType
           val idxTail = indexes.tail
-          if(idxTail.size > 0) {
+          if(idxTail.nonEmpty) {
             getResultType(nextType, idxTail)
           }
           else {
@@ -426,7 +423,7 @@ object IRTree extends Attribution {
         case t: L_PointerType =>
           val nextType = t.pointer
           val idxTail = indexes.tail
-          if(idxTail.size > 0) {
+          if(idxTail.nonEmpty) {
             getResultType(nextType, idxTail)
           }
           else {
@@ -439,7 +436,7 @@ object IRTree extends Attribution {
               // We can convert this to Int because a structure with more than max_int fields is ludicrous.
               val nextType = t.fields(c.value.toInt)
               val idxTail = indexes.tail
-              if(idxTail.size > 0) {
+              if(idxTail.nonEmpty) {
                 getResultType(nextType, idxTail)
               }
               else {
@@ -460,9 +457,7 @@ object IRTree extends Attribution {
 
   //////////// CONVERSION OPERATIONS ////////////
 
-  abstract class L_ConversionOperation(valuein: L_Value, targetTypein: L_Type) extends L_Instruction with L_Value {
-    val value = valuein
-    val targetType = targetTypein
+  abstract class L_ConversionOperation(val value: L_Value, val targetType: L_Type) extends L_Instruction with L_Value {
     val instructionString = "Unknown Conversion Operation"
   }
 
@@ -515,11 +510,7 @@ object IRTree extends Attribution {
   }
 
   //////////// OTHER OPERATIONS ////////////
-  abstract class L_ICMP(LHSin: L_Value, RHSin: L_Value, compCodein: String) extends L_Instruction with L_Value {
-    val LHS = LHSin
-    val RHS = RHSin
-    val compCode = compCodein
-  }
+  abstract class L_ICMP(val LHS: L_Value, val RHS: L_Value, val compCode: String) extends L_Instruction with L_Value
 
   case class L_ICmpEQ (LHSin: L_Value, RHSin: L_Value) extends L_ICMP(LHSin, RHSin, "eq" )
   case class L_ICmpNEQ(LHSin: L_Value, RHSin: L_Value) extends L_ICMP(LHSin, RHSin, "ne" )
@@ -533,11 +524,7 @@ object IRTree extends Attribution {
   case class L_ICmpSLT(LHSin: L_Value, RHSin: L_Value) extends L_ICMP(LHSin, RHSin, "slt")
   case class L_ICmpSLE(LHSin: L_Value, RHSin: L_Value) extends L_ICMP(LHSin, RHSin, "sle")
 
-  abstract class L_FCMP(LHSin: L_Value, RHSin: L_Value, compCodein: String) extends L_Instruction with L_Value {
-    val LHS = LHSin
-    val RHS = RHSin
-    val compCode = compCodein
-  }
+  abstract class L_FCMP(val LHS: L_Value, val RHS: L_Value, val compCode: String) extends L_Instruction with L_Value
 
   case class L_FCmpFalse(LHSin: L_Value, RHSin: L_Value) extends L_FCMP(LHSin, RHSin, "false")
   case class L_FCmpOEQ  (LHSin: L_Value, RHSin: L_Value) extends L_FCMP(LHSin, RHSin, "oeq"  )
@@ -619,35 +606,35 @@ object IRTree extends Attribution {
       case n: L_Array       => L_ArrayType(n.elements.size, resultType(n.elements.head))
       case n: L_String      => L_ArrayType(n.s.size - (n.s.filter(c => (c == '\\')).size * 2), L_IntType(8))
       case n: L_Vector      => L_VectorType(n.elements.size, resultType(n.elements.head))
-      case n: L_ZeroInitialiser => n.typ
+      case n: L_ZeroInitializer => n.typ
 
       // BINARY OPERATOR INSTRUCTIONS
       /* Deprecated code - simplified
-      case n: L_Add         => (n.LHS)->resultType
-      case n: L_NSWAdd      => (n.LHS)->resultType
-      case n: L_NUWAdd      => (n.LHS)->resultType
-      case n: L_FAdd        => (n.LHS)->resultType
-      case n: L_Sub         => (n.LHS)->resultType
-      case n: L_NSWSub      => (n.LHS)->resultType
-      case n: L_NUWSub      => (n.LHS)->resultType
-      case n: L_FSub        => (n.LHS)->resultType
-      case n: L_Mul         => (n.LHS)->resultType
-      case n: L_NSWMul      => (n.LHS)->resultType
-      case n: L_NUWMul      => (n.LHS)->resultType
-      case n: L_FMul        => (n.LHS)->resultType
-      case n: L_UDiv        => (n.LHS)->resultType
-      case n: L_SDiv        => (n.LHS)->resultType
-      case n: L_ExactSDiv   => (n.LHS)->resultType
-      case n: L_FDiv        => (n.LHS)->resultType
-      case n: L_URem        => (n.LHS)->resultType
-      case n: L_SRem        => (n.LHS)->resultType
-      case n: L_FRem        => (n.LHS)->resultType
-      case n: L_Shl         => (n.LHS)->resultType
-      case n: L_LShr        => (n.LHS)->resultType
-      case n: L_AShr        => (n.LHS)->resultType
-      case n: L_And         => (n.LHS)->resultType
-      case n: L_Or          => (n.LHS)->resultType
-      case n: L_Xor         => (n.LHS)->resultType
+      case n: L_Add         => resultType(n.LHS)
+      case n: L_NSWAdd      => resultType(n.LHS)
+      case n: L_NUWAdd      => resultType(n.LHS)
+      case n: L_FAdd        => resultType(n.LHS)
+      case n: L_Sub         => resultType(n.LHS)
+      case n: L_NSWSub      => resultType(n.LHS)
+      case n: L_NUWSub      => resultType(n.LHS)
+      case n: L_FSub        => resultType(n.LHS)
+      case n: L_Mul         => resultType(n.LHS)
+      case n: L_NSWMul      => resultType(n.LHS)
+      case n: L_NUWMul      => resultType(n.LHS)
+      case n: L_FMul        => resultType(n.LHS)
+      case n: L_UDiv        => resultType(n.LHS)
+      case n: L_SDiv        => resultType(n.LHS)
+      case n: L_ExactSDiv   => resultType(n.LHS)
+      case n: L_FDiv        => resultType(n.LHS)
+      case n: L_URem        => resultType(n.LHS)
+      case n: L_SRem        => resultType(n.LHS)
+      case n: L_FRem        => resultType(n.LHS)
+      case n: L_Shl         => resultType(n.LHS)
+      case n: L_LShr        => resultType(n.LHS)
+      case n: L_AShr        => resultType(n.LHS)
+      case n: L_And         => resultType(n.LHS)
+      case n: L_Or          => resultType(n.LHS)
+      case n: L_Xor         => resultType(n.LHS)
       */
       case n: L_BinOpInstruction => resultType(n.LHS)
 
