@@ -2,6 +2,9 @@ package org.pchapin.augusta
 
 import org.antlr.v4.runtime._
 import org.antlr.v4.runtime.tree._
+import org.bitbucket.inkytonik.kiama.util.OutputEmitter
+import org.slem.IRTree.L_FunctionDefinition
+import org.slem.IRTreeEncoder
 
 /**
   * The main object of the Augusta. This object contains the main method and other methods that
@@ -71,7 +74,10 @@ object Main {
 
         case Mode.LLVM =>
           val myLLVMGenerator = new LLVMGenerator(symbolTable, reporter)
-          myLLVMGenerator.visit(tree)
+          val LLVMAbstractSyntax = myLLVMGenerator.visit(tree)
+          val output = new OutputEmitter
+          val encoder = new IRTreeEncoder(output)
+          encoder.encodeFunctionDefinition(LLVMAbstractSyntax.asInstanceOf[L_FunctionDefinition])
       }
     }
   }
