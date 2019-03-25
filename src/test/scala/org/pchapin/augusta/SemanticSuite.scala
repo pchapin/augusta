@@ -67,13 +67,13 @@ object SemanticSuite {
   val prefix: String = "testData" + File.separator + "semantics"
 
   val basicCases: Array[String] =
-    Array("semantic_errors.ada" /*, "subprogram0001.ada" */) map { prefix + File.separator + _ }
+    Array("semantic_errors.adb" /*, "subprogram0001.adb" */) map { prefix + File.separator + _ }
 
   val basicTypeCheckingCases: Array[String] =
-    Array("type_checking1.ada") map { prefix + File.separator + _ }
+    Array("type_checking1.adb") map { prefix + File.separator + _ }
 
   val typeDeclarations: Array[String] =
     Array(
-      "type_declare1.ada", "type_declare2.ada", "type_declare3.ada",
-      "type_declare4.ada") map { prefix + File.separator + _ }
+      "type_declare1.adb", "type_declare2.adb", "type_declare3.adb",
+      "type_declare4.adb") map { prefix + File.separator + _ }
 }
