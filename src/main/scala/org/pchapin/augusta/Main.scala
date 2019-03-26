@@ -73,8 +73,8 @@ object Main {
           // Do nothing more (semantic analysis is all that is necessary).
 
         case Mode.LLVM =>
-          val myLLVMGenerator = new LLVMGenerator(symbolTable, reporter)
-          val LLVMAbstractSyntax = myLLVMGenerator.visit(tree)
+          val myCodeGenerator = new CodeGenerator(CFG, symbolTable, reporter)
+          val LLVMAbstractSyntax = myCodeGenerator.makeAST
           val output = new OutputEmitter
           val encoder = new IRTreeEncoder(output)
           encoder.encodeFunctionDefinition(LLVMAbstractSyntax.asInstanceOf[L_FunctionDefinition])

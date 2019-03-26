@@ -2,15 +2,24 @@ package org.pchapin.augusta
 
 import org.slem.IRTree._
 
-// TODO: Finish Me!
-class LLVMGenerator(symbolTable: SymbolTable, reporter: Reporter) extends AdaBaseVisitor[L_Node] {
+/**
+  * This class computes LLVM ASTs for various expression forms. It is used by the code generator
+  * when processing the statements in the various basic blocks of a subprogram definition.
+  *
+  * @param symbolTable The symbol table being used by the subprogram.
+  * @param reporter The reporter used for reporting messages.
+  */
+class LLVMGenerator(symbolTable: SymbolTable, reporter: Reporter) {
 
-  override def visitCompilation_unit(ctx: AdaParser.Compilation_unitContext): L_Node = {
-    visitChildren(ctx)
+  def visit(ctx: AdaParser.Assignment_statementContext): L_Store = {
+    // TODO: Finish me! Return an L_Store instruction that assigns the expression to memory.
+    val rightHandSide = visit(ctx.expression)
+    // TODO: Actually the allocation needs to be looked up in the symbol table.
+    L_Store(rightHandSide, L_Alloca(L_IntType(64)))
   }
 
 
-  override def visitPrimary_expression(ctx: AdaParser.Primary_expressionContext): L_Node = {
+  def visit(ctx: AdaParser.Primary_expressionContext): L_Value = {
     if (ctx.expression != null) {
       visit(ctx.expression)
     }
@@ -45,27 +54,27 @@ class LLVMGenerator(symbolTable: SymbolTable, reporter: Reporter) extends AdaBas
   }
 
 
-  override def visitMultiplicative_expression(ctx: AdaParser.Multiplicative_expressionContext): L_Node =  {
+  def visit(ctx: AdaParser.Multiplicative_expressionContext): L_Value =  {
     if (ctx.MULTIPLY != null) {
-      val leftSubexpression  = visit(ctx.multiplicative_expression).asInstanceOf[L_Value]
-      val rightSubexpression = visit(ctx.primary_expression).asInstanceOf[L_Value]
+      val leftSubexpression  = visit(ctx.multiplicative_expression)
+      val rightSubexpression = visit(ctx.primary_expression)
 
-      L_Add(leftSubexpression, rightSubexpression)
+      L_Mul(leftSubexpression, rightSubexpression)
     }
     else if (ctx.DIVIDE != null) {
-      val leftSubexpression  = visit(ctx.multiplicative_expression).asInstanceOf[L_Value]
-      val rightSubexpression = visit(ctx.primary_expression).asInstanceOf[L_Value]
+      val leftSubexpression  = visit(ctx.multiplicative_expression)
+      val rightSubexpression = visit(ctx.primary_expression)
 
-      L_Sub(leftSubexpression, rightSubexpression)
+      L_SDiv(leftSubexpression, rightSubexpression)
     }
     else {
-      visit(ctx.primary_expression).asInstanceOf[L_Value]
+      visit(ctx.primary_expression)
     }
   }
 
 
-  override def visitUnary_expression(ctx: AdaParser.Unary_expressionContext): L_Node = {
-    val subexpression = visit(ctx.multiplicative_expression).asInstanceOf[L_Value]
+  def visit(ctx: AdaParser.Unary_expressionContext): L_Value = {
+    val subexpression = visit(ctx.multiplicative_expression)
 
     if (ctx.PLUS != null) {
       subexpression
@@ -79,22 +88,34 @@ class LLVMGenerator(symbolTable: SymbolTable, reporter: Reporter) extends AdaBas
   }
 
 
-  override def visitAdditive_expression(ctx: AdaParser.Additive_expressionContext): L_Node = {
+  def visit(ctx: AdaParser.Additive_expressionContext): L_Value = {
     if (ctx.PLUS != null) {
-      val leftSubexpression  = visit(ctx.additive_expression).asInstanceOf[L_Value]
-      val rightSubexpression = visit(ctx.unary_expression).asInstanceOf[L_Value]
+      val leftSubexpression  = visit(ctx.additive_expression)
+      val rightSubexpression = visit(ctx.unary_expression)
 
       L_Add(leftSubexpression, rightSubexpression)
     }
     else if (ctx.MINUS != null) {
-      val leftSubexpression  = visit(ctx.additive_expression).asInstanceOf[L_Value]
-      val rightSubexpression = visit(ctx.unary_expression).asInstanceOf[L_Value]
+      val leftSubexpression  = visit(ctx.additive_expression)
+      val rightSubexpression = visit(ctx.unary_expression)
 
       L_Sub(leftSubexpression, rightSubexpression)
     }
     else {
-      visit(ctx.unary_expression).asInstanceOf[L_Value]
+      visit(ctx.unary_expression)
     }
+  }
+
+
+  def visit(ctx: AdaParser.Relational_expressionContext): L_Value = {
+    // TODO: Finish me!
+    visit(ctx.additive_expression)
+  }
+
+
+  def visit(ctx: AdaParser.ExpressionContext): L_Value = {
+    // TODO: Finish me!
+    visit(ctx.relational_expression)
   }
 
 }
