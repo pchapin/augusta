@@ -2,7 +2,11 @@ package org.pchapin.augusta
 
 import org.slem.IRTree._
 
+import scala.collection.mutable
+
 class CodeGenerator(CFG: ControlFlowGraph, symbolTable: SymbolTable, reporter: Reporter) {
+
+  val locationMap: LocationMap = LocationMap()
 
   private val LLVM = new LLVMGenerator(symbolTable, reporter)
 
@@ -17,9 +21,8 @@ class CodeGenerator(CFG: ControlFlowGraph, symbolTable: SymbolTable, reporter: R
       L_Block(assignments, L_Ret(0: Long), "labelMe")
     }
 
-    // The entryBlock needs to be augmented with L_Alloc instructions to allocate items in the
-    // symbol table. A mapping from the symbol name to the corresponding L_Alloc instruction
-    // needs to also be created. Probably a separate block should be created for the L_Alloc.
+    // TODO: Create an L_Block filled with L_Alloc instructions for each of the variables.
+    // TODO: Add the L_Alloc instructions to locationMap as well.
 
     val generatedBlocks = for (node <- graph.nodes) yield {
       makeBasicBlockAST(node)
