@@ -12,9 +12,9 @@ package org.pchapin.augusta
  * @param killed The set of variables defined in this block.
  * @param live The set of variables that are live at the end of this block.
  */
-class BasicBlock(val assignments: List[AdaParser.Assignment_statementContext],
-                 val condition  : Option[AdaParser.ExpressionContext],
-                 var upwardlyExposed: Set[String] = Set(),
-                 var killed         : Set[String] = Set(),
-                 var live           : Set[String] = Set())
-// TODO: Do I need to override equals and hashCode for this class?
+case class BasicBlock(
+  assignments: List[AdaParser.Assignment_statementContext],
+  condition  : Option[AdaParser.ExpressionContext],
+  var upwardlyExposed: Set[String] = Set(),
+  var killed         : Set[String] = Set(),
+  var live           : Set[String] = Set())

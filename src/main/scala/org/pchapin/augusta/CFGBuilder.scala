@@ -52,7 +52,7 @@ class CFGBuilder(
   override def visitAssignment_statement(
     ctx: AdaParser.Assignment_statementContext): ControlFlowGraph = {
 
-    val primitiveBlock = new BasicBlock(List(ctx), None)
+    val primitiveBlock = BasicBlock(List(ctx), None)
     ControlFlowGraph(primitiveBlock, Graph[BasicBlock, LDiEdge](primitiveBlock), primitiveBlock)
   }
 
@@ -61,7 +61,7 @@ class CFGBuilder(
      ctx: AdaParser.Conditional_statementContext): ControlFlowGraph = {
 
     // TODO: Implement the CFG construction of conditional statements.
-    val nullBlock = new BasicBlock(List(), None)
+    val nullBlock = BasicBlock(List(), None)
     ControlFlowGraph(nullBlock, Graph[BasicBlock, LDiEdge](nullBlock), nullBlock)
   }
 
@@ -69,8 +69,8 @@ class CFGBuilder(
   override def visitIteration_statement(
     ctx: AdaParser.Iteration_statementContext): ControlFlowGraph = {
 
-    val expressionBlock = new BasicBlock(List(), Some(ctx.expression))
-    val nullBlock = new BasicBlock(List(), None)
+    val expressionBlock = BasicBlock(List(), Some(ctx.expression))
+    val nullBlock = BasicBlock(List(), None)
     val ControlFlowGraph(bodyEntry, bodyGraph, bodyExit) =
       combineStatementSequence(ctx.statement.asScala)
     val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, nullBlock) union bodyGraph
@@ -85,7 +85,7 @@ class CFGBuilder(
   override def visitNull_statement(
     ctx: AdaParser.Null_statementContext): ControlFlowGraph = {
 
-    val nullBlock = new BasicBlock(List(), None)
+    val nullBlock = BasicBlock(List(), None)
     ControlFlowGraph(nullBlock, Graph[BasicBlock, LDiEdge](nullBlock), nullBlock)
   }
 

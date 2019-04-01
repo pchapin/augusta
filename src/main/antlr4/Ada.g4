@@ -68,7 +68,7 @@ primary_expression
 
 multiplicative_expression
     locals [String expressionType]
-    :   multiplicative_expression (MULTIPLY | DIVIDE) primary_expression
+    :   multiplicative_expression (MULTIPLY | DIVIDE | REM) primary_expression
     |   primary_expression;
 
 unary_expression

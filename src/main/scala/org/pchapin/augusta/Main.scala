@@ -66,6 +66,7 @@ object Main {
       val graphBuilder = new CFGBuilder(symbolTable, reporter)
       val rawCFG = graphBuilder.visit(tree)
       val CFG = CGFBuilder.optimize(rawCFG)
+      println(CFG)
 
       // Do what must be done.
       mode match {

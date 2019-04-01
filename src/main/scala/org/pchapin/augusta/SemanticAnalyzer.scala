@@ -114,6 +114,7 @@ class SemanticAnalyzer(
       case ctx: Multiplicative_expressionContext =>
         if      (ctx.MULTIPLY != null) ctx.MULTIPLY
         else if (ctx.DIVIDE   != null) ctx.DIVIDE
+        else if (ctx.REM      != null) ctx.REM
         else getTopNode(ctx.primary_expression)
 
       case ctx: Unary_expressionContext =>
@@ -176,7 +177,7 @@ class SemanticAnalyzer(
 
 
   override def exitMultiplicative_expression(ctx: AdaParser.Multiplicative_expressionContext): Unit = {
-    if (ctx.MULTIPLY == null && ctx.DIVIDE == null) {
+    if (ctx.MULTIPLY == null && ctx.DIVIDE == null && ctx.REM == null) {
       ctx.expressionType = ctx.primary_expression.expressionType
     }
     else {
