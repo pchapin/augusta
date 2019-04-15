@@ -15,3 +15,7 @@ testData/output.ll
 # Wiki is a separate Git repository.
 Wiki
 
+# ENSIME files
+.ensime
+.ensime_cache
+

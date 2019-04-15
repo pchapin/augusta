@@ -78,7 +78,7 @@ object Main {
           val LLVMAbstractSyntax = myCodeGenerator.makeAST
           val output = new OutputEmitter
           val encoder = new IRTreeEncoder(output)
-          encoder.encodeFunctionDefinition(LLVMAbstractSyntax.asInstanceOf[L_FunctionDefinition])
+          encoder.encodeFunctionDefinition(LLVMAbstractSyntax)
       }
     }
   }
