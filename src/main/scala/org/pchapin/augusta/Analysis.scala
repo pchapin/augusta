@@ -13,7 +13,6 @@ object Analysis {
    *
    * @param CFG The control flow graph to process.
    */
-  /*
   private def computeUEAndKillSets(CFG: ControlFlowGraph): Unit = {
     val ControlFlowGraph(entryBlock, graph, _) = CFG
     // for all someNode in the nodes of the CFG.
@@ -28,7 +27,6 @@ object Analysis {
         // ...
     }
   }
-  */
 
 
   /**
@@ -36,7 +34,6 @@ object Analysis {
    *
    * @param CFG A representation of the control flow of the program being analyzed.
    */
-  /*
   def liveness(CFG: ControlFlowGraph): Unit = {
     computeUEAndKillSets(CFG)
 
@@ -56,6 +53,5 @@ object Analysis {
       }
     }
   }
-  */
 
 }

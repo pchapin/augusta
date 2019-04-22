@@ -68,6 +68,10 @@ object Main {
       val CFG = CGFBuilder.optimize(rawCFG)
       println(CFG)
 
+      // Do a liveness analysis on the CFG.
+      //Analysis.liveness(CFG)
+      // TODO: Check to see if there are any variables that might be used uninitialized.
+
       // Do what must be done.
       mode match {
         case Mode.CHECK =>
