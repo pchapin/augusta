@@ -43,12 +43,12 @@ object Analysis {
     var changed = true
     while (changed) {
       changed = false
-      for (someNode  <- graph.innerNodeTraverser(graph get entryBlock);
-           successor <- someNode.diSuccessors) {
-
+      for (someNode  <- graph.innerNodeTraverser(graph get entryBlock)) {
         val oldLive = someNode.live
-        // TODO: The last term should be (successor.live intersect (NOT successor.kill))
-        someNode.live = someNode.live union (successor.upwardlyExposed union successor.live)
+        for (successor <- someNode.diSuccessors) {
+          // TODO: The last term should be (successor.live intersect (NOT successor.kill))
+          someNode.live = someNode.live union (successor.upwardlyExposed union successor.live)
+        }
         if (someNode.live != oldLive) changed = true
       }
     }
