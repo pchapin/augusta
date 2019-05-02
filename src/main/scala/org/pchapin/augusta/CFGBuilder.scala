@@ -1,5 +1,6 @@
 package org.pchapin.augusta
 
+import scala.collection.JavaConverters._    // ctx is a java.util.List, not a scala.List.
 import scalax.collection.Graph
 import scalax.collection.GraphPredef._
 import scalax.collection.edge.LDiEdge
@@ -7,8 +8,6 @@ import scalax.collection.edge.LDiEdge
 class CFGBuilder(
   symbolTable: SymbolTable,
   reporter   : Reporter) extends AdaBaseVisitor[ControlFlowGraph] {
-
-  import scala.collection.JavaConverters._    // ctx is a java.util.List, not a scala.List.
 
   /**
     * Combines statements in a straight line statement sequence to create a CFG where the CFG
@@ -29,6 +28,8 @@ class CFGBuilder(
       (left, right) match {
         case (ControlFlowGraph(leftEntry,  leftGraph,  leftExit),
               ControlFlowGraph(rightEntry, rightGraph, rightExit)) =>
+
+          // Make a CFG by combining the left and right CFGs in a straight line.
           ControlFlowGraph(
             leftEntry,
             (leftGraph union rightGraph) + LDiEdge(leftExit, rightEntry)('U'),
@@ -36,6 +37,7 @@ class CFGBuilder(
       }
     }
   }
+
 
   override def visitProcedure_definition(
     ctx: AdaParser.Procedure_definitionContext): ControlFlowGraph = {
@@ -57,36 +59,77 @@ class CFGBuilder(
   }
 
 
+  // This method doesn't handle ELSIF clauses. See my comment in Ada.g4 about this.
+  // TODO: Handle ELSIF clauses properly.
   override def visitConditional_statement(
      ctx: AdaParser.Conditional_statementContext): ControlFlowGraph = {
 
-    // TODO: Implement the CFG construction of conditional statements.
-    val nullBlock = BasicBlock(List(), None)
-    ControlFlowGraph(nullBlock, Graph[BasicBlock, LDiEdge](nullBlock), nullBlock)
+    // Create additional blocks and sub-graphs as needed.
+    val expressionBlock = BasicBlock(List(), Some(ctx.expression))
+    val emptyBlock = BasicBlock(List(), None)
+    val ControlFlowGraph(thenBodyEntry, thenBodyGraph, thenBodyExit) =
+      combineStatementSequence(ctx.thenStatements.asScala)
+
+    val overallGraph = if (ctx.ELSE == null) {
+      // Collect all the additional blocks and sub-graphs into a common structure.
+      val allNodesGraph =
+        Graph[BasicBlock, LDiEdge](expressionBlock, emptyBlock) union thenBodyGraph
+
+      // Connect the additional blocks as appropriate.
+      allNodesGraph +
+        LDiEdge(expressionBlock, thenBodyEntry)('T') +
+        LDiEdge(expressionBlock, emptyBlock)('F') +
+        LDiEdge(thenBodyExit, emptyBlock)('U')
+    }
+    else {
+      val ControlFlowGraph(elseBodyEntry, elseBodyGraph, elseBodyExit) =
+        combineStatementSequence(ctx.elseStatements.asScala)
+
+      // Collect all the additional blocks and sub-graphs into a common structure.
+      val allNodesGraph =
+        Graph[BasicBlock, LDiEdge](expressionBlock, emptyBlock) union thenBodyGraph union elseBodyGraph
+
+      // Connect the additional blocks as appropriate.
+      allNodesGraph +
+        LDiEdge(expressionBlock, thenBodyEntry)('T') +
+        LDiEdge(expressionBlock, elseBodyEntry)('F') +
+        LDiEdge(thenBodyExit, emptyBlock)('U') +
+        LDiEdge(elseBodyExit, emptyBlock)('U')
+    }
+
+    // Return the overall CFG with properly specified entry and exit blocks.
+    ControlFlowGraph(expressionBlock, overallGraph, emptyBlock)
   }
 
 
   override def visitIteration_statement(
     ctx: AdaParser.Iteration_statementContext): ControlFlowGraph = {
 
+    // Create additional blocks and sub-graphs as needed.
     val expressionBlock = BasicBlock(List(), Some(ctx.expression))
-    val nullBlock = BasicBlock(List(), None)
+    val emptyBlock = BasicBlock(List(), None)
     val ControlFlowGraph(bodyEntry, bodyGraph, bodyExit) =
       combineStatementSequence(ctx.statement.asScala)
-    val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, nullBlock) union bodyGraph
+
+    // Collect all the additional blocks and sub-graphs into a common structure.
+    val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, emptyBlock) union bodyGraph
+
+    // Connect the additional blocks as appropriate.
     val overallGraph = allNodesGraph +
       LDiEdge(expressionBlock, bodyEntry)('T') +
-      LDiEdge(expressionBlock, nullBlock)('F') +
+      LDiEdge(expressionBlock, emptyBlock)('F') +
       LDiEdge(bodyExit, expressionBlock)('U')
-    ControlFlowGraph(expressionBlock, overallGraph, nullBlock)
+
+    // Return the overall CFG with properly specified entry and exit blocks.
+    ControlFlowGraph(expressionBlock, overallGraph, emptyBlock)
   }
 
 
   override def visitNull_statement(
     ctx: AdaParser.Null_statementContext): ControlFlowGraph = {
 
-    val nullBlock = BasicBlock(List(), None)
-    ControlFlowGraph(nullBlock, Graph[BasicBlock, LDiEdge](nullBlock), nullBlock)
+    val emptyBlock = BasicBlock(List(), None)
+    ControlFlowGraph(emptyBlock, Graph[BasicBlock, LDiEdge](emptyBlock), emptyBlock)
   }
 
 }

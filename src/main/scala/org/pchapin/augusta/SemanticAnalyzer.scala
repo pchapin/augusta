@@ -74,12 +74,18 @@ class SemanticAnalyzer(
 
 
   override def exitConditional_statement(ctx: AdaParser.Conditional_statementContext): Unit = {
-    for (conditionContext <- ctx.expression.asScala) {
-      if (conditionContext.expressionType != "Boolean") {
-        typeError(
-          "Controlling expression of conditional must have type Boolean",
-          getTopNode(conditionContext))
-      }
+     if (ctx.expression.expressionType != "Boolean") {
+      typeError(
+        "Controlling expression of conditional must have type Boolean",
+        getTopNode(ctx.expression))
+    }
+   }
+
+  override def exitElsif_fragment(ctx: AdaParser.Elsif_fragmentContext): Unit = {
+    if (ctx.expression.expressionType != "Boolean") {
+      typeError(
+        "Controlling expression of conditional must have type Boolean",
+        getTopNode(ctx.expression))
     }
   }
 

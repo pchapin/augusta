@@ -44,10 +44,17 @@ assignment_statement
     :   left_expression ASSIGNMENT expression ';';
 
 conditional_statement
-    :   IF expression THEN statement+
-       (ELSIF expression THEN statement+)*
-       (ELSE statement+)?
+    :   IF expression THEN thenStatements+=statement+
+       (elsif_fragment)*
+       (ELSE elseStatements+=statement+)?
         END IF ';';
+
+// The problem with including elsif_fragment in the rule above is that I don't know how to
+// distinguish the batches of statements in the various ELSIF parts. Unfortunately when building
+// the CFG this rule seems to require two different exit points: one leading to the next ELSE if
+// the expression is False, and one leading to the overall end when the statement list completes.
+elsif_fragment
+    :   ELSIF expression THEN statement+;
 
 iteration_statement
     :   WHILE expression LOOP statement+ END LOOP ';';
