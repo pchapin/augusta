@@ -2,9 +2,19 @@ import Dependencies._
 
 enablePlugins(Antlr4Plugin)
 
-ThisBuild / organization := "org.pchapin"
-ThisBuild / version      := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion := "2.12.8"
+ThisBuild / organization  := "org.pchapin"
+ThisBuild / version       := "0.1.0-SNAPSHOT"
+ThisBuild / scalaVersion  := "2.12.8"
+ThisBuild / scalacOptions :=
+  Seq("-encoding", "UTF-8",
+      "-feature",
+      "-deprecation",
+      "-unchecked",
+      "-Ywarn-adapted-args",
+      "-Ywarn-dead-code",
+      "-Ywarn-infer-any",
+      "-Ywarn-unused-import",
+      "-Ywarn-value-discard")
 
 logBuffered in Test := false
 
