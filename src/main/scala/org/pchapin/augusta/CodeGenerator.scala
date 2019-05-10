@@ -144,8 +144,39 @@ class CodeGenerator(CFG: ControlFlowGraph, symbolTable: SymbolTable, reporter: R
       val assignments = for (statement <- block.assignments) yield {
         LLVMGenerator.visit(statement)
       }
-      // TODO: Fix the terminator instruction and label.
-      L_Block(assignments, L_Ret(0: Long), "labelMe")
+      val Some(innerNode) = CFG.graph.find(block)
+      innerNode.outDegree match {
+
+        // No outgoing edges. This must be the exit block of the graph.
+        case 0 =>
+          L_Block(assignments, L_Ret(0: Long), L_Label(block.label))
+
+        // One outgoing edge. It must be a 'U' edge.
+        // TODO: Check that the label on the outgoing edge is really 'U'.
+        case 1 =>
+          val edges = innerNode.edges
+          val targetInnerNode = edges.head.to  // This works because there is only one edge.
+          L_Block(
+            assignments, L_Br(L_Label(targetInnerNode.toOuter.label)), L_Label(block.label))
+
+        // Two outgoing edges. They must be 'T' and 'F'.
+        // TODO: Check that the labels do exist as expected.
+        case 2 =>
+          val edges = innerNode.edges
+          val Some(trueEdge)  = edges.find( _.label == 'T' )
+          val Some(falseEdge) = edges.find( _.label == 'F' )
+          val trueTargetInnerNode = trueEdge.to
+          val falseTargetInnerNode = falseEdge.to
+          val Some(conditionalExpression) = block.condition
+          val expressionAST = LLVMGenerator.visit(conditionalExpression)
+          L_Block(
+            assignments,
+            L_BrCond(
+              expressionAST,
+              L_Label(trueTargetInnerNode.toOuter.label),
+              L_Label(falseTargetInnerNode.toOuter.label)),
+            L_Label(block.label))
+      }
     }
 
     val generatedBlocks = for (node <- CFG.graph.nodes) yield makeBasicBlockAST(node)

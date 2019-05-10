@@ -135,7 +135,7 @@ class CFGBuilder(
 }
 
 
-object CGFBuilder {
+object CFGBuilder {
 
   /**
    * Method that optimizes the CFG by 1) removing all possible null blocks, and 2) combining
@@ -150,4 +150,29 @@ object CGFBuilder {
     CFG
   }
 
+
+  /**
+    * Method that traverses the CFG and creates labels for each basic block in the CFG. These
+    * labels are used during code generation as the target labels for each basic block, for
+    * example when generating assembly language.
+    * 
+    * It is important that this method start the label numbering at one and not zero. This is
+    * because the label "block0" is treated in a special way in the code generator. It is
+    * reserved for the prologue block of a subprogram where local variables are allocated.
+    * 
+    * @param CFG The control flow graph to label.
+    * @return The labeled CFG.
+    */
+  def label(CFG: ControlFlowGraph): ControlFlowGraph = {
+    var blockNumber = 1
+    val ControlFlowGraph(entryBlock, graph, _) = CFG
+    val initialInnerNode = graph get entryBlock
+    for (node <- initialInnerNode.outerNodeTraverser) {
+      node.label = "block" + blockNumber
+      blockNumber += 1
+    }
+    CFG
+  }
+
 }
+

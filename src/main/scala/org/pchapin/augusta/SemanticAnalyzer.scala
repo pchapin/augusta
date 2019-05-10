@@ -1,6 +1,5 @@
 package org.pchapin.augusta
 
-import org.pchapin.augusta.SymbolTable.SymbolTableException
 import org.antlr.v4.runtime.tree.TerminalNode
 import org.antlr.v4.runtime.ParserRuleContext
 
@@ -8,8 +7,6 @@ class SemanticAnalyzer(
   symbolTable: BasicSymbolTable,
   reporter   : Reporter) extends AdaBaseListener {
 
-  import AdaTypes._
-  import scala.collection.JavaConverters._
 
   // Processing High Level Grammar
   // -----------------------------

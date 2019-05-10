@@ -3,7 +3,6 @@ package org.pchapin.augusta
 import org.antlr.v4.runtime._
 import org.antlr.v4.runtime.tree._
 import org.bitbucket.inkytonik.kiama.util.OutputEmitter
-import org.slem.IRTree.L_FunctionDefinition
 import org.slem.IRTreeEncoder
 
 /**
@@ -65,7 +64,8 @@ object Main {
       // Build a control flow graph.
       val graphBuilder = new CFGBuilder(symbolTable, reporter)
       val rawCFG = graphBuilder.visit(tree)
-      val CFG = CGFBuilder.optimize(rawCFG)
+      val optimizedCFG = CFGBuilder.optimize(rawCFG)
+      val CFG = CFGBuilder.label(optimizedCFG)
       println(CFG)
 
       // Do a liveness analysis on the CFG.
