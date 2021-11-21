@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------
 // FILE   : Data.scala
 // SUMMARY: Interface to date implementations.
-// AUTHOR : Peter C. Chapin <PChapin@vtc.vsc.edu>
+// AUTHOR : Peter C. Chapin <pchapin@vtc.edu>
 // ------------------------------------------------------------------------
 package org.pchapin.dragon
 
@@ -18,7 +18,7 @@ trait Date {
   def previous: Date
 
   // Operations defined in terms of the abstract methods above.
-  def isLeap = Date.isLeapYear(year)
+  def isLeap: Boolean = Date.isLeapYear(year)
 }
 
 object Date {
@@ -39,7 +39,7 @@ object Date {
    * the range 1900 to 2099 (inclusive) are supported; dates outside that range are considered
    * invalid.
    */
-  def valid(year: Int, month: Int, day: Int) = {
+  def valid(year: Int, month: Int, day: Int): Boolean = {
 
     // Return true if the day is out of bounds for the given (year, month).
     def outOfBoundsDay(year: Int, month: Int, day: Int): Boolean = {
@@ -62,7 +62,7 @@ object Date {
    *
    * @return True if the given year is a leap year and false otherwise.
    */
-  def isLeapYear(year: Int) = {
+  def isLeapYear(year: Int): Boolean = {
     if (year % 4 != 0) false
     else if (year % 400 == 0) true
     else if (year % 100 == 0) false

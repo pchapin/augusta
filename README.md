@@ -1,7 +1,7 @@
 Augusta
 =======
 
-Augusta is an open source Ada 2012/2020 compiler written in Scala that targets LLVM. This
+Augusta is an open source Ada 2012/2022 compiler written in Scala that targets LLVM. This
 document is a quick description of how to get set up for Augusta development. For more
 information see the documentation in the 'doc' folder, particularly the file Build.xml. The
 GitHub wiki (or the wiki folder in this repository) may contain additional information for
@@ -42,11 +42,11 @@ related versions would probably also work, but have not been tested.
 + Several third party libraries are used by Augusta. The jar files for those libraries are not
   included as part of this repository, but are downloaded by SBT during the build process.
 
-+ [Java Development Kit](https://www.oracle.com/technetwork/java/javase/downloads/index.html) (11.x.y)
++ [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (17.0.1)
 
   There are some Java source files in Augusta so a JRE is not sufficient.
   
-+ [SBT](https://www.scala-sbt.org/) (1.2.8)
++ [SBT](https://www.scala-sbt.org/) (1.5.5)
 
   SBT is the build tool we use. It knows how to download the various libraries and certain other
   components that are required (such as Scala).
@@ -64,19 +64,15 @@ related versions would probably also work, but have not been tested.
   download and unpack the DocBook XML DTD distribution to any suitable location on your system.
   Next continue with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2018.3.5)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2021.2.3)
 
   Officially we use the Community Edition, but some of us use the Ultimate edition. You will
   need to download and install the Scala plugin from the plugin control panel (or during the
   installation of IntelliJ when you are given the opportunity to install popular plugins). You
   may have to configure IntelliJ to find your Java JDK.
 
-  The Augusta project assumes a suitable Scala SDK has been configured. This can be done from
-  inside IntelliJ by pointing the IDE to the folder where Scala has been installed. If Scala has
-  been downloaded by SBT, that location will most likely be in the <tt>.ivy2</tt> cache folder.
-
   You also need to define the IntelliJ path variable `DOCBOOK_XML` to point at the folder
-  containing the DocBook XML 4.5. DTD.
+  containing the DocBook 5.1 RelaxNG schema.
 
   We also recommend that you install the ANTLR v4 grammar support plugin and the Markdown
   editing plugin from the IntelliJ plugins repository.
@@ -89,7 +85,7 @@ related versions would probably also work, but have not been tested.
   outside the scope of this document. See the LLVM web site or the file Build.xml in the
   documentation folder for more information.
 
-+ [GNAT](http://www.adacore.com/community) (GNAT-Community-2018)
++ [GNAT](http://www.adacore.com/community) (GNAT-Community-2021)
 
   The Augusta run time system is largely written in Ada. Since Augusta is currently not mature
   enough to compile it, GNAT is (temporarily) used for run time system development.
@@ -116,10 +112,10 @@ and tested using GNAT with GPS as the integrated development environment. Load s
 the RTS/SL/src folder into GPS to build the current version of the standard library. At the time
 of this writing the runtime library in RTS/RL is empty.
 
-All of these projects can be compiled via SBT. The SBT build control file has all the necessary
-dependencies declared so that building one project should trigger the download of the required
-libraries and the building of required subprojects. The usual SBT tasks can be used to build API
-(internal) documentation, run tests, and so forth. See the [SBT
+The Dragon and Tiger projects can be compiled via SBT. The SBT build control file has all the
+necessary dependencies declared so that building one project should trigger the download of the
+required libraries and the building of required subprojects. The usual SBT tasks can be used to
+build API (internal) documentation, run tests, and so forth. See the [SBT
 documentation](https://www.scala-sbt.org/documentation.html) for more details.
 
 ### Documentation
@@ -154,4 +150,4 @@ bugs, contributing code, or generally giving words of support you can follow the
 contact me at one or more of the resources below:
 
 Peter C. Chapin  
-chapinp@acm.org  
+peter@pchapin.org  

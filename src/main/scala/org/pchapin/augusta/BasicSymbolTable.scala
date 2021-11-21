@@ -13,7 +13,7 @@ class BasicSymbolTable extends SymbolTable {
   typeMap.put("Integer", AdaTypes.IntegerRep)
   typeMap.put("Boolean", AdaTypes.BooleanRep)
 
-  def addObjectName(name: String, typeName: String) {
+  def addObjectName(name: String, typeName: String): Unit= {
     if (objectMap.get(name) != None) {
       throw new SymbolTable.DuplicateObjectNameException("Duplicate object name: " + name)
     }
@@ -24,12 +24,12 @@ class BasicSymbolTable extends SymbolTable {
       throw new SymbolTable.ConflictingNameException("Already a type: " + name)
     }
     else {
-      objectMap.put(name, typeName)
+      objectMap.put(name, typeName): @annotation.nowarn("msg=discarded non-Unit value")
     }
   }
 
 
-  def addTypeName(name: String, representation: AdaTypes.TypeRep) {
+  def addTypeName(name: String, representation: AdaTypes.TypeRep): Unit = {
     if (typeMap.get(name) != None) {
       throw new SymbolTable.DuplicateTypeNameException("Duplicate type name: " + name)
     }
@@ -37,7 +37,7 @@ class BasicSymbolTable extends SymbolTable {
       throw new SymbolTable.ConflictingNameException("Already an object: " + name)
     }
     else {
-      typeMap.put(name, representation)
+      typeMap.put(name, representation): @annotation.nowarn("msg=discarded non-Unit value")
     }
   }
 

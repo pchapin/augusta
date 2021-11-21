@@ -5,10 +5,11 @@
 // ------------------------------------------------------------------------
 package org.pchapin.dragon
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest.*
+import funsuite.*
+import matchers.*
 
-class TimeSuite extends FunSuite with Assertions with Matchers {
+class TimeSuite extends AnyFunSuite with Assertions with should.Matchers {
 
   test("Time constructor") {
 

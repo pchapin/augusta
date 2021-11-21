@@ -4,7 +4,7 @@
 
 <!-- FILE        : Augusta.xml
      SUBJECT     : Master document for the Augusta documentation set.
-     AUTHOR      : (C) Copyright 2018 by Peter C. Chapin <chapinp@acm.org>
+     AUTHOR      : (C) Copyright 2021 by Peter C. Chapin <chapinp@acm.org>
 
 This is the documentation for the Augusta Ada compiler. -->
 
@@ -26,7 +26,7 @@ This is the documentation for the Augusta Ada compiler. -->
     </author>
     <authorinitials>pcc</authorinitials>
     <copyright>
-      <year>2018</year>
+      <year>2021</year>
       <holder>Peter C. Chapin</holder>
     </copyright>
     <legalnotice>
@@ -41,10 +41,10 @@ This is the documentation for the Augusta Ada compiler. -->
     <revhistory>
       <revision>
         <revnumber>1.0</revnumber>
-        <date>2020-12-31</date>
+        <date>2025-12-31</date>
         <authorinitials>pcc</authorinitials>
         <revremark>This is a work in progress. Release 1.0 is scheduled for the end of
-          2020.</revremark>
+          2025.</revremark>
       </revision>
     </revhistory>
   </info>
@@ -61,7 +61,7 @@ This is the documentation for the Augusta Ada compiler. -->
     <para>Augusta is a long term project. Since I can only work on it in my spare time and since
       I'm not expecting many contributors at first, I anticipate it taking years before Augusta
       reaches any level of maturity. Yet to put a concrete time line on my work I have decided
-      to release version 1.0 of Augusta on December 31, 2020. At that time I intend to have a
+      to release version 1.0 of Augusta on December 31, 2025. At that time I intend to have a
       usable compiler ready, for some reasonable definition of "usable."</para>
 
     <para>Augusta is written primarily in the Scala programming language. I chose Scala because

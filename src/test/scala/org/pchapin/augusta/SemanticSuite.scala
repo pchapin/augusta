@@ -1,13 +1,14 @@
 package org.pchapin.augusta
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest._
+import funsuite._
+import matchers._
 import java.io.{File, FileInputStream}
 
 import org.antlr.v4.runtime.{CharStreams, CommonTokenStream}
 import org.antlr.v4.runtime.tree.ParseTreeWalker
 
-class SemanticSuite extends FunSuite with Assertions with Matchers {
+class SemanticSuite extends AnyFunSuite with Assertions with should.Matchers {
   import SemanticSuite._
   
   /**
@@ -15,7 +16,7 @@ class SemanticSuite extends FunSuite with Assertions with Matchers {
    * 
    * @param testCaseNames An array of file names representing the test cases.
    */
-  private def doTests(testCaseNames: Array[String]) {
+  private def doTests(testCaseNames: Array[String]): Unit = {
     
     for (testCaseName <- testCaseNames) {
       val baseName  = testCaseName.substring(0, testCaseName.lastIndexOf('.'))

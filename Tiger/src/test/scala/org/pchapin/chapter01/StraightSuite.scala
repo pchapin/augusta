@@ -6,14 +6,15 @@
 //-----------------------------------------------------------------------
 package org.pchapin.chapter01
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest.*
+import funsuite.*
+import matchers.*
 
-class StraightSuite extends FunSuite with Assertions with Matchers {
-  import Straight._
+class StraightSuite extends AnyFunSuite with Assertions with should.Matchers {
+  import Straight.*
 
   // Nested print statements.
-  val program0 =
+  val program0: PrintStatement =
     PrintStatement(List(
       IdentifierExpression("a"),
       SequenceExpression(
@@ -27,14 +28,14 @@ class StraightSuite extends FunSuite with Assertions with Matchers {
     ))
 
   // An empty print statement.
-  val program1 = PrintStatement(List())
+  val program1: PrintStatement = PrintStatement(List())
 
   // A simple program without print statements.
-  val program2 = AssignmentStatement(
+  val program2: AssignmentStatement = AssignmentStatement(
     "a", OperationExpression(IdentifierExpression("b"), Plus, IdentifierExpression("c")))
 
   // From MCIML, Chapter 1.
-  val program3 =
+  val program3: CompoundStatement =
     CompoundStatement(
       AssignmentStatement("a", OperationExpression(
         NumericLiteralExpression(5), Plus, NumericLiteralExpression(3))),

@@ -1,9 +1,10 @@
 package org.pchapin.dragon
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest.*
+import funsuite.*
+import matchers.*
 
-class DFASuite extends FunSuite with Assertions with Matchers {
+class DFASuite extends AnyFunSuite with Assertions with should.Matchers {
 
   test("Overall Test") {
     // Consider the RE: (a|b)*c

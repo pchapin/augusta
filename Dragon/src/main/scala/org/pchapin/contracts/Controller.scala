@@ -1,7 +1,7 @@
 //-----------------------------------------------------------------------
 // FILE    : Controller.scala
 // SUBJECT : Object containing methods that allow configuration of contract behaviors.
-// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <PChapin@vtc.vsc.edu>
+// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <pchapin@vtc.edu>
 //
 //-----------------------------------------------------------------------
 package org.pchapin.contracts
@@ -20,7 +20,7 @@ object Controller {
    * @param state If true then preconditions are evaluated; otherwise they are not evaluated. In
    * the later case the associated block is always executed.
    */
-  def preconditionsEvaluated(state: Boolean) {
+  def preconditionsEvaluated(state: Boolean): Unit = {
     preconditionsActive = state
   }
 }

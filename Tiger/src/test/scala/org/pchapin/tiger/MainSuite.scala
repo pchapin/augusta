@@ -6,10 +6,11 @@
 //-----------------------------------------------------------------------
 package org.pchapin.tiger
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest.*
+import funsuite.*
+import matchers.*
 
-class MainSuite extends FunSuite with Assertions with Matchers {
+class MainSuite extends AnyFunSuite with Assertions with should.Matchers {
 
   test("Basic configuration") {
     println("Meow")

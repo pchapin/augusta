@@ -35,7 +35,7 @@ class StackedSymbolTable extends SymbolTable {
    * needs to be removed. The names in the scope we are leaving are no longer accessible.
    */
   def exitScope(): Unit = {
-    stack.pop()
+    stack.pop(): @annotation.nowarn("msg=discarded non-Unit value")
   }
 
 

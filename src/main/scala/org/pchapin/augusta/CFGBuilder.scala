@@ -1,6 +1,6 @@
 package org.pchapin.augusta
 
-import scala.collection.JavaConverters._    // ctx is a java.util.List, not a scala.List.
+import scala.jdk.CollectionConverters._    // ctx is a java.util.List, not a scala.List.
 import scalax.collection.Graph
 import scalax.collection.GraphPredef._
 import scalax.collection.edge.LDiEdge
@@ -32,7 +32,7 @@ class CFGBuilder(
           // Make a CFG by combining the left and right CFGs in a straight line.
           ControlFlowGraph(
             leftEntry,
-            (leftGraph union rightGraph) + LDiEdge(leftExit, rightEntry)('U'),
+            (leftGraph union rightGraph) union Set(LDiEdge(leftExit, rightEntry)('U')),
             rightExit)
       }
     }
@@ -76,10 +76,10 @@ class CFGBuilder(
         Graph[BasicBlock, LDiEdge](expressionBlock, emptyBlock) union thenBodyGraph
 
       // Connect the additional blocks as appropriate.
-      allNodesGraph +
-        LDiEdge(expressionBlock, thenBodyEntry)('T') +
-        LDiEdge(expressionBlock, emptyBlock)('F') +
-        LDiEdge(thenBodyExit, emptyBlock)('U')
+      allNodesGraph union
+        Set(LDiEdge(expressionBlock, thenBodyEntry)('T'),
+            LDiEdge(expressionBlock, emptyBlock)('F'),
+            LDiEdge(thenBodyExit, emptyBlock)('U'))
     }
     else {
       val ControlFlowGraph(elseBodyEntry, elseBodyGraph, elseBodyExit) =
@@ -90,11 +90,11 @@ class CFGBuilder(
         Graph[BasicBlock, LDiEdge](expressionBlock, emptyBlock) union thenBodyGraph union elseBodyGraph
 
       // Connect the additional blocks as appropriate.
-      allNodesGraph +
-        LDiEdge(expressionBlock, thenBodyEntry)('T') +
-        LDiEdge(expressionBlock, elseBodyEntry)('F') +
-        LDiEdge(thenBodyExit, emptyBlock)('U') +
-        LDiEdge(elseBodyExit, emptyBlock)('U')
+      allNodesGraph union
+        Set(LDiEdge(expressionBlock, thenBodyEntry)('T'),
+            LDiEdge(expressionBlock, elseBodyEntry)('F'),
+            LDiEdge(thenBodyExit, emptyBlock)('U'),
+            LDiEdge(elseBodyExit, emptyBlock)('U'))
     }
 
     // Return the overall CFG with properly specified entry and exit blocks.
@@ -115,10 +115,10 @@ class CFGBuilder(
     val allNodesGraph = Graph[BasicBlock, LDiEdge](expressionBlock, emptyBlock) union bodyGraph
 
     // Connect the additional blocks as appropriate.
-    val overallGraph = allNodesGraph +
-      LDiEdge(expressionBlock, bodyEntry)('T') +
-      LDiEdge(expressionBlock, emptyBlock)('F') +
-      LDiEdge(bodyExit, expressionBlock)('U')
+    val overallGraph = allNodesGraph union
+      Set(LDiEdge(expressionBlock, bodyEntry)('T'),
+          LDiEdge(expressionBlock, emptyBlock)('F'),
+          LDiEdge(bodyExit, expressionBlock)('U'))
 
     // Return the overall CFG with properly specified entry and exit blocks.
     ControlFlowGraph(expressionBlock, overallGraph, emptyBlock)

@@ -1,12 +1,13 @@
 package org.pchapin.augusta
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest._
+import funsuite._
+import matchers._
 import java.io.{File, FileInputStream}
 
 import org.antlr.v4.runtime.{CharStreams, CommonTokenStream}
 
-class ParserSuite extends FunSuite with Assertions with Matchers {
+class ParserSuite extends AnyFunSuite with Assertions with should.Matchers {
   import ParserSuite._
   
   /**
@@ -17,7 +18,7 @@ class ParserSuite extends FunSuite with Assertions with Matchers {
    * start symbol.
    */
   private def doTests(testCaseNames: Array[String],
-                      doParse      : AdaParser => Any) {
+                      doParse      : AdaParser => Any): Unit = {
     
     for (testCaseName <- testCaseNames) {
       val testCase = new File(testCaseName)
@@ -35,11 +36,11 @@ class ParserSuite extends FunSuite with Assertions with Matchers {
     }
   }
 
-  private def doWholeFileTests(testCaseNames: Array[String]) {
+  private def doWholeFileTests(testCaseNames: Array[String]): Unit = {
     doTests(testCaseNames, _.compilation_unit())
   }
 
-  private def doBlockTests(testCaseNames: Array[String]) {
+  private def doBlockTests(testCaseNames: Array[String]): Unit = {
     doTests(testCaseNames, _.block())
   }
 

@@ -1,16 +1,17 @@
 //-----------------------------------------------------------------------
 // FILE    : ContractsSuite.scala
 // SUBJECT : Tests for package edu.vtc.contracts
-// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <PChapin@vtc.vsc.edu>
+// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <pchapin@vtc.edu>
 //
 //-----------------------------------------------------------------------
 
 package org.pchapin.contracts
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest.*
+import funsuite.*
+import matchers.*
 
-class ContractsSuite extends FunSuite with Assertions with Matchers {
+class ContractsSuite extends AnyFunSuite with Assertions with should.Matchers {
 
   test("Basic Precondition Test") {
 

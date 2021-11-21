@@ -15,7 +15,7 @@ trait Reporter {
    * @param column The column on the line where the error was detected.
    * @param message The human readable message describing the error.
    */
-  def reportError(line: Int, column: Int, message: String)
+  def reportError(line: Int, column: Int, message: String): Unit
 
   /**
    * Used to report a warning condition. Warnings do not prevent code from being generated.
@@ -24,7 +24,7 @@ trait Reporter {
    * @param column THe column on hte line where the warning was detected.
    * @param message THe human readable message describing the warning.
    */
-  def reportWarning(line: Int, column: Int, message: String)
+  def reportWarning(line: Int, column: Int, message: String): Unit
 }
 
 

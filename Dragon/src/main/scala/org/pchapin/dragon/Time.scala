@@ -1,7 +1,7 @@
 // ------------------------------------------------------------------------
 // FILE   : Time.scala
 // SUMMARY: Time of day support.
-// AUTHOR : Peter C. Chapin <PChapin@vtc.vsc.edu>
+// AUTHOR : Peter C. Chapin <pchapin@vtc.edu>
 // ------------------------------------------------------------------------
 package org.pchapin.dragon
 

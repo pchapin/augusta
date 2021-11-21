@@ -2,8 +2,6 @@ package org.pchapin.augusta
 
 import org.antlr.v4.runtime._
 import org.antlr.v4.runtime.tree._
-import org.bitbucket.inkytonik.kiama.util.OutputEmitter
-import org.slem.IRTreeEncoder
 
 /**
   * The main object of the Augusta. This object contains the main method and other methods that
@@ -12,12 +10,11 @@ import org.slem.IRTreeEncoder
 object Main {
   private val reporter = new BasicConsoleReporter
 
-
   private object Mode {
     final val CHECK = 0
     final val LLVM  = 1
   }
-
+  
 
   /**
     * The entry point of the program.
@@ -69,20 +66,17 @@ object Main {
       println(CFG)
 
       // Do a liveness analysis on the CFG.
-      //Analysis.liveness(CFG)
+      Analysis.liveness(CFG)
       // TODO: Check to see if there are any variables that might be used uninitialized.
 
-      // Do what must be done.
+      // Generate code.
       mode match {
         case Mode.CHECK =>
           // Do nothing more (semantic analysis is all that is necessary).
 
         case Mode.LLVM =>
           val myCodeGenerator = new CodeGenerator(CFG, symbolTable, reporter)
-          val LLVMAbstractSyntax = myCodeGenerator.makeAST
-          val output = new OutputEmitter
-          val encoder = new IRTreeEncoder(output)
-          encoder.encodeFunctionDefinition(LLVMAbstractSyntax)
+          // TODO: Finish me!
       }
     }
   }

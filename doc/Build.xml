@@ -33,22 +33,21 @@
     <title>Build Tools</title>
 
     <varlistentry>
-      <term><link
-          xlink:href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java
+      <term><link xlink:href="https://www.oracle.com/java/technologies/downloads/">Java
           Development Kit</link></term>
       <listitem>
-        <para>We use JDK v11.x.y. If you use a different JDK than for Java 11, you will have to
-          adjust the IntelliJ project definition. A full JDK is necessary, and not just a JRE,
-          because the Augusta code base includes some Java files.</para>
+        <para>We use JDK v17.0.1. A full JDK is necessary, and not just a JRE, because the
+          Augusta code base includes some Java files.</para>
       </listitem>
     </varlistentry>
 
     <varlistentry>
       <term><link xlink:href="http://www.scala-lang.org/">Scala Compiler</link></term>
       <listitem>
-        <para>We use Scala v2.12.8. The Scala compiler is executed indirectly via SBT. You do
-          not need to download and install it separately, although you might find it useful to
-          have a separate installation available.</para>
+        <para>We use Scala v2.13.7 with the expectation of migrating to Scala 3 once all our
+          dependent libraries have caught up. The Scala compiler is executed indirectly via SBT.
+          You do not need to download and install it separately, although you might find it
+          useful to have a separate installation available.</para>
       </listitem>
     </varlistentry>
 
@@ -71,16 +70,15 @@
     <varlistentry>
       <term><link xlink:href="http://www.jetbrains.com/idea/">IntelliJ IDEA</link></term>
       <listitem>
-        <para>Officially we use IntelliJ IDEA, Community Edition, version 2018.3.5 with the
+        <para>Officially we use IntelliJ IDEA, Community Edition, version 2021.2.3 with the
           IntelliJ Scala plugin developed by JetBrains as our integrated development
           environment. The plugin can be installed from inside IntelliJ once the main IDE is
           installed. Some of us use the Ultimate edition of IntelliJ with no problems.</para>
 
-        <para>Unofficially some of us use the Ultimate edition of IntelliJ IDEA. It is also
-          entirely feasible to do Augusta development without an IDE and use instead just a text
-          editor and the SBT command console.</para>
+        <para>It is also entirely feasible to do Augusta development without an IDE and use
+          instead just a text editor and the SBT command console.</para>
 
-        <para>In addition you might consider configuring a path variables in IntelliJ. It is
+        <para>In addition you might consider configuring a path variable in IntelliJ. It is
           DOCBOOK_XML and it should point at the folder containing your DocBook schema. It is
           used by IntelliJ's DocBook editor to locate the schema so it can do validation.</para>
 
@@ -102,7 +100,7 @@
 
     <varlistentry>
       <term><link xlink:href="http://www.adacore.com/community">GNAT Community
-        2018</link></term>
+        2021</link></term>
       <listitem>
         <para>Currently the Augusta runtime system is compiled with the GNAT Ada compiler. This
           is necessary because Augusta is not yet mature enough to compile its runtime
@@ -114,9 +112,9 @@
       <term><link xlink:href="http://jenkins-ci.org/">Jenkins</link></term>
       <listitem>
         <para>We use Jenkins as our continuous integration system. Our practice is to run
-          Jenkins from the <link xlink:href="http://glassfish.java.net/">Glassfish</link>
+          Jenkins from the <link xlink:href="http://tomcat.apache.org/">Tomcat</link>
           application server. You do not need to set up Jenkins if you are a single developer.
-            <emphasis>TODO: Give more details about setting up Glassfish and
+            <emphasis>TODO: Give more details about setting up Tomcat and
           Jenkins.</emphasis></para>
       </listitem>
     </varlistentry>

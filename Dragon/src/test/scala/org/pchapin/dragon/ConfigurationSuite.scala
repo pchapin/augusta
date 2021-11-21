@@ -6,10 +6,11 @@
 //-----------------------------------------------------------------------
 package org.pchapin.dragon
 
-import org.scalatest.{Assertions, FunSuite}
-import org.scalatest.Matchers
+import org.scalatest.*
+import funsuite.*
+import matchers.*
 
-class ConfigurationSuite extends FunSuite with Assertions with Matchers {
+class ConfigurationSuite extends AnyFunSuite with Assertions with should.Matchers {
 
   test("Basic configuration") {
     // TODO: Enhance the ConfigurationSettings test.

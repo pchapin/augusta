@@ -1,11 +1,11 @@
 //-----------------------------------------------------------------------
 // FILE    : ConfigurationSettings.scala
 // SUBJECT : A facility to manage a program's configuration
-// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <PChapin@vtc.vsc.edu>
+// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <pchapin@vtc.edu>
 //-----------------------------------------------------------------------
 package org.pchapin.dragon
 
-import java.io._
+import java.io.*
 
 /**
  * Class to manage a collection of (name, value) pairs that can be used to hold the
@@ -17,7 +17,7 @@ import java.io._
  * the value of the setting into whatever form the application finds convenient.
  */
 class ConfigurationSettings(private val configurableItems: Map[String, String => String]) {
-  import ConfigurationSettings._
+  import ConfigurationSettings.*
 
   /** Contains a map of (name, value) pairs. */
   private var settings = Map[String, String]()
@@ -30,7 +30,7 @@ class ConfigurationSettings(private val configurableItems: Map[String, String =>
    * @throws BadNameException if a name is encountered that is not configurable.
    * @throws BadValidationException if a value does not pass validation.
    */
-  def setDefaults(defaultValues: Map[String, String]) {
+  def setDefaults(defaultValues: Map[String, String]): Unit = {
     for ((name, value) <- defaultValues) {
       put(name, value)
     }
@@ -51,7 +51,7 @@ class ConfigurationSettings(private val configurableItems: Map[String, String =>
     object States extends Enumeration {
       val Normal, Quote = Value
     }
-    import States._
+    import States.*
 
     var currentState = Normal
     var index = -1
@@ -87,7 +87,7 @@ class ConfigurationSettings(private val configurableItems: Map[String, String =>
    * @throws BadNameException if a name is encountered that is not configurable.
    * @throws BadValidationException if any of the file members fail to pass validation.
    */
-  def readConfigurationFile(fileName: String) {
+  def readConfigurationFile(fileName: String): Unit = {
     // TODO: This method does not allow the value to contain an '=' character.
     // TODO: If a name is found that is not among the set of allowed configurable items, it is silently ignored.
 
@@ -98,12 +98,12 @@ class ConfigurationSettings(private val configurableItems: Map[String, String =>
       while (line != null) {
         line = killComments(line)
         line = line.trim
-        if (line.length != 0) {
+        if (line.nonEmpty) {
           val fields = line.split("""\s*=\s*""")
 
           // Do some sanity checking on the line. Ignore it if it looks bad.
           if (fields.length == 2          &&
-              fields(0).length >= 1       &&
+              fields(0).nonEmpty          &&
               fields(1).length >= 2       &&
               fields(1).charAt(0) == '\"' &&
               fields(1).charAt(fields(1).length - 1) == '\"') {
@@ -154,7 +154,7 @@ class ConfigurationSettings(private val configurableItems: Map[String, String =>
    * @throws BadNameException if the name does not specify a configurable item.
    * @throws BadValidationException if the value does not pass validation.
    */
-  def put(name: String, value: String) {
+  def put(name: String, value: String): Unit = {
     if (configurableItems.contains(name))
       settings += ( name -> configurableItems(name)(value) )
     else

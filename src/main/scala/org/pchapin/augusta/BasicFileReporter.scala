@@ -12,19 +12,21 @@ class BasicFileReporter(fileName: String) extends Reporter {
   def getErrorCount   = errorCount
   def getWarningCount = warningCount
 
-  def reportError(line: Int, column: Int, message: String) {
+  def reportError(line: Int, column: Int, message: String): Unit = {
     errorCount += 1
-    output.printf("error: (%d, %d) %s%n", new Integer(line), new Integer(column), message)
+    output.printf("error: (%d, %d) %s%n", line, column, message):
+        @annotation.nowarn("msg=discarded non-Unit value")
   }
 
 
-  def reportWarning(line: Int, column: Int, message: String) {
+  def reportWarning(line: Int, column: Int, message: String): Unit = {
     warningCount += 1
-    output.printf("warning: (%d, %d) %s%n", new Integer(line), new Integer(column), message)
+    output.printf("warning: (%d, %d) %s%n", line, column, message):
+        @annotation.nowarn("msg=discarded non-Unit value")
   }
 
 
-  def close() {
+  def close(): Unit = {
     output.close()
   }
 
