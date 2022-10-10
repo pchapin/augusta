@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="16.1">
+<project>
     <meta>
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="16.1" xml:space="preserve">
-                <map>
+            <serialized xml:space="preserve">
+                <serializableOrderedMap>
                     <entry>
                         <String>ant.file.patterns</String>
                         <String>disable.xml</String>
@@ -33,7 +33,11 @@
                         <String>key.text.editor.option.pane</String>
                         <Boolean>true</Boolean>
                     </entry>
-                </map>
+                    <entry>
+                        <String>storage.level.scenario.associations</String>
+                        <Boolean>false</Boolean>
+                    </entry>
+                </serializableOrderedMap>
             </serialized>
         </options>
     </meta>
