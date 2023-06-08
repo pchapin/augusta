@@ -4,8 +4,8 @@ import sbt._
 object Dependencies {
 
   // Versions
-  lazy val scalaTestVersion = "3.2.10"
-  lazy val scalaGraphCoreVersion = "1.13.2"
+  lazy val scalaTestVersion = "3.2.16"
+  lazy val scalaGraphCoreVersion = "1.13.6"
 
   // Kiama and ScalaZ don't appear to have binaries for Scala 2.13.x
   // Fortunately, they are not needed at this time.
@@ -21,8 +21,8 @@ object Dependencies {
   // val scalaz = "org.scalaz" %% "scalaz" % scalazVersion
 
   // Projects
-  val augustaDeps = Seq(scalaGraphCore, scalactic, scalaTest % Test)
-  val tigerDeps   = Seq(scalactic, scalaTest % Test)
-  val dragonDeps  = Seq(scalactic, scalaTest % Test)
+  val augustaDeps: Seq[ModuleID] = Seq(scalaGraphCore, scalactic, scalaTest % Test)
+  val tigerDeps: Seq[ModuleID] = Seq(scalactic, scalaTest % Test)
+  val dragonDeps: Seq[ModuleID] = Seq(scalactic, scalaTest % Test)
 
 }
