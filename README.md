@@ -1,25 +1,21 @@
-Augusta
-=======
+# Augusta
 
 Augusta is an open source Ada 2012/2022 compiler written in Scala that targets LLVM. This
 document is a quick description of how to get set up for Augusta development. For more
-information see the documentation in the 'doc' folder, particularly the file Build.xml. The
-GitHub wiki (or the wiki folder in this repository) may contain additional information for
-Augusta contributors.
+information, see the documentation in the 'doc' folder, particularly the file Build.xml.
 
-Augusta is not even remotely usable at this time. However we intend to keep the system in a
-buildable state so it should always be possible to create the Augusta jar file as well as
+Augusta is not even remotely usable at this time. However, we intend to keep the system in a
+buildable state, so it should always be possible to create the Augusta jar file as well as
 execute whatever tests have been written to date.
 
-Augusta development is done primarily on Linux and Windows. However, we expect it would be
-possible to do Augusta development on any system that supports the prerequisites. Mostly that
+Augusta's development is done on Linux, macOS, and Windows. We expect it would be
+possible to do Augusta development on any system that supports the prerequisites. Mostly, that
 means any system that supports Java and LLVM.
 
 
-Disclaimer
-----------
+## Disclaimer
 
-First let me assure you that we are completely aware that the goal of writing a full featured
+First, let me assure you that we are completely aware that the goal of writing a full-featured
 Ada compiler is unrealistic for us at this time. We are not so naive as to think it is feasible
 given our limited resources. Our true goals are:
 
@@ -29,24 +25,23 @@ given our limited resources. Our true goals are:
 
 This project is done entirely for fun and to learn. To the extent that it satisfies those goals,
 we will judge it as a success. If, at some future time, this project ever attracts enough
-attention and resources to significantly push it foward... well, we can revisit our goals then.
+attention and resources to significantly push it forward... well, we can revisit our goals then.
 
 
-Prerequisites
--------------
+## Prerequisites
 
 The prerequisites necessary for setting up an Augusta development system are listed below. The
-version numbers given are for the specific versions we're using. In most cases other closely
+version numbers given are for the specific versions we're using. In most cases, other closely
 related versions would probably also work, but have not been tested.
 
-+ Several third party libraries are used by Augusta. The jar files for those libraries are not
++ Augusta uses several third party libraries. The jar files for those libraries are not
   included as part of this repository, but are downloaded by SBT during the build process.
 
 + [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (17.0.1)
 
-  There are some Java source files in Augusta so a JRE is not sufficient.
+  There are some Java source files in Augusta, so a JRE is not sufficient.
   
-+ [SBT](https://www.scala-sbt.org/) (1.5.5)
++ [SBT](https://www.scala-sbt.org/) (1.9.0)
 
   SBT is the build tool we use. It knows how to download the various libraries and certain other
   components that are required (such as Scala).
@@ -55,18 +50,18 @@ related versions would probably also work, but have not been tested.
 
   The documentation for Augusta is written in an XML vocabulary called DocBook. The source files
   for the documentation can be read and edited directly in a text editor if necessary. If you
-  want to convert the documentation into some other format (HTML, PDF, etc) you will need a
+  want to convert the documentation into some other format (HTML, PDF, etc.) you will need a
   DocBook tool chain. We use the commercial XML editor <oXygen/>. Open source alternatives
   exist.
 
   It is possible to view and edit the XML source of the documentation from inside IntelliJ (see
-  below). Depending on your needs this may be sufficient. To do this you will first need to
+  below). Depending on your needs, this may be sufficient. To do this, you will first need to
   download and unpack the DocBook XML DTD distribution to any suitable location on your system.
-  Next continue with the installation of IntelliJ as described below.
+  Next, continue with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2021.2.3)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2023.1.2)
 
-  Officially we use the Community Edition, but some of us use the Ultimate edition. You will
+  Officially, we use the Community Edition, but some of us use the Ultimate edition. You will
   need to download and install the Scala plugin from the plugin control panel (or during the
   installation of IntelliJ when you are given the opportunity to install popular plugins). You
   may have to configure IntelliJ to find your Java JDK.
@@ -82,7 +77,7 @@ related versions would probably also work, but have not been tested.
   Augusta generates (will eventually generate) code for the Low Level Virtual Machine (LLVM).
   Only the back-end tools from the LLVM project are needed. None of the front-end compilers
   (gcc, clang, etc) are necessary. Detailed instructions for installing the LLVM tools are
-  outside the scope of this document. See the LLVM web site or the file Build.xml in the
+  outside the scope of this document. See the LLVM website or the file Build.xml in the
   documentation folder for more information.
 
 + [GNAT](http://www.adacore.com/community) (GNAT-Community-2021)
@@ -91,8 +86,7 @@ related versions would probably also work, but have not been tested.
   enough to compile it, GNAT is (temporarily) used for run time system development.
 
 
-Building
---------
+## Building
 
 ### Augusta
 
@@ -101,7 +95,7 @@ The Augusta project includes two additional modules named Tiger and Dragon.
 The Tiger module is an implementation of the Tiger programming language as described in the book
 "Modern Compiler Implementation in ML" by Andrew W. Appel. This module is not directly related
 to Augusta and is used as a testing ground for implementation ideas that might be useful in
-Augusta. Solutions to some of the exercises in the book (all in Scala) are also included.
+Augusta. Solutions to some exercises in the book (all in Scala) are also included.
 
 The Dragon module is a library of useful material of interest to compiler writers. It factors
 out code that can be shared between Augusta, Tiger, and potentially other compiler projects that
@@ -110,7 +104,7 @@ use Scala as an implementation language. It also contains other tidbits of gener
 The Augusta runtime system is in the RTS folder. It is written in Ada and is currently compiled
 and tested using GNAT with GPS as the integrated development environment. Load stdlibrary.gpr in
 the RTS/SL/src folder into GPS to build the current version of the standard library. At the time
-of this writing the runtime library in RTS/RL is empty.
+of this writing, the runtime library in RTS/RL is empty.
 
 The Dragon and Tiger projects can be compiled via SBT. The SBT build control file has all the
 necessary dependencies declared so that building one project should trigger the download of the
@@ -131,23 +125,21 @@ Two tutorials, also in DocBook format, are provided. One targets Ada programmers
 learn Scala, and the other targets Scala programmers wishing to learn Ada.
 
 
-Testing
--------
+## Testing
 
 Each SBT project has associated tests. They are stored in the 'test' folder of each project, as
 usual for SBT. All tests use the ScalaTest testing framework.
 
 Testing of the standard library is currently done with GNAT and the AUnit test framework. After
-loading stdlibrary.gpr into GPS as described above you can build and run the test program from
+loading stdlibrary.gpr into GPS as described above, you can build and run the test program from
 inside GPS.
 
 
-Contact Information
--------------------
+## Contact Information
 
 If you have any questions or concerns about this project, or if you are interested in reporting
-bugs, contributing code, or generally giving words of support you can follow the project or
+bugs, contributing code, or generally giving words of support, you can follow the project or
 contact me at one or more of the resources below:
 
-Peter C. Chapin  
-peter@pchapin.org  
+Peter Chapin  
+chapinp@proton.me  

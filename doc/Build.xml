@@ -42,9 +42,24 @@
     </varlistentry>
 
     <varlistentry>
+      <term><link xlink:href="https://www.scala-sbt.org/">SBT</link></term>
+      <listitem>
+        <para>We used SBT v1.9.0 to manage the build of Augusta. SBT automatically downloads and
+          installs all required libraries, including the required version of the Scala compiler
+          itself.</para>
+
+        <para>Using SBT also means that any development environment that works with SBT should,
+          in theory, be able to work with the Augusta code base. We tend to use IntelliJ as
+          described below, but Visual Studio Code with the Metals extension, and Emacs with
+          Ensime have also been used. It is also entirely possible to issue SBT commands at the
+          console and use any, arbitrary text editor to edit the source code.</para>
+      </listitem>
+    </varlistentry>
+
+    <varlistentry>
       <term><link xlink:href="http://www.scala-lang.org/">Scala Compiler</link></term>
       <listitem>
-        <para>We use Scala v2.13.7 with the expectation of migrating to Scala 3 once all our
+        <para>We use Scala v2.13.11 with the expectation of migrating to Scala 3 once all our
           dependent libraries have caught up. The Scala compiler is executed indirectly via SBT.
           You do not need to download and install it separately, although you might find it
           useful to have a separate installation available.</para>
@@ -70,7 +85,7 @@
     <varlistentry>
       <term><link xlink:href="http://www.jetbrains.com/idea/">IntelliJ IDEA</link></term>
       <listitem>
-        <para>Officially we use IntelliJ IDEA, Community Edition, version 2021.2.3 with the
+        <para>Officially we use IntelliJ IDEA, Community Edition, version 2023.1.2 with the
           IntelliJ Scala plugin developed by JetBrains as our integrated development
           environment. The plugin can be installed from inside IntelliJ once the main IDE is
           installed. Some of us use the Ultimate edition of IntelliJ with no problems.</para>
