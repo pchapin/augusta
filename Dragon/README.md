@@ -7,4 +7,4 @@ name of this library is a tribute to the famous compiler design text commonly ca
 book." However this library does not implement only the algorithms described in that book. Any
 code generally useful for compiler construction is a suitable to Dragon.
 
-Peter C. Chapin <PChapin@vtc.vsc.edu>
+Peter Chapin <spicacality@kelseymountain.org>  

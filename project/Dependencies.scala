@@ -4,11 +4,10 @@ import sbt._
 object Dependencies {
 
   // Versions
-  lazy val scalaTestVersion = "3.2.16"
-  lazy val scalaGraphCoreVersion = "1.13.6"
+  lazy val scalaTestVersion = "3.2.17"
+  lazy val scalaGraphCoreVersion = "1.13.6"  // Are we ready to update to version 2.0.0?
 
-  // Kiama and ScalaZ don't appear to have binaries for Scala 2.13.x
-  // Fortunately, they are not needed at this time.
+  // Kiama and ScalaZ are not needed at this time.
   //
   // lazy val kiamaVersion = "2.2.0"
   // lazy val scalazVersion = "7.3.0-SNAPSHOT"

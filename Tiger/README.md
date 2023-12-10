@@ -17,4 +17,4 @@ My intention is to transfer what I learn from implementing Tiger in Scala to the
 project. Although the materials here try to be faithful to MCIML, I have taken liberties with
 certain things for the sake of my larger goals.
 
-Peter C. Chapin <PChapin@vtc.vsc.edu>
+Peter Chapin <spicacality@kelseymountain.org>  

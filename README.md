@@ -37,11 +37,11 @@ related versions would probably also work, but have not been tested.
 + Augusta uses several third party libraries. The jar files for those libraries are not
   included as part of this repository, but are downloaded by SBT during the build process.
 
-+ [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (17.0.1)
++ [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (21.0.1)
 
   There are some Java source files in Augusta, so a JRE is not sufficient.
   
-+ [SBT](https://www.scala-sbt.org/) (1.9.0)
++ [SBT](https://www.scala-sbt.org/) (1.9.7)
 
   SBT is the build tool we use. It knows how to download the various libraries and certain other
   components that are required (such as Scala).
@@ -59,7 +59,7 @@ related versions would probably also work, but have not been tested.
   download and unpack the DocBook XML DTD distribution to any suitable location on your system.
   Next, continue with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2023.1.2)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2023.3)
 
   Officially, we use the Community Edition, but some of us use the Ultimate edition. You will
   need to download and install the Scala plugin from the plugin control panel (or during the
@@ -142,4 +142,4 @@ bugs, contributing code, or generally giving words of support, you can follow th
 contact me at one or more of the resources below:
 
 Peter Chapin  
-chapinp@proton.me  
+spicacality@kelseymountain.org  
