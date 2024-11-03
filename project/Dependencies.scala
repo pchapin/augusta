@@ -5,22 +5,21 @@ object Dependencies {
 
   // Versions
   lazy val scalaTestVersion = "3.2.17"
-  lazy val scalaGraphCoreVersion = "1.13.6"  // Are we ready to update to version 2.0.0?
-
-  // Kiama and ScalaZ are not needed at this time.
-  //
-  // lazy val kiamaVersion = "2.2.0"
-  // lazy val scalazVersion = "7.3.0-SNAPSHOT"
+  lazy val scalaGraphCoreVersion = "1.13.6"    // Version 2.x seems very different.
 
   // Libraries
   val scalactic = "org.scalactic" %% "scalactic" % scalaTestVersion
   val scalaTest = "org.scalatest" %% "scalatest" % scalaTestVersion
   val scalaGraphCore = "org.scala-graph" %% "graph-core" % scalaGraphCoreVersion
-  // val kiama = "org.bitbucket.inkytonik.kiama" %% "kiama" % kiamaVersion
-  // val scalaz = "org.scalaz" %% "scalaz" % scalazVersion
 
   // Projects
-  val augustaDeps: Seq[ModuleID] = Seq(scalaGraphCore, scalactic, scalaTest % Test)
+
+  // When there is a version of Graph-for-Scala explicitly labeled for Scala 3 in Maven, the
+  // following line can be uncommented here and the unmanagedJar removed from build.sbt.
+  //
+  //val augustaDeps = Seq(scalaGraphCore, scalactic, scalaTest % Test)
+  
+  val augustaDeps: Seq[ModuleID] = Seq(scalactic, scalaTest % Test)
   val tigerDeps: Seq[ModuleID] = Seq(scalactic, scalaTest % Test)
   val dragonDeps: Seq[ModuleID] = Seq(scalactic, scalaTest % Test)
 

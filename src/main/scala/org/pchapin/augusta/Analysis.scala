@@ -21,7 +21,7 @@ object Analysis {
     //   for every variable v in e...
     //      if v is not in the kill set, then add v to the UE set.
     //   add x to the kill set.
-    for (someNode  <- graph.innerNodeTraverser(graph get entryBlock);
+    for (someNode  <- graph.outerNodeTraverser(graph get entryBlock);
          statement <- someNode.assignments) {
 
         // ...
@@ -43,12 +43,12 @@ object Analysis {
     var changed = true
     while (changed) {
       changed = false
-      for (someNode  <- graph.innerNodeTraverser(graph get entryBlock)) {
+      for (someNode  <- graph.innerNodeTraverser(graph get entryBlock);
+           successor <- someNode.diSuccessors) {
+
         val oldLive = someNode.live
-        for (successor <- someNode.diSuccessors) {
-          // TODO: The last term should be (successor.live intersect (NOT successor.kill))
-          someNode.live = someNode.live union (successor.upwardlyExposed union successor.live)
-        }
+        // TODO: The last term should be (successor.live intersect (NOT successor.kill))
+        someNode.live = someNode.live union (successor.upwardlyExposed union successor.live)
         if (someNode.live != oldLive) changed = true
       }
     }
