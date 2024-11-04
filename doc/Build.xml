@@ -36,7 +36,7 @@
       <term><link xlink:href="https://www.oracle.com/java/technologies/downloads/">Java
           Development Kit</link></term>
       <listitem>
-        <para>We use JDK v21.0.1. A full JDK is necessary, and not just a JRE, because the
+        <para>We use JDK v21.0.3. A full JDK is necessary, and not just a JRE, because the
           Augusta code base includes some Java files.</para>
       </listitem>
     </varlistentry>
@@ -59,8 +59,7 @@
     <varlistentry>
       <term><link xlink:href="http://www.scala-lang.org/">Scala Compiler</link></term>
       <listitem>
-        <para>We use Scala v2.13.12 with the expectation of migrating to Scala 3 once all our
-          dependent libraries have caught up. The Scala compiler is executed indirectly via SBT.
+        <para>We use Scala v3.3.4. The Scala compiler is executed indirectly via SBT.
           You do not need to download and install it separately, although you might find it
           useful to have a separate installation available.</para>
       </listitem>
@@ -85,7 +84,7 @@
     <varlistentry>
       <term><link xlink:href="http://www.jetbrains.com/idea/">IntelliJ IDEA</link></term>
       <listitem>
-        <para>Officially we use IntelliJ IDEA, Community Edition, version 2023.3 with the
+        <para>Officially we use IntelliJ IDEA, Community Edition, version 2024.2.4 with the
           IntelliJ Scala plugin developed by JetBrains as our integrated development
           environment. The plugin can be installed from inside IntelliJ once the main IDE is
           installed. Some of us use the Ultimate edition of IntelliJ with no problems.</para>

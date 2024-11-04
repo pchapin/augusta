@@ -31,13 +31,13 @@ attention and resources to significantly push it forward... well, we can revisit
 ## Prerequisites
 
 The prerequisites necessary for setting up an Augusta development system are listed below. The
-version numbers given are for the specific versions we're using. In most cases, other closely
+version numbers given are for the specific versions we are using. In most cases, other closely
 related versions would probably also work, but have not been tested.
 
 + Augusta uses several third party libraries. The jar files for those libraries are not
   included as part of this repository, but are downloaded by SBT during the build process.
 
-+ [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (21.0.1)
++ [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (21.0.3)
 
   There are some Java source files in Augusta, so a JRE is not sufficient.
   
@@ -56,10 +56,10 @@ related versions would probably also work, but have not been tested.
 
   It is possible to view and edit the XML source of the documentation from inside IntelliJ (see
   below). Depending on your needs, this may be sufficient. To do this, you will first need to
-  download and unpack the DocBook XML DTD distribution to any suitable location on your system.
+  download and unpack the DocBook 5.1 RelaxNG schema to any suitable location on your system.
   Next, continue with the installation of IntelliJ as described below.
 
-+ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2023.3)
++ [IntelliJ IDEA](http://www.jetbrains.com/idea/) (2024.2.4)
 
   Officially, we use the Community Edition, but some of us use the Ultimate edition. You will
   need to download and install the Scala plugin from the plugin control panel (or during the
@@ -124,7 +124,6 @@ reference materials. See the README file in the references folder for more infor
 Two tutorials, also in DocBook format, are provided. One targets Ada programmers wishing to
 learn Scala, and the other targets Scala programmers wishing to learn Ada.
 
-
 ## Testing
 
 Each SBT project has associated tests. They are stored in the 'test' folder of each project, as
@@ -133,7 +132,6 @@ usual for SBT. All tests use the ScalaTest testing framework.
 Testing of the standard library is currently done with GNAT and the AUnit test framework. After
 loading stdlibrary.gpr into GPS as described above, you can build and run the test program from
 inside GPS.
-
 
 ## Contact Information
 
