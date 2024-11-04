@@ -1,4 +1,4 @@
-package org.pchapin.dragon
+package org.kelseymountain.dragon
 
 /**
   * Instances of this class are arguments to the NFA transition function.

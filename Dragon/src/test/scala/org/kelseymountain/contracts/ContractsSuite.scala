@@ -1,11 +1,4 @@
-//-----------------------------------------------------------------------
-// FILE    : ContractsSuite.scala
-// SUBJECT : Tests for package edu.vtc.contracts
-// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <pchapin@vtc.edu>
-//
-//-----------------------------------------------------------------------
-
-package org.pchapin.contracts
+package org.kelseymountain.contracts
 
 import org.scalatest.*
 import funsuite.*
@@ -15,7 +8,7 @@ class ContractsSuite extends AnyFunSuite with Assertions with should.Matchers {
 
   test("Basic Precondition Test") {
 
-    // Basic test that pass precondition evaluation.
+    // Basic test that passes precondition evaluation.
     val result = requiring (1 == 1) { "Hello" }
     assert(result == "Hello")
 

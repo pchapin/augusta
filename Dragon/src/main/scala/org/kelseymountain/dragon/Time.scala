@@ -1,9 +1,4 @@
-// ------------------------------------------------------------------------
-// FILE   : Time.scala
-// SUMMARY: Time of day support.
-// AUTHOR : Peter C. Chapin <pchapin@vtc.edu>
-// ------------------------------------------------------------------------
-package org.pchapin.dragon
+package org.kelseymountain.dragon
 
 import Time.InvalidTimeException
 

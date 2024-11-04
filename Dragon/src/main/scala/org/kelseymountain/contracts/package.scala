@@ -1,10 +1,4 @@
-//-----------------------------------------------------------------------
-// FILE    : package.scala
-// SUBJECT : The package object for edu.vtc.contracts
-// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <pchapin@vtc.edu>
-//
-//-----------------------------------------------------------------------
-package org.pchapin
+package org.kelseymountain
 
 /**
  * Object to wrap various contract methods and other related materials.

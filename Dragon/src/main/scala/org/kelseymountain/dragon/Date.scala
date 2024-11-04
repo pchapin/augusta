@@ -1,9 +1,4 @@
-// ------------------------------------------------------------------------
-// FILE   : Data.scala
-// SUMMARY: Interface to date implementations.
-// AUTHOR : Peter C. Chapin <pchapin@vtc.edu>
-// ------------------------------------------------------------------------
-package org.pchapin.dragon
+package org.kelseymountain.dragon
 
 trait Date {
 

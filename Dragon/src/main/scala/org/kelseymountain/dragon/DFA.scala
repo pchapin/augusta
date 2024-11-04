@@ -1,9 +1,9 @@
-package org.pchapin.dragon
+package org.kelseymountain.dragon
 
 /**
   * This class represents deterministic finite automata. The states of the NFA are numbered with
   * integers starting at stateLower and going to stateUpper. The range of states is contiguous.
-  * The first state in the range is the start state and the last state in the range is the final
+  * The first state in the range is the start state, and the last state in the range is the final
   * state.
   *
   * DFAs represented by this class contain only a single final state. While this is a restriction

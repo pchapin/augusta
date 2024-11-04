@@ -1,4 +1,4 @@
-package org.pchapin.dragon
+package org.kelseymountain.dragon
 
 import org.scalatest.*
 import funsuite.*

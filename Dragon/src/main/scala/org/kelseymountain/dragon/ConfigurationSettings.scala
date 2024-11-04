@@ -1,9 +1,4 @@
-//-----------------------------------------------------------------------
-// FILE    : ConfigurationSettings.scala
-// SUBJECT : A facility to manage a program's configuration
-// AUTHOR  : (C) Copyright 2012 by Peter C. Chapin <pchapin@vtc.edu>
-//-----------------------------------------------------------------------
-package org.pchapin.dragon
+package org.kelseymountain.dragon
 
 import java.io.*
 

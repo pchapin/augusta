@@ -1,9 +1,4 @@
-// ------------------------------------------------------------------------
-// FILE   : TimeSuite.scala
-// SUMMARY: Tests for class Time.
-// AUTHOR : (C) Copyright 2018 by Peter C. Chapin <peter@pchapin.org>
-// ------------------------------------------------------------------------
-package org.pchapin.dragon
+package org.kelseymountain.dragon
 
 import org.scalatest.*
 import funsuite.*
