@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 /**
  * The kind of exception thrown when the format of a literal is wrong.

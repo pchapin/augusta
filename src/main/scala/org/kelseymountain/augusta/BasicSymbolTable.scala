@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 /**
  * A BasicSymbolTable implements the SymbolTable trait by way of two ordinary in-memory maps.

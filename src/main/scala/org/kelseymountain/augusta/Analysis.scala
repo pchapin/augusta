@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 /**
  * This object contains methods that perform various kinds of analysis, typically on the

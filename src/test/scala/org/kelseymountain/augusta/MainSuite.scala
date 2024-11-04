@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 import org.scalatest._
 import funsuite._

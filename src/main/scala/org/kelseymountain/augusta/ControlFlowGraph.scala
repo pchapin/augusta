@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 import scalax.collection.Graph
 import scalax.collection.edge.LDiEdge

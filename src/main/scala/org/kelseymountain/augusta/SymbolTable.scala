@@ -1,5 +1,4 @@
-package org.pchapin.augusta
-
+package org.kelseymountain.augusta
 
 /**
  * A trait describing Augusta symbol tables. Symbols are divided into object names and type

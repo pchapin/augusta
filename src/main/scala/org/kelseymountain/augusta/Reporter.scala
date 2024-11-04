@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 /**
  * This trait describes the interface to error reporting objects. Different implementations

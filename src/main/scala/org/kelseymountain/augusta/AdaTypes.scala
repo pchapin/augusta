@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 /**
  * This object encapsulates the representation of Ada types. Only the representation of a type

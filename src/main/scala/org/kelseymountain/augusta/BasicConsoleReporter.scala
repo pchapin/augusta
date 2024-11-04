@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 class BasicConsoleReporter extends Reporter {
 

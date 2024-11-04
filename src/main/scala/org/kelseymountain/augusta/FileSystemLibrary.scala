@@ -4,7 +4,7 @@
 // AUTHOR  : (C) Copyright 2011 by Peter C. Chapin <PChapin@vtc.vsc.edu>
 //
 //-----------------------------------------------------------------------
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 import java.io.File
 

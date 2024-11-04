@@ -1,4 +1,4 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 import scala.jdk.CollectionConverters._    // ctx is a java.util.List, not a scala.List.
 import scalax.collection.Graph

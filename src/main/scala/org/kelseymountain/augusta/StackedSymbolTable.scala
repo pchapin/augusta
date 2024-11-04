@@ -1,7 +1,7 @@
-package org.pchapin.augusta
+package org.kelseymountain.augusta
 
 import scala.collection.mutable
-import org.pchapin.augusta.SymbolTable.{UnknownTypeNameException, UnknownObjectNameException, SymbolTableException}
+import SymbolTable.{UnknownTypeNameException, UnknownObjectNameException, SymbolTableException}
 
 /**
  * A StackedSymbolTable manages a collection of basic symbol tables used for representing
