@@ -4,7 +4,7 @@ import sbt._
 object Dependencies {
 
   // Versions
-  lazy val scalaTestVersion = "3.2.17"
+  lazy val scalaTestVersion = "3.2.19"
   lazy val scalaGraphCoreVersion = "1.13.6"    // Version 2.x seems very different.
 
   // Libraries

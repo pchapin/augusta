@@ -4,7 +4,7 @@ enablePlugins(Antlr4Plugin)
 
 ThisBuild / organization  := "org.kelseymountain"
 ThisBuild / version       := "0.1.0-SNAPSHOT"
-ThisBuild / scalaVersion  := "3.3.4"
+ThisBuild / scalaVersion  := "3.3.4"  // Intended to be the latest LTS version.
 ThisBuild / scalacOptions :=
   Seq("-encoding", "UTF-8", // Encoding of the source files.
       "-feature",
@@ -24,7 +24,7 @@ lazy val augusta = (project in file("."))
     libraryDependencies ++= augustaDeps,
     Test / unmanagedJars += file("lib/graph-core_2.13-1.13.6.jar"),
 
-    Antlr4 / antlr4Version     := "4.13.1",
+    Antlr4 / antlr4Version     := "4.13.2",
     Antlr4 / antlr4PackageName := Some("org.kelseymountain.augusta"),
     Antlr4 / antlr4GenListener := true,
     Antlr4 / antlr4GenVisitor  := true
