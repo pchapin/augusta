@@ -18,7 +18,7 @@ class DFA(
     * This method implements a state minimization algorithm (Hopcroft's Algorithm) to minimize
     * the number of states in a DFA.
     *
-    * @return An DFA that recognizes the same language but that contains a minimal number of states.
+    * @return A DFA that recognizes the same language but that contains a minimal number of states.
     */
   def minimize: DFA = {
     // TODO: This method body is just a place holder!
@@ -28,21 +28,30 @@ class DFA(
   /**
     * Returns true if this DFA accepts the given text; false otherwise.
     */
-  def `match`(text: String): Boolean = {
-    var currentState = stateLower;  // The start state.
-    for (i <- 0 to text.length()) {
-      val argument = DFATransitionFunctionArgument(currentState, text.charAt(i))
+  import scala.util.control.Breaks._
 
-      // If there is no explicit transition for this (state, character) input, then make a
-      // transition to an implicit error state that is non-accepting and that absorbs all
-      // following characters. The text does not match.
-      // TODO: Rewrite to eliminate the return.
-      if (!transitionFunction.contains(argument)) return false
-      currentState = transitionFunction(argument)
+  def `match`(text: String): Boolean = {
+    var currentState = stateLower // The start state.
+    var accepts = true
+
+    breakable {
+      for (i <- 0 until text.length) {
+        val argument = DFATransitionFunctionArgument(currentState, text.charAt(i))
+
+        // If there is no explicit transition for this (state, character) input, then make a
+        // transition to an implicit error state that is non-accepting and that absorbs all
+        // following characters. The text does not match.
+        if (!transitionFunction.contains(argument)) {
+          accepts = false
+          break
+        }
+
+        currentState = transitionFunction(argument)
+      }
     }
 
     // Are we in the accepting state at the end?
-    currentState == stateUpper
+    accepts && currentState == stateUpper
   }
 
 }
