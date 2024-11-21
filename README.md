@@ -59,11 +59,12 @@ the previous system, you can ignore this list.
   system, but not an ideal match for the needs of this project. reST feels more appropriate and
   will make it easier for others to contribute.
   
-+ The build now includes the [Cats](https://typelevel.org/cats/) and [Cats
-  Effect](https://github.com/typelevel/cats-effect) libraries, setting the stage for a more
-  functional style in the code base. For now, ANTLR is being retained as the parser generator of
-  choice, but we may consider a more Scala-specific solution
-  ([FastParse](https://com-lihaoyi.github.io/fastparse/)) going forward.
++ The build now includes the [Cats](https://typelevel.org/cats/), [Cats
+  Effect](https://github.com/typelevel/cats-effect), and
+  [Kiama](https://github.com/inkytonik/kiama) libraries, setting the stage for a more functional
+  style in the code base. For now, ANTLR is being retained as the parser generator of choice,
+  but we may consider a more Scala-specific solution (perhaps
+  [FastParse](https://com-lihaoyi.github.io/fastparse/)) going forward.
 
 
 ## Prerequisites
@@ -101,7 +102,7 @@ related versions would probably also work, but have not been tested.
 
 + A Development Environment
 
-  Any development environment that can interact with SBT projects will work. We don't not
+  Any development environment that can interact with SBT projects will work. We do not
   specifically recommend one, but we use [Visual Studio Code](https://code.visualstudio.com/)
   with the Metals extension or [IntelliJ IDEA](https://www.jetbrains.com/idea/) with the Scala
   plugin. _TODO:_ Document how to set up a development environment more fully.
