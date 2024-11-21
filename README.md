@@ -1,3 +1,11 @@
+# Development Moved!
+
+This branch is no longer being developed. It is retained only for easy reference. The Augusta
+project has been refactored/restarted in the `main` branch of this repository. Please switch to
+that branch to follow the current main line of development.
+
+This branch will likely be renamed to (or tagged as) `legacy` at some future time.
+
 # Augusta
 
 Augusta is an open source Ada 2012/2022 compiler written in Scala that targets LLVM. This
