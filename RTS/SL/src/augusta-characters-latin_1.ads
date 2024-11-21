@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : augusta-characters-latin_1.ads
 -- SUBJECT : Specification of Latin 1 character constants package.
--- AUTHOR  : (C) Copyright 2013 by Peter C. Chapin
+-- AUTHOR  : (C) Copyright 2025 by the Augusta Contributors
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 
 package Augusta.Characters.Latin_1 is

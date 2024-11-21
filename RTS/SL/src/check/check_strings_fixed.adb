@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : check_strings_fixed.adb
 -- SUBJECT : Package containing tests of the fixed string handling package.
--- AUTHOR  : (C) Copyright 2013 by Peter C. Chapin
+-- AUTHOR  : (C) Copyright 2025 by the Augusta Contributors
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 with AUnit.Assertions; use AUnit.Assertions;
 with Augusta.Strings.Fixed;

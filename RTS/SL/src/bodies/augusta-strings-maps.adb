@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : augusta-strings-fixed.ads
 -- SUBJECT : Augusta standard library fixed length string handling package.
--- AUTHOR  : (C) Copyright 2013 by Peter C. Chapin
+-- AUTHOR  : (C) Copyright 2025 by Peter Chapin
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 package body Augusta.Strings.Maps is
 

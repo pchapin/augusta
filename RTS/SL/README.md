@@ -4,11 +4,11 @@ Augusta Standard Library
 
 This folder contains the Augusta standard library. Much of this library can be developed in
 parallel with the Augusta compiler. The code here can, in principle, be compiled and tested with
-any existing Ada 2012 compiler even before Augusta is mature enough to handle this code itself.
-We use GNAT as our library development compiler for now.
+any existing Ada compiler even before Augusta is mature enough to handle this code itself. We
+use GNAT as our library development compiler for now.
 
 We anticipate these packages as being a useful "proving ground" for Augusta as the compiler
-matures. Clearly implementing language features required for processing critical library
+matures. Clearly, implementing language features required for processing critical library
 packages should be given priority.
 
 The packages here are fully specified in the Ada Reference Manual and are further documented in
@@ -20,8 +20,7 @@ reviewing the packages for conformity to the standard.
 The specifications are stored separately from the bodies so the specifications could, in
 principle, be easily packaged, distributed, and studied on their own. The bodies are, at the
 time of this writing, mostly place holders that raise a special Augusta.Not_Implemented
-exception. As such all the bodies do compile as Ada 2012 (using GNAT) as they are currently
-defined.
+exception. As such all the bodies do compile as Ada (using GNAT) as they are currently defined.
 
 The library test program is in the 'check' folder beneath 'src.' The test program exercises all
 library components that are currently implemented.

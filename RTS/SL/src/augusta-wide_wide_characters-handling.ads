@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : augusta-wide_wide_haracters-handling.ads
 -- SUBJECT : Specification of wide wide character handling package.
--- AUTHOR  : (C) Copyright 2013 by the Augusta Contributors
+-- AUTHOR  : (C) Copyright 2025 by the Augusta Contributors
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 
 -- See A.3.6.

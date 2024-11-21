@@ -5,11 +5,11 @@ grammar AdaFull;
 // many parts of it are probably usable for Augusta.
 
 @parser::header {
-    package org.pchapin.augusta;
+    package org.kelseymountain.augusta;
 }
 
 @lexer::header {
-    package org.pchapin.augusta;
+    package org.kelseymountain.augusta;
 }
 
 @members {
@@ -1409,7 +1409,7 @@ fragment HDIGIT
 // INDENTIFIER then the '\'' character is a TICK, otherwise it is the start of a character
 // literal.
 //
-// Currently CHARACTER_LITERAL only matches a single character between the quotation marks.
+// Currently, CHARACTER_LITERAL only matches a single character between the quotation marks.
 // There are no attributes with single character names (yes?) so everything works as is. ANTLR
 // is unable to create a CHARACTER_LITERAL token for text such as X'Last - X'First because the
 // material between the quotation marks is longer than one character. Attributes with single

@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : check.adb
 -- SUBJECT : Main procedure of the Augusta standard library unit test program.
--- AUTHOR  : (C) Copyright 2011 by Peter C. Chapin
+-- AUTHOR  : (C) Copyright 2025 by the Augusta Contributors
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 with AUnit.Run;
 with AUnit.Reporter.Text;

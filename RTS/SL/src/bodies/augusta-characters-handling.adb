@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : augusta-characters-handling.adb
 -- SUBJECT : Body of character handling package.
--- AUTHOR  : (C) Copyright 2013 by Peter C. Chapin
+-- AUTHOR  : (C) Copyright 2025 by the August Contributors
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 
 package body Augusta.Characters.Handling is

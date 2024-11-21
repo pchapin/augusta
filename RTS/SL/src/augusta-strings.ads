@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : augusta-strings.ads
 -- SUBJECT : Augusta standard library string handling package.
--- AUTHOR  : (C) Copyright 2011 by Peter C. Chapin
+-- AUTHOR  : (C) Copyright 2025 by the August Contributors
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 package Augusta.Strings is
    pragma Pure(Strings);

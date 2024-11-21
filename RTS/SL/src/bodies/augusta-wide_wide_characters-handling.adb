@@ -1,11 +1,11 @@
 ---------------------------------------------------------------------------
 -- FILE    : augusta-wide_wide_characters-handling.adb
 -- SUBJECT : Body of wide wide character handling package.
--- AUTHOR  : (C) Copyright 2013 by the Augusta Contributors
+-- AUTHOR  : (C) Copyright 2025 by the Augusta Contributors
 --
 -- Please send comments or bug reports to
 --
---      Peter C. Chapin <PChapin@vtc.vsc.edu>
+--      Peter Chapin <spicacality@kelseymountain.org>
 ---------------------------------------------------------------------------
 
 package body Augusta.Wide_Wide_Characters.Handling is
