@@ -6,6 +6,7 @@
         "ANTLR",
         "Intelli",
         "multicore",
-        "subfolders"
+        "subfolders",
+        "venv"
     ]
 }
