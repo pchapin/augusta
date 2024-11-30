@@ -78,20 +78,23 @@ related versions would probably also work, but have not been tested.
 
 + [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (21.0.x)
 
-  There are some Java source files in Augusta, so a JRE is not sufficient.
+  There are some Java source files in Augusta, so a JRE is not sufficient. The Java compiler is
+  required.
   
 + [SBT](https://www.scala-sbt.org/) (1.10.5)
 
   SBT is the build tool we use. It knows how to download the various libraries and certain other
   components that are required (such as Scala).
   
-+ [Sphinx](https://www.sphinx-doc.org/en/master/). We use Sphinx to process the reStructuredText
-  documentation. More information can be found in the README in the `doc` folder.
++ [Sphinx](https://www.sphinx-doc.org/en/master/) (8.1.3)
+
+  We use Sphinx to process the reStructuredText documentation. More information about setting up
+  the documentation build environment can be found in the README in the `doc` folder.
 
 + [LLVM](http://llvm.org/) (19.1.4)
 
   Augusta generates code for the Low Level Virtual Machine (LLVM). Only the back-end tools from
-  the LLVM project are needed. None of the front-end compilers (gcc, clang, etc) are necessary.
+  the LLVM project are needed. None of the front-end compilers (gcc, clang, etc.) are necessary.
   _TODO:_ Document how to set up LLVM more fully.
 
 + [GNAT](https://www.getada.dev/)
@@ -105,32 +108,39 @@ related versions would probably also work, but have not been tested.
   Any development environment that can interact with SBT projects will work. We do not
   specifically recommend one, but we use [Visual Studio Code](https://code.visualstudio.com/)
   with the Metals extension or [IntelliJ IDEA](https://www.jetbrains.com/idea/) with the Scala
-  plugin. _TODO:_ Document how to set up a development environment more fully.
+  plugin. A plain text editor of your choice can also work. SBT commands can be issued at a
+  console/terminal prompt to build the system. _TODO:_ Document how to set up a development
+  environment more fully.
 
 
 ## Building
 
 ### Augusta
 
-Using SBT you can build Augusta by issuing the following commands at a shell prompt:
+After installing a suitable version of Java and a recent version of SBT, you can build Augusta
+by issuing the following commands at a shell prompt:
 
     $ sbt compile  # Compiles the system.
     $ sbt test     # Executes the unit tests.
     $ sbt assembly # Builds the "uber-jar" containing Augusta and all dependencies.
     
-See the [SBT documentation](https://www.scala-sbt.org/documentation.html) for more details.
+These commands will work on all supported operating systems (Linux, macOS, and Windows).
+
+The resulting JAR file is in `target/scala-3.3.4`. The file is large because it contains all of
+Augusta's dependencies and is completely self-contained. You can deploy August by simply copying
+that JAR file to another system and executing it. See the [SBT
+documentation](https://www.scala-sbt.org/documentation.html) for more details about SBT.
 
 ### Documentation
 
-The external documentation can be built using Sphinx. This process is described in more detail
-in the `doc` folder.
+The documentation can be built using Sphinx. This process is described in more detail in the
+README in `doc` folder.
 
 
 ## Contact Information
 
-If you have any questions or concerns about this project, or if you are interested in reporting
-bugs, contributing code, or generally giving words of support, you can follow the project or
-contact us at one or more of the resources below:
+If you have questions, concerns, want to report bugs, contribute code, or share words of
+support, you can follow the project or contact us through one of the email addresses listed in
+the CONTRIBUTORS file.
 
-Peter Chapin  
-spicacality@kelseymountain.org  
+The Augusta Contributors  

@@ -3,10 +3,13 @@
         "**/target": true
     },
     "cSpell.words": [
+        "Alire",
         "ANTLR",
+        "buildable",
         "Intelli",
         "multicore",
         "subfolders",
+        "subprojects",
         "venv"
     ]
 }
