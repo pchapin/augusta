@@ -10,7 +10,7 @@ execute whatever tests have been written to date.
 
 Augusta's development is done on Linux, macOS, and Windows. We expect it would be possible to do
 Augusta development on any system that supports the prerequisites. Mostly, that means any system
-that supports Java and LLVM.
+that supports Java, LLVM, and Python.
 
 
 ## Disclaimer
@@ -73,9 +73,6 @@ The prerequisites necessary for setting up an Augusta development system are lis
 version numbers given are for the specific versions we are using. In most cases, other closely
 related versions would probably also work, but have not been tested.
 
-+ Augusta uses several third party libraries. The jar files for those libraries are not
-  included as part of this repository, but are downloaded by SBT during the build process.
-
 + [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (21.0.x)
 
   There are some Java source files in Augusta, so a JRE is not sufficient. The Java compiler is
@@ -84,12 +81,13 @@ related versions would probably also work, but have not been tested.
 + [SBT](https://www.scala-sbt.org/) (1.10.5)
 
   SBT is the build tool we use. It knows how to download the various libraries and certain other
-  components that are required (such as Scala).
+  components that are required (such as the Scala compiler).
   
 + [Sphinx](https://www.sphinx-doc.org/en/master/) (8.1.3)
 
   We use Sphinx to process the reStructuredText documentation. More information about setting up
-  the documentation build environment can be found in the README in the `doc` folder.
+  the documentation build environment can be found in the README in the `doc` folder. Sphinx
+  (and Python) are not required for building Augusta itself.
 
 + [LLVM](http://llvm.org/) (19.1.4)
 
@@ -99,9 +97,9 @@ related versions would probably also work, but have not been tested.
 
 + [GNAT](https://www.getada.dev/)
 
-  The Augusta run time system is largely written in Ada. Since Augusta is currently not mature
-  enough to compile it, AdaCore's GNAT is used for run time system development. The GNAT
-  compiler can be installed via the Alire tool.
+  The Augusta runtime system is largely written in Ada. Since Augusta is currently not mature
+  enough to compile it, AdaCore's GNAT is used for runtime system development. The GNAT compiler
+  can be installed via the Alire tool.
 
 + A Development Environment
 

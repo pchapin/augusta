@@ -5,11 +5,11 @@ README
 This folder contains the main Augusta documentation set. There are four independent documents,
 each in its own subfolder.
 
-- **Design Documentation** describes the design of Augusta, including the architecture and
+- **Design Documentation** describes the design of Augusta, including architecture and
   implementation notes.
 
-- **Reference Manual** provides a detailed reference for the Augusta and the specific subset of
-  Ada that it compiles.
+- **Reference Manual** provides a detailed reference for Augusta and the specific subset of Ada
+  that it compiles.
 
 - **Tutorial** is a step-by-step guide to using Augusta, including getting-started instructions
   and simple examples.
@@ -34,8 +34,7 @@ the virtual environment, run the following command:
 $ source venv/bin/activate
 ```
 
-The same command works on Windows, but the `source` command is replaced by
-`.\venv\Scripts\activate`.
+On Windows, replace the `source` command by `.\venv\Scripts\activate`.
 
 When the virtual environment is activated for the first time, do:
     
@@ -52,9 +51,9 @@ $ make html
 
 ## Additional Documentation
 
-In this folder, the file `Ada2012.g4` is the ANTLR grammar file for Ada 2012. It is nothing more
-than a copy of the grammar in the Ada 2012 standard and thus not suitable as the basis for a
-parser for Augusta. The file is included here for reference only.
+In this folder, the file `Ada2012.g4` is the ANTLR grammar for Ada 2012. It is nothing more than
+a copy of the grammar in the Ada 2012 standard and thus not suitable as the basis for a parser.
+The file is included for reference only.
 
 The subfolder `jEdit` contains documentation related to the jEdit text editor. In particular, it
 contains an enhanced version of jEdit's Ada mode.
