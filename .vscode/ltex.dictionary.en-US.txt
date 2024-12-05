@@ -7,3 +7,5 @@ Chapin
 Alire
 AdaCore
 gcc
+pragmas
+pragma

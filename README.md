@@ -1,41 +1,76 @@
 # Augusta
 
-Augusta is an open source Ada compiler written in Scala that targets LLVM. This document is a
-quick description of how to get set up for Augusta development. For more information, see the
-documentation in the 'doc' folder.
+Augusta is an open source compiler for an Ada-like subset written in Scala that targets LLVM.
+This document is a quick description of how to get set up for Augusta development. For more
+information, see the documentation in the 'doc' folder.
 
-Augusta is not even remotely usable at this time. However, we intend to keep the system in a
-buildable state, so it should always be possible to create the Augusta jar file as well as
-execute whatever tests have been written to date.
+Augusta is not usable at this time. However, we intend to keep the system in a buildable state,
+so it should always be possible to create the Augusta jar file as well as execute whatever tests
+have been written to date.
 
 Augusta's development is done on Linux, macOS, and Windows. We expect it would be possible to do
 Augusta development on any system that supports the prerequisites. Mostly, that means any system
 that supports Java, LLVM, and Python.
 
 
-## Disclaimer
+## Vision
 
-First, let us assure you that we are completely aware that the goal of writing a full-featured
-Ada compiler is extremely ambitious and unrealistic for us at this time. We are not so naive as
-to think it is feasible given our limited resources. Our true goals are:
+The original goal of the Augusta project was to create a full-featured Ada compiler. However, we
+fully realize that goal is, and always has been unrealistic given our limited resources. Thus,
+we are now focusing on creating a compiler for a minimal Ada-like language that can stand on its
+own merits. Maintaining complete compatibility with Ada is not a priority. The August language,
+while inspired by Ada, is its own entity.
 
-+ Having fun working on a compiler for a semi-realistic, even if minimal, language based on Ada.
+The vision for Augusta is to create a language that is simple, easy to learn and implement, and
+yet powerful enough for serious programming. August takes inspiration from C in terms of its
+scope. It contains basic procedural constructs, arrays, records, and pointers. It uses a simplified
+version of Ada's type system and packaging mechanism, but it eliminates many of Ada's more advanced
+features:
 
-+ Creating educational opportunities for other hobbyists and students.
++ No exceptions.
++ No controlled types.
++ No tagged types.
++ No tasking or protected objects.
++ Simplified pointer semantics (less strict accessibility rules).
 
-To the extent that this project satisfies those goals, we will judge it as a success. If, at
-some future time, this project ever attracts enough attention and resources to significantly
-push it forward we can revisit our goals then.
+Augusta will ultimately include certain complicated Ada features such as generics. It will also
+support something similar to Ada's aspect syntax to allow tools to interact with Augusta
+programs in a well-defined way.
 
-We are also aware that using Scala as the implementation language for an Ada compiler is an
-unusual choice, and that it may inhibit potential contributors (from either community) from
-getting involved. We chose it because we believe Scala is a good language for compiler
-implementation in general, bringing features to the table for which other languages, notably
-Ada, are weaker (in particular, algebraic data types). It also allows us to leverage the
-language processing libraries and tools in the Java/Scala ecosystem, which are considerable.
+In fact, the idea of Augusta is to off-load as much language complexity to tools as possible. To
+that end, the syntax and semantics of Augusta are designed to be simple and easy to parse. Also,
+various language extension and tool interface points will be provided in the Augusta syntax,
+such as aspects and pragmas, and in the Augusta compiler, such as plug-ins and APIs.
 
-It remains to be seen if using Scala is a good choice or not. In any case, it does make Augusta
-unique among Ada compiler efforts, and that makes it fun!
+The modern trend in language design is for programming languages to become ever more complex and
+feature rich the longer they exist. Each language standard adds more functionality, but also
+more complexity. This makes it difficult for compiler vendors to keep up, for programmers to
+learn and use the language, and discourages new compiler projects from starting.
+
+Augusta is an attempt to reverse that trend. It is a language that is simple and easy to learn,
+and that is not intended to grow indefinitely. Instead, functionality can be off loaded to tools
+as necessary. In effect, Augusta is a kind of RISC-like programming language, relying on
+extra-linguistic facilities to provide important functionality.
+
+This is the vision of Augusta.
+
+
+## Scala?
+
+We are aware that using Scala as the implementation language for an Ada-like compiler is an
+unusual choice, and that it may inhibit potential contributors from getting involved. We chose
+it because we believe Scala is a good language for compiler implementation, bringing features to
+the table for which many other languages are weaker (for example, algebraic data types). It also
+allows us to leverage the language processing libraries and tools in the Java/Scala ecosystem,
+which are considerable.
+
+However, since the vision of Augusta is to be a simple language, we encourage others to
+implement Augusta in other ways. The effort in doing so should not be extreme. In fact, that is
+the point of this project.
+
+We note that we use the name "Augusta" both for the language and for the compiler. That may
+change in the future, but for now, it is a convenient shorthand. The precise meaning of
+"Augusta" (language vs. compiler for that language) should be clear from context.
 
 
 ## Recent Restart
@@ -97,9 +132,9 @@ related versions would probably also work, but have not been tested.
 
 + [GNAT](https://www.getada.dev/)
 
-  The Augusta runtime system is largely written in Ada. Since Augusta is currently not mature
-  enough to compile it, AdaCore's GNAT is used for runtime system development. The GNAT compiler
-  can be installed via the Alire tool.
+  The Augusta runtime system is largely written in Ada. Since Augusta is currently not able to
+  compile it, AdaCore's GNAT is used for runtime system development. The GNAT compiler can be
+  installed via the Alire tool.
 
 + A Development Environment
 
