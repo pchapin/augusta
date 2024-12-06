@@ -1,10 +1,10 @@
 # Augusta
 
 Augusta is simple, low-level, systems programming language based on Ada. This repository
-describes the Augusta language and provides a compiler for that language called AGC. The
-compiler translates Augusta source files into either LLVM assembly language, where final code
-generation can be done by LLVM, or into C99 that can be compiled with any standard-conforming C
-compiler. Currently, AGC is written in Scala.
+describes the Augusta language and provides a compiler for that language called AGC (pronounced
+"Agency"). The compiler translates Augusta source files into either LLVM assembly language,
+where final code generation can be done by LLVM, or into C99 that can be compiled with any
+standard-conforming C compiler. Currently, AGC is written in Scala.
 
 This project is very much in the early stages. The Augusta language is not well-defined and the
 AGC compiler is not usable at this time. However, we intend to keep the documentation and
@@ -45,8 +45,8 @@ some as yet-to-be-determined build and package management system. We hope the ea
 of these tools will encourage the growth of an active community around Augusta and accelerate
 its development.
 
-Obviously this is a grand goal and it will take time to achieve. The first stage of this effort
-is to define the base language (which we call "Augusta, Level 1") and implement the AGC compiler
+Obviously this is a grand goal that will take time to achieve. The first stage of this effort is
+to define the base language (which we call "Augusta, Level 1") and implement the AGC compiler
 for that language.
 
 
@@ -94,13 +94,15 @@ the previous system, you can ignore this list.
   [FastParse](https://com-lihaoyi.github.io/fastparse/)) going forward.
 
 
-## Prerequisites
+## Building
+
+### Prerequisites
 
 The prerequisites necessary for setting up an Augusta/AGC development system are listed below.
 The version numbers given are for the specific versions we are using. In most cases, other
 closely related versions would probably also work, but have not been tested.
 
-+ [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (21.0.x)
++ [Java](https://www.oracle.com/java/technologies/downloads/) (21.0.x)
 
   There are some Java source files in AGC, so a JRE is not sufficient. The Java compiler is
   required.
@@ -108,48 +110,35 @@ closely related versions would probably also work, but have not been tested.
 + [SBT](https://www.scala-sbt.org/) (1.10.5)
 
   SBT is the build tool we use. It knows how to download the various libraries and certain other
-  components that are required (such as the Scala compiler).
+  components that are required. SBT will download the Scala compiler we use; you do not need to
+  install Scala separately.
+
++ [Python](https://www.python.org/) (3.13.1)
+
+  Sphinx, a Python package, is used to build the documentation. The instructions for setting up
+  the necessary virtual environment with all required components are detailed in the `doc`
+  folder.
   
-+ [Sphinx](https://www.sphinx-doc.org/en/master/) (8.1.3)
-
-  We use Sphinx to process the reStructuredText documentation. More information about setting up
-  the documentation build environment can be found in the README in the `doc` folder. Sphinx
-  (and Python) are not required for building Augusta itself.
-
 + [LLVM](http://llvm.org/) (19.1.4)
 
   Augusta generates code for the Low Level Virtual Machine (LLVM). Only the back-end tools from
   the LLVM project are needed. None of the front-end compilers (gcc, clang, etc.) are necessary.
-  _TODO:_ Document how to set up LLVM more fully.
-
-+ [GNAT](https://www.getada.dev/)
-
-  The AGC runtime system is largely written in Augusta. Since AGC is currently not able to
-  compile it, AdaCore's GNAT is used for runtime system development. The GNAT compiler can be
-  installed via the Alire tool.
-
-+ A Development Environment
-
-  Any development environment that can interact with SBT projects will work. We do not
-  specifically recommend one, but we use [Visual Studio Code](https://code.visualstudio.com/)
-  with the Metals extension or [IntelliJ IDEA](https://www.jetbrains.com/idea/) with the Scala
-  plugin. A plain text editor of your choice can also work. SBT commands can be issued at a
-  console/terminal prompt to build the system. _TODO:_ Document how to set up a development
-  environment more fully.
-
-
-## Building
+  _TODO:_ Document how to set up LLVM.
 
 ### AGC
 
-After installing a suitable version of Java and a recent version of SBT, you can build Augusta
-by issuing the following commands at a shell prompt:
+After installing the Java and SBT prerequisites, you can build AGC by issuing the following
+commands at a shell prompt:
 
     $ sbt compile  # Compiles the system.
     $ sbt test     # Executes the unit tests.
-    $ sbt assembly # Builds the "uber-jar" containing AGC and all dependencies.
+    $ sbt assembly # Builds the "uber-JAR" containing AGC and all dependencies.
     
-These commands will work on all supported operating systems (Linux, macOS, and Windows).
+These commands will work on all supported operating systems (Windows, macOS, and Linux). Note
+that "test" and "assembly" imply "compile," so you do not need to run "compile" separately.
+However, doing so can be helpful in isolating errors. The first time you run these commands, SBT
+will download many components, including the Scala compiler and the various libraries that AGC
+depends on. This can take some time, depending on your network connection.
 
 The resulting JAR file is in `target/scala-3.3.4`. The file is large because it contains all of
 AGC's dependencies and is completely self-contained. You can deploy AGC by simply copying that
@@ -160,6 +149,55 @@ documentation](https://www.scala-sbt.org/documentation.html) for more details ab
 
 The documentation can be built using Sphinx. This process is described in more detail in the
 README in `doc` folder.
+
+## Development Environments
+
+We primarily use two development environments for working on Augusta/AGC: Visual Studio Code and
+IntelliJ IDEA. Visual Studio Code is a general tool that can work across the entire project
+seamlessly. We use IntelliJ to focus specifically on the Scala code base. Both tools support all
+three of the platforms we target (Windows, macOS, and Linux).
+
+We recommend that you execute the full build from the console before configuring your
+development environment. It is easier to troubleshoot the build without the complexity of a
+large development environment interfering. Also, SBT will download all prerequisites, including
+the Scala compiler, reducing the chance of spurious errors when you first configure your other
+tools.
+
+In any case, be sure you build the project via SBT even from within your development
+environment. This ensures the build is done properly. The SBT build file is the source of truth
+for the project's configuration and dependencies, so any tool that knows how to manage it will
+work for Augusta/AGC development.
+
+### Visual Studio Code
+
+We recommend first setting up the Python virtual environment for Sphinx, as described in the
+`doc` folder, before configuring Visual Studio Code. Some of the settings for Visual Studio Code
+reference the Python virtual environment.
+
+Download and install [Visual Studio Code](https://code.visualstudio.com/). Then, install the
+following extensions into Visual Studio Code:
+
++ Scala (Metals) by Scalameta
++ Python by Microsoft
++ reStructuredText by LeXtudio
+
+Open Visual Studio Code on the top level folder of this repository. The Metals extension should
+notice that there is an SBT build defined, and prompt you to import it. Some time is required to
+execute this import and perform related indexing. Also, when you first open a Scala file, there
+is some additional extra time required while Metals compiles the project.
+
+### IntelliJ IDEA
+
+Download and install [IntelliJ IDEA](https://www.jetbrains.com/idea/). The Community Edition
+should be sufficient. Then, install the following plugins into IntelliJ:
+
++ Scala
++ ANTLR
++ Python (Optional)
+
+Open IntelliJ IDEA on the top level folder of this repository. As with Visual Studio Code,
+IntelliJ should notice the SBT build and prompt you to import it. This will also take some time
+while IntelliJ configures and indexes the project.
 
 
 ## Contact Information

@@ -9,3 +9,5 @@ AdaCore
 gcc
 pragmas
 pragma
+Scalameta
+LeXtudio
