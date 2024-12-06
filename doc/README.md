@@ -2,25 +2,26 @@
 README
 ======
 
-This folder contains the main Augusta documentation set. There are four independent documents,
-each in its own subfolder.
+This folder contains the main Augusta/AGC documentation set. There are four independent
+documents, each in its own subfolder.
 
-- **Design Documentation** describes the design of Augusta, including architecture and
+- **Design Documentation** describes the design of AGC, including architecture and
   implementation notes.
 
-- **Reference Manual** provides a detailed reference for Augusta and the specific subset of Ada
-  that it compiles.
+- **Language Reference** provides a detailed reference for the Augusta language. This document
+  is written in an implementation-independent manner and applies to all Augusta compilers, not
+  just AGC.
 
-- **Tutorial** is a step-by-step guide to using Augusta, including getting-started instructions
-  and simple examples.
+- **Tutorial** is a step-by-step guide to using AGC to compile Augusta programs, including
+  getting-started instructions and simple examples.
 
-- **User Guide** is a more complete description of how to use Augusta, with detailed
-  installation instructions, and examples of Augusta's more advanced features.
+- **User Guide** is a more complete description of how to use AGC, with detailed installation
+  instructions, and examples of the compiler's more advanced features.
 
 ## Building the Documentation
 
-The Augusta documentation is written using reStructuredText (reST) and compiled with Sphinx into
-presentation formats. To set up Sphinx, first install a suitable version of Python (3.6 or
+The Augusta/AGC documentation is written using reStructuredText (reST) and compiled with Sphinx
+into presentation formats. To set up Sphinx, first install a suitable version of Python (3.6 or
 later) and then create a virtual environment in the `doc` folder as follows:
 
 ```bash

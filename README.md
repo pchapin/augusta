@@ -1,86 +1,78 @@
 # Augusta
 
-Augusta is an open source compiler for an Ada-like subset written in Scala that targets LLVM.
-This document is a quick description of how to get set up for Augusta development. For more
-information, see the documentation in the 'doc' folder.
+Augusta is simple, low-level, systems programming language based on Ada. This repository
+describes the Augusta language and provides a compiler for that language called AGC. The
+compiler translates Augusta source files into either LLVM assembly language, where final code
+generation can be done by LLVM, or into C99 that can be compiled with any standard-conforming C
+compiler. Currently, AGC is written in Scala.
 
-Augusta is not usable at this time. However, we intend to keep the system in a buildable state,
-so it should always be possible to create the Augusta jar file as well as execute whatever tests
-have been written to date.
+This project is very much in the early stages. The Augusta language is not well-defined and the
+AGC compiler is not usable at this time. However, we intend to keep the documentation and
+compiler in a buildable state, so it should always be possible to follow the progress of the
+project using concrete artifacts. We welcome contributions and feedback from any interested
+persons.
 
-Augusta's development is done on Linux, macOS, and Windows. We expect it would be possible to do
-Augusta development on any system that supports the prerequisites. Mostly, that means any system
-that supports Java, LLVM, and Python.
+Augusta/AGC's development is done on Windows, macOS, and Linux. We intend to fully support all
+three platforms.
 
 
 ## Vision
 
-The original goal of the Augusta project was to create a full-featured Ada compiler. However, we
-fully realize that goal is, and always has been unrealistic given our limited resources. Thus,
-we are now focusing on creating a compiler for a minimal Ada-like language that can stand on its
-own merits. Maintaining complete compatibility with Ada is not a priority. The August language,
-while inspired by Ada, is its own entity.
+The original goal of this project was to create a full-featured Ada compiler. However, that
+goal has always been unrealistic. In December 2024, we radically reimagined this project.
 
-The vision for Augusta is to create a language that is simple, easy to learn and implement, and
-yet powerful enough for serious programming. August takes inspiration from C in terms of its
-scope. It contains basic procedural constructs, arrays, records, and pointers. It uses a simplified
-version of Ada's type system and packaging mechanism, but it eliminates many of Ada's more advanced
-features:
+The new vision for the Augusta is to be a language that is simple, easy to learn and implement,
+and yet powerful enough for serious programming. August takes inspiration from C in terms of its
+scope, but borrows syntax and much semantic behavior from Ada. It contains basic procedural
+constructs, arrays, records, and pointers. It uses a simplified version of Ada's type system and
+packaging mechanism, but it eliminates many of Ada's more advanced features.
 
-+ No exceptions.
-+ No controlled types.
-+ No tagged types.
-+ No tasking or protected objects.
-+ Simplified pointer semantics (less strict accessibility rules).
+Inspired by the development of RISC hardware, the concept is for Augusta to be fundamentally a
+simple, but well-structured language that allows extensions through a variety of *extension
+points*. The precise nature of these extension points has yet to be defined, but may include:
 
-Augusta will ultimately include certain complicated Ada features such as generics. It will also
-support something similar to Ada's aspect syntax to allow tools to interact with Augusta
-programs in a well-defined way.
++ Language aspects, pragmas, or annotations.
++ Compiler plugins.
++ API access to compiler data structures such as the Augusta parse tree and symbol table.
 
-In fact, the idea of Augusta is to off-load as much language complexity to tools as possible. To
-that end, the syntax and semantics of Augusta are designed to be simple and easy to parse. Also,
-various language extension and tool interface points will be provided in the Augusta syntax,
-such as aspects and pragmas, and in the Augusta compiler, such as plug-ins and APIs.
+The goal is to create a language that invites experimentation and the development of advanced
+tooling by using a simple and uncomplicated base.
 
-The modern trend in language design is for programming languages to become ever more complex and
-feature rich the longer they exist. Each language standard adds more functionality, but also
-more complexity. This makes it difficult for compiler vendors to keep up, for programmers to
-learn and use the language, and discourages new compiler projects from starting.
+In addition to off-loading advanced language features to compiler extensions and tools, we feel
+that the infrastructure and ecosystem surrounding a language is as important as the language
+itself. Thus, we hope to eventually provide Augusta support for popular editors and IDEs, and
+some as yet-to-be-determined build and package management system. We hope the early availability
+of these tools will encourage the growth of an active community around Augusta and accelerate
+its development.
 
-Augusta is an attempt to reverse that trend. It is a language that is simple and easy to learn,
-and that is not intended to grow indefinitely. Instead, functionality can be off loaded to tools
-as necessary. In effect, Augusta is a kind of RISC-like programming language, relying on
-extra-linguistic facilities to provide important functionality.
-
-This is the vision of Augusta.
+Obviously this is a grand goal and it will take time to achieve. The first stage of this effort
+is to define the base language (which we call "Augusta, Level 1") and implement the AGC compiler
+for that language.
 
 
 ## Scala?
 
-We are aware that using Scala as the implementation language for an Ada-like compiler is an
-unusual choice, and that it may inhibit potential contributors from getting involved. We chose
-it because we believe Scala is a good language for compiler implementation, bringing features to
-the table for which many other languages are weaker (for example, algebraic data types). It also
-allows us to leverage the language processing libraries and tools in the Java/Scala ecosystem,
-which are considerable.
+We are aware that using Scala as the implementation language for AGC is an unusual choice, and
+that it may inhibit potential contributors from getting involved. We chose it because we believe
+Scala is a good language for compiler implementation, bringing features to the table for which
+many other languages are weaker (for example, algebraic data types). It also allows us to
+leverage the language processing libraries and tools in the Java/Scala ecosystem, which are
+considerable.
 
-However, since the vision of Augusta is to be a simple language, we encourage others to
-implement Augusta in other ways. The effort in doing so should not be extreme. In fact, that is
-the point of this project.
-
-We note that we use the name "Augusta" both for the language and for the compiler. That may
-change in the future, but for now, it is a convenient shorthand. The precise meaning of
-"Augusta" (language vs. compiler for that language) should be clear from context.
+However, since the vision is for Augusta to be a simple language, we encourage others to
+implement Augusta in other ways. If this project is successful, the effort in doing so should
+not be excessively large.
 
 
 ## Recent Restart
 
 Recently (2024-11-21), this project was "reset" to a mostly initial state and restarted with a
-significant change in vision and organization. The `master` branch reflects the state of the
-project before the restart. That branch should be considered legacy-only. It is retained for
-reference since some of the code in that branch may be integrated back into this new development
-effort. In the future, the `master` branch may be tagged as `legacy` and then deleted. You
-should follow the `main` branch if you want to follow the unfolding development of Augusta.
+significant change in vision as described above. The repository was also significantly
+reorganized. The `master` branch reflects the state of the project before the reset. That branch
+should be considered legacy-only. It is retained for reference since some of the code in that
+branch may be integrated back into this new development effort. In the future, the `master`
+branch may be tagged as `legacy` and then deleted. You should follow the `main` branch if you
+want to follow the unfolding development of Augusta/AGC.
 
 Here is a partial list of changes relative to the previous system. If you are not familiar with
 the previous system, you can ignore this list.
@@ -94,7 +86,7 @@ the previous system, you can ignore this list.
   system, but not an ideal match for the needs of this project. reST feels more appropriate and
   will make it easier for others to contribute.
   
-+ The build now includes the [Cats](https://typelevel.org/cats/), [Cats
++ The build of AGC now includes the [Cats](https://typelevel.org/cats/), [Cats
   Effect](https://github.com/typelevel/cats-effect), and
   [Kiama](https://github.com/inkytonik/kiama) libraries, setting the stage for a more functional
   style in the code base. For now, ANTLR is being retained as the parser generator of choice,
@@ -104,13 +96,13 @@ the previous system, you can ignore this list.
 
 ## Prerequisites
 
-The prerequisites necessary for setting up an Augusta development system are listed below. The
-version numbers given are for the specific versions we are using. In most cases, other closely
-related versions would probably also work, but have not been tested.
+The prerequisites necessary for setting up an Augusta/AGC development system are listed below.
+The version numbers given are for the specific versions we are using. In most cases, other
+closely related versions would probably also work, but have not been tested.
 
 + [Java Development Kit](https://www.oracle.com/java/technologies/downloads/) (21.0.x)
 
-  There are some Java source files in Augusta, so a JRE is not sufficient. The Java compiler is
+  There are some Java source files in AGC, so a JRE is not sufficient. The Java compiler is
   required.
   
 + [SBT](https://www.scala-sbt.org/) (1.10.5)
@@ -132,7 +124,7 @@ related versions would probably also work, but have not been tested.
 
 + [GNAT](https://www.getada.dev/)
 
-  The Augusta runtime system is largely written in Ada. Since Augusta is currently not able to
+  The AGC runtime system is largely written in Augusta. Since AGC is currently not able to
   compile it, AdaCore's GNAT is used for runtime system development. The GNAT compiler can be
   installed via the Alire tool.
 
@@ -148,20 +140,20 @@ related versions would probably also work, but have not been tested.
 
 ## Building
 
-### Augusta
+### AGC
 
 After installing a suitable version of Java and a recent version of SBT, you can build Augusta
 by issuing the following commands at a shell prompt:
 
     $ sbt compile  # Compiles the system.
     $ sbt test     # Executes the unit tests.
-    $ sbt assembly # Builds the "uber-jar" containing Augusta and all dependencies.
+    $ sbt assembly # Builds the "uber-jar" containing AGC and all dependencies.
     
 These commands will work on all supported operating systems (Linux, macOS, and Windows).
 
 The resulting JAR file is in `target/scala-3.3.4`. The file is large because it contains all of
-Augusta's dependencies and is completely self-contained. You can deploy August by simply copying
-that JAR file to another system and executing it. See the [SBT
+AGC's dependencies and is completely self-contained. You can deploy AGC by simply copying that
+JAR file to another system and executing it. See the [SBT
 documentation](https://www.scala-sbt.org/documentation.html) for more details about SBT.
 
 ### Documentation

@@ -1,7 +1,7 @@
-.. Augusta Reference Manual master file, created by sphinx-quickstart
+.. Augusta Language Reference master file, created by sphinx-quickstart
 
-Augusta Reference Manual
-========================
+Augusta Language Reference
+==========================
 
 Add your content using ``reStructuredText`` syntax. See the
 `reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
