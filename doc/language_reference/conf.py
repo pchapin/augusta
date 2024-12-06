@@ -3,10 +3,20 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+# This sets up the Augusta lexer for syntax highlighting in the documentation.
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath('../sphinx-extensions'))
+from augusta_lexer import AugustaLexer
+
+def setup(app):
+    app.add_lexer('augusta', AugustaLexer)
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Augusta Reference Manual'
+project = 'Augusta Language Reference'
 copyright = '2024, Augusta Contributors'
 author = 'Augusta Contributors'
 

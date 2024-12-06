@@ -12,5 +12,9 @@
         "subfolders",
         "subprojects",
         "venv"
+    ],
+    "python.defaultInterpreterPath": "doc/venv/Scripts/python",
+    "python.analysis.extraPaths": [
+        "doc/sphinx-extensions"
     ]
 }
