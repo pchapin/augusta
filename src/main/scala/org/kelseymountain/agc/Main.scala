@@ -1,4 +1,4 @@
-package org.kelseymountain.augusta
+package org.kelseymountain.agc
 
 import cats.effect._
 import org.antlr.v4.runtime._

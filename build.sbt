@@ -13,13 +13,13 @@ ThisBuild / scalacOptions :=
 
 Test / logBuffered := false
 
-lazy val augusta = (project in file("."))
+lazy val agc = (project in file("."))
   .settings(
-    name := "Augusta",
+    name := "agc",
     libraryDependencies ++= augustaDeps,
 
     Antlr4 / antlr4Version     := "4.13.2",
-    Antlr4 / antlr4PackageName := Some("org.kelseymountain.augusta"),
+    Antlr4 / antlr4PackageName := Some("org.kelseymountain.agc"),
     Antlr4 / antlr4GenListener := true,
     Antlr4 / antlr4GenVisitor  := true
   )

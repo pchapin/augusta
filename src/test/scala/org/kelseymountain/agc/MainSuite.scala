@@ -1,4 +1,4 @@
-package org.kelseymountain.augusta
+package org.kelseymountain.agc
 
 import org.scalatest._
 import funsuite._
