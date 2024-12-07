@@ -13,7 +13,7 @@ project using concrete artifacts. We welcome contributions and feedback from any
 persons.
 
 Augusta/AGC's development is done on Windows, macOS, and Linux. We intend to fully support all
-three platforms.
+three platforms, both for development and for running AGC-generated code.
 
 
 ## Vision
@@ -21,58 +21,45 @@ three platforms.
 The original goal of this project was to create a full-featured Ada compiler. However, that
 goal has always been unrealistic. In December 2024, we radically reimagined this project.
 
-The new vision for the Augusta is to be a language that is simple, easy to learn and implement,
-and yet powerful enough for serious programming. August takes inspiration from C in terms of its
+The new vision for Augusta is to be a language that is simple, easy to learn and implement, and
+yet powerful enough for serious programming. Augusta takes inspiration from C in terms of its
 scope, but borrows syntax and much semantic behavior from Ada. It contains basic procedural
 constructs, arrays, records, and pointers. It uses a simplified version of Ada's type system and
-packaging mechanism, but it eliminates many of Ada's more advanced features.
+packaging mechanism, and it eliminates many of Ada's more advanced features.
 
 Inspired by the development of RISC hardware, the concept is for Augusta to be fundamentally a
 simple, but well-structured language that allows extensions through a variety of *extension
 points*. The precise nature of these extension points has yet to be defined, but may include:
 
 + Language aspects, pragmas, or annotations.
++ Hygienic macros.
 + Compiler plugins.
-+ API access to compiler data structures such as the Augusta parse tree and symbol table.
++ API access to compiler data structures.
 
 The goal is to create a language that invites experimentation and the development of advanced
 tooling by using a simple and uncomplicated base.
 
 In addition to off-loading advanced language features to compiler extensions and tools, we feel
 that the infrastructure and ecosystem surrounding a language is as important as the language
-itself. Thus, we hope to eventually provide Augusta support for popular editors and IDEs, and
-some as yet-to-be-determined build and package management system. We hope the early availability
-of these tools will encourage the growth of an active community around Augusta and accelerate
-its development.
+itself. Thus, we hope to provide Augusta support for popular editors and IDEs, and some as
+yet-to-be-determined build and package management system. We hope the early availability of
+these tools will encourage the growth of an active community around Augusta and accelerate its
+development.
 
 Obviously this is a grand goal that will take time to achieve. The first stage of this effort is
-to define the base language (which we call "Augusta, Level 1") and implement the AGC compiler
-for that language.
-
-
-## Scala?
-
-We are aware that using Scala as the implementation language for AGC is an unusual choice, and
-that it may inhibit potential contributors from getting involved. We chose it because we believe
-Scala is a good language for compiler implementation, bringing features to the table for which
-many other languages are weaker (for example, algebraic data types). It also allows us to
-leverage the language processing libraries and tools in the Java/Scala ecosystem, which are
-considerable.
-
-However, since the vision is for Augusta to be a simple language, we encourage others to
-implement Augusta in other ways. If this project is successful, the effort in doing so should
-not be excessively large.
+to define the base language (which we call "Augusta, Level 1," or simply "L1") and implement the
+AGC compiler for that language.
 
 
 ## Recent Restart
 
-Recently (2024-11-21), this project was "reset" to a mostly initial state and restarted with a
-significant change in vision as described above. The repository was also significantly
-reorganized. The `master` branch reflects the state of the project before the reset. That branch
-should be considered legacy-only. It is retained for reference since some of the code in that
-branch may be integrated back into this new development effort. In the future, the `master`
-branch may be tagged as `legacy` and then deleted. You should follow the `main` branch if you
-want to follow the unfolding development of Augusta/AGC.
+Recently (2024-11-21), this project was restarted with a significant change in vision as
+described above. The repository was also significantly reorganized. The `master` branch reflects
+the state of the project before the restart. That branch should be considered legacy-only. It is
+retained for reference since some of the code in that branch may be integrated back into this
+new development effort. In the future, the `master` branch may be tagged as `legacy` and then
+deleted. You should follow the `main` branch if you want to follow the unfolding development of
+Augusta/AGC.
 
 Here is a partial list of changes relative to the previous system. If you are not familiar with
 the previous system, you can ignore this list.
@@ -116,8 +103,7 @@ closely related versions would probably also work, but have not been tested.
 + [Python](https://www.python.org/) (3.13.1)
 
   Sphinx, a Python package, is used to build the documentation. The instructions for setting up
-  the necessary virtual environment with all required components are detailed in the `doc`
-  folder.
+  the necessary virtual environment with all required components are detailed below.
   
 + [LLVM](http://llvm.org/) (19.1.4)
 
@@ -125,10 +111,51 @@ closely related versions would probably also work, but have not been tested.
   the LLVM project are needed. None of the front-end compilers (gcc, clang, etc.) are necessary.
   _TODO:_ Document how to set up LLVM.
 
+### Python Virtual Environment
+
+The Augusta/AGC documentation is written using reStructuredText (reST) and compiled with Sphinx
+into presentation formats. If you intend to build the documentation, you will need to set up a
+Python virtual environment as described here. Technically, the build of AGC itself does not
+require this, but we use Python as our official scripting language so in the future it might be
+used in other supportive roles. Therefore, we encourage every developer to go through these
+steps regardless of your current needs.
+
+First, install a suitable version of Python. Use at least version 3.6 as a minimum for Sphinx,
+but a more recent version is encouraged (we use 3.13.x). Then create a virtual environment in
+the root folder of the repository as follows:
+
+```bash
+$ python -m venv venv
+```
+
+This runs the module `venv` and creates a virtual environment in the `venv` folder. To activate
+the virtual environment, run the following command on Unix-like systems:
+
+```bash
+$ source venv/bin/activate
+```
+
+On Windows, replace the `source` command by `.\venv\Scripts\activate`.
+
+Activation changes the environment of your shell so that the Python resources in the virtual
+environment are directly available. When the virtual environment is activated for the first
+time, do:
+    
+```bash 
+$ pip install -r requirements.txt
+```
+
+This installs all required packages into the virtual environment. You only need to do this once.
+When you are done working with Python you can deactivate the virtual environment by running:
+
+```bash
+$ deactivate
+```
+
 ### AGC
 
 After installing the Java and SBT prerequisites, you can build AGC by issuing the following
-commands at a shell prompt:
+commands at a shell prompt in the root folder of the repository:
 
     $ sbt compile  # Compiles the system.
     $ sbt test     # Executes the unit tests.
@@ -147,15 +174,15 @@ documentation](https://www.scala-sbt.org/documentation.html) for more details ab
 
 ### Documentation
 
-The documentation can be built using Sphinx. This process is described in more detail in the
-README in `doc` folder.
+The documentation can be built using Sphinx. This process is described in the README in the
+`doc` folder.
 
 ## Development Environments
 
 We primarily use two development environments for working on Augusta/AGC: Visual Studio Code and
 IntelliJ IDEA. Visual Studio Code is a general tool that can work across the entire project
 seamlessly. We use IntelliJ to focus specifically on the Scala code base. Both tools support all
-three of the platforms we target (Windows, macOS, and Linux).
+three of the platforms we target.
 
 We recommend that you execute the full build from the console before configuring your
 development environment. It is easier to troubleshoot the build without the complexity of a
@@ -163,16 +190,18 @@ large development environment interfering. Also, SBT will download all prerequis
 the Scala compiler, reducing the chance of spurious errors when you first configure your other
 tools.
 
-In any case, be sure you build the project via SBT even from within your development
-environment. This ensures the build is done properly. The SBT build file is the source of truth
-for the project's configuration and dependencies, so any tool that knows how to manage it will
-work for Augusta/AGC development.
+During normal development, continue to build the project via SBT even from within your
+development environment. This ensures the build is done properly. The SBT build is the source of
+truth for the project's configuration and dependencies, so it should be used consistently. One
+advantage of this is that any tool that knows how to work with SBT will work for Augusta/AGC
+development.
 
 ### Visual Studio Code
 
-We recommend first setting up the Python virtual environment for Sphinx, as described in the
-`doc` folder, before configuring Visual Studio Code. Some of the settings for Visual Studio Code
-reference the Python virtual environment.
+We recommend first setting up the Python virtual environment for Sphinx, as described above,
+before configuring Visual Studio Code. VSCode will automatically detect the virtual environment
+and configure itself appropriately. If the virtual environment is not in place, you may
+encounter some errors while using Visual Studio Code.
 
 Download and install [Visual Studio Code](https://code.visualstudio.com/). Then, install the
 following extensions into Visual Studio Code:

@@ -11,3 +11,6 @@ pragmas
 pragma
 Scalameta
 LeXtudio
+VSCode
+Kiama
+FastParse
