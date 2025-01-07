@@ -200,6 +200,7 @@ Download and install [Visual Studio Code](https://code.visualstudio.com/). Then,
 following extensions into Visual Studio Code:
 
 + Scala (Metals) by Scalameta
++ ANTLR4 grammar syntax support by Mike Lischke
 + Python by Microsoft
 + reStructuredText by LeXtudio
 
