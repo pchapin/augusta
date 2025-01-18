@@ -6,8 +6,8 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'Augusta User Guide'
-copyright = '2024, Augusta Contributors'
+project = 'AGC User Guide'
+copyright = '2025, Augusta Contributors'
 author = 'Augusta Contributors'
 
 # -- General configuration ---------------------------------------------------

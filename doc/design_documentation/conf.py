@@ -7,7 +7,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = 'Augusta Design Documentation'
-copyright = '2024, Augusta Contributors'
+copyright = '2025, Augusta Contributors'
 author = 'Augusta Contributors'
 
 # -- General configuration ---------------------------------------------------

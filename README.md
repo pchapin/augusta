@@ -42,7 +42,7 @@ tooling, rather than creating a language with numerous built-in features (e.g., 
 In addition to off-loading advanced language features to compiler extensions and tools, we feel
 that the infrastructure and ecosystem surrounding a language is as important as the language
 itself. Thus, we hope to provide Augusta support for popular editors and IDEs, and some as
-yet-to-be-determined build and package management system (e.g., (Bazel)[https://bazel.build/]).
+yet-to-be-determined build and package management system (e.g., [Bazel](https://bazel.build/)).
 We hope the early availability of these tools will encourage the growth of an active community
 around Augusta and accelerate its development.
 
@@ -54,11 +54,11 @@ AGC compiler for that language.
 ## Ada Subset?
 
 We define "subset" to mean that every program that is a valid Augusta program would also be a
-valid Ada program. However, we regard it as an open question if Augusta is ultimately intended
-to be an Ada subset or not. It is our intention to make Augusta as compatible with Ada as
-possible, but we also want to honor the vision of Augusta being a simpler language to learn and
-implement. At the moment we regard the sequence of Augusta levels (L1, L2, etc.) as converging
-toward full Ada, but even that is not certain at this time.
+valid Ada program. However, it is an open question if Augusta is ultimately destined to be an
+Ada subset or not. It is our intention to make Augusta as compatible with Ada as possible, but
+we also want to honor the vision of Augusta being a simple language to learn and implement. At
+the moment we regard the sequence of Augusta levels (L1, L2, etc.) as converging toward full
+Ada, but even that is not certain at this time.
 
 For example, Augusta Level 1 requires less checking of the source program than Ada does in the
 interest of simplicity, even for constructs L1 supports. This makes L1 not a strict subset of

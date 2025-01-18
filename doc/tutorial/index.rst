@@ -3,17 +3,15 @@
 Augusta/AGC Tutorial
 ====================
 
-Add your content using ``reStructuredText`` syntax. See the `reStructuredText
-<https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_ documentation for
-details.
+.. Add your content using ``reStructuredText`` syntax. See the `reStructuredText
+.. <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_ documentation for
+.. details.
 
 Welcome to the Augusta/AGC Tutorial. This tutorial will guide you through... blah, blah, blah.
-
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    chapter1_introduction
-   chapter2_getting_started
-   chapter3_augusta_language
+
