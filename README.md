@@ -37,14 +37,14 @@ points*. The precise nature of these extension points has yet to be defined, but
 + API access to compiler data structures (compiler-as-library)
 
 The idea is to create a language that invites experimentation and the development of advanced
-tooling, rather than creating a language with numerous built-in features (e.g., Ada).
+tooling, rather than creating a language with numerous built-in features (i.e., Ada).
 
 In addition to off-loading advanced language features to compiler extensions and tools, we feel
 that the infrastructure and ecosystem surrounding a language is as important as the language
 itself. Thus, we hope to provide Augusta support for popular editors and IDEs, and some as
-yet-to-be-determined build and package management system (e.g., [Bazel](https://bazel.build/)).
-We hope the early availability of these tools will encourage the growth of an active community
-around Augusta and accelerate its development.
+yet-to-be-determined build and package management system (for example,
+[Bazel](https://bazel.build/)). We hope the early availability of these tools will encourage the
+growth of an active community around Augusta and accelerate its development.
 
 Obviously this is a grand goal that will take time to achieve. The first stage of this effort is
 to define the base language (which we call "Augusta Level 1," or simply "L1") and implement the
@@ -128,7 +128,8 @@ the virtual environment, run the following command on Unix-like systems:
 $ source venv/bin/activate
 ```
 
-On Windows, replace the `source` command by `.\venv\Scripts\activate`.
+On Windows, use the command `.\venv\Scripts\Activate.ps1` (for PowerShell users) or
+`.\venv\Scripts\activate` (for cmd.exe users).
 
 Activation changes the environment of your shell so that the Python resources in the virtual
 environment are directly available. When the virtual environment is activated for the first
