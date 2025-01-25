@@ -13,7 +13,8 @@ project using concrete artifacts. We welcome contributions and feedback from any
 persons.
 
 Augusta/AGC's development is done on Windows, macOS, and Linux. We intend to fully support all
-three platforms, both for development and for running AGC-generated code.
+three platforms, both for the development of AGC and for developing and running Augusta
+programs.
 
 
 ## Vision
@@ -53,22 +54,21 @@ AGC compiler for that language.
 
 ## Ada Subset?
 
-We define "subset" to mean that every program that is a valid Augusta program would also be a
-valid Ada program. However, it is an open question if Augusta is ultimately destined to be an
-Ada subset or not. It is our intention to make Augusta as compatible with Ada as possible, but
-we also want to honor the vision of Augusta being a simple language to learn and implement. At
-the moment we regard the sequence of Augusta levels (L1, L2, etc.) as converging toward full
-Ada, but even that is not certain at this time.
+When we say August is a "subset" of Ada we mean every valid Augusta program is also a valid Ada
+program. However, it is an open question if Augusta will ultimately be a subset of Ada or not.
+It is our intention to make Augusta as compatible with Ada as possible, but we also want to
+honor the vision of Augusta being a simple language to learn and implement. At the moment we
+regard the sequence of Augusta levels (L1, L2, etc.) as converging toward full Ada, but even
+that is not certain at this time.
 
 For example, Augusta Level 1 requires less checking of the source program than Ada does in the
-interest of simplicity, even for constructs L1 supports. This makes L1 not a strict subset of
-Ada since some programs acceptable to an L1 compiler, would not be acceptable to an Ada
+interest of simplicity, even for Ada constructs L1 supports. This makes L1 not a strict subset
+of Ada since some programs acceptable to an L1 compiler, would not be acceptable to an Ada
 compiler. However, we expect that some Ada-mandated checks could be added back with the help of
 Augusta's extension points. For example, a tool or compiler-plugin could be created that checks
-for Ada compatibility.
-
-Also, Augusta Level 2, when it is defined, may introduce some of the missing checks. This would
-technically break compatibility with L1, but it would move L2 closer to Ada.
+for Ada compatibility. Also, Augusta Level 2, when it is defined, may introduce some of the
+missing checks. This would technically break compatibility with L1, but it would move L2 closer
+to Ada.
 
 More details about Ada compatibility along with the rationale for breaking compatibility in
 certain cases is provided in the Augusta Language Reference Manual.
@@ -82,7 +82,9 @@ The prerequisites necessary for setting up an Augusta/AGC development system are
 The version numbers given are for the specific versions we are using. In most cases, other
 closely related versions would probably also work, but have not been tested.
 
-+ [Java](https://www.oracle.com/java/technologies/downloads/) (21.0.5)
+_TODO:_ Discuss how to install SBT via Coursier.
+
++ [Java](https://www.oracle.com/java/technologies/downloads/) (21.0.6)
 
   There are some Java source files in AGC, so a JRE is not sufficient. The Java compiler is
   required.
@@ -102,16 +104,17 @@ closely related versions would probably also work, but have not been tested.
 
   Augusta generates code for the Low Level Virtual Machine (LLVM). Only the back-end tools from
   the LLVM project are needed. None of the front-end compilers (gcc, clang, etc.) are necessary.
+
   _TODO:_ Document how to set up LLVM.
 
 ### Python Virtual Environment
 
 The Augusta/AGC documentation is written using reStructuredText (reST) and compiled with Sphinx
 into presentation formats. If you intend to build the documentation, you will need to set up a
-Python virtual environment as described here. Technically, the build of AGC itself does not
-require this, but we use Python as our official scripting language so in the future it might be
-used in other supportive roles. Therefore, we encourage every developer to go through these
-steps regardless of your current needs.
+Python virtual environment as described here. The build of AGC itself does not require this, but
+we use Python as our official scripting language so in the future Python might be used in other
+supportive roles. Therefore, we encourage every developer to go through these steps regardless
+of your current needs.
 
 First, install a suitable version of Python. Use at least version 3.6 as a minimum for Sphinx,
 but a more recent version is encouraged (we use 3.13.x). Then create a virtual environment in
@@ -163,13 +166,35 @@ depends on. This can take some time, depending on your network connection.
 
 The resulting JAR file is in `target/scala-3.3.4`. The file is large because it contains all of
 AGC's dependencies and is completely self-contained. You can deploy AGC by simply copying that
-JAR file to another system and executing it. See the [SBT
-documentation](https://www.scala-sbt.org/documentation.html) for more details about SBT.
+JAR file to another system and executing it.
+
+Additional SBT commands of interest are:
+
+    $ sbt clean    # Deletes all build artifacts.
+    $ sbt doc      # Builds the API documentation in target/scala-3.3.4/api.
+    $ sbt run      # Runs AGC interactively.
+    $ sbt console  # Starts the Scala REPL with AGC's classpath configured.
+
+See the [SBT documentation](https://www.scala-sbt.org/documentation.html) for more details about
+SBT.
 
 ### Documentation
 
 The documentation can be built using Sphinx. This process is described in the README in the
 `doc` folder.
+
+### Tutorials
+
+Since AGC's source language (Augusta/Ada) is different from its implementation language (Scala),
+we expect that potential contributors from either language community may want to consult a
+tutorial about the other language. Some resources can be found on the [Augusta
+Wiki](https://github.com/pchapin/augusta/wiki). However, this repository also contains a
+tutorial for Scala in the `tutorial/Scala` folder. At some point this tutorial might be moved to
+its own repository, but that won't happen until it is more complete.
+
+The `tutorials` folder may contain other tutorials in the future that are relevant to
+Augusta/AGC development. There is also a `tutorial` folder in `doc` that contains a
+user-oriented tutorial on Augusta/AGC itself.
 
 ## Development Environments
 
@@ -184,31 +209,48 @@ large development environment interfering. Also, SBT will download all prerequis
 the Scala compiler, reducing the chance of spurious errors when you first configure your other
 tools.
 
-During normal development, continue to build the project via SBT even from within your
-development environment. This ensures the build is done properly. The SBT build is the source of
-truth for the project's configuration and dependencies, so it should be used consistently. One
-advantage of this is that any tool that knows how to work with SBT will work for Augusta/AGC
-development.
+During normal development, continue to build the project via SBT either from the command line or
+from within your development environment. This ensures the build is done properly. The SBT build
+is the source of truth for the project's configuration and dependencies, so it should be used
+consistently. One advantage of this is that any tool that knows how to work with SBT will work
+for Augusta/AGC development.
 
 ### Visual Studio Code
 
 We recommend first setting up the Python virtual environment for Sphinx, as described above,
-before configuring Visual Studio Code. VSCode will automatically detect the virtual environment
+before configuring Visual Studio Code. VS Code will automatically detect the virtual environment
 and configure itself appropriately. If the virtual environment is not in place, you may
-encounter some errors while using Visual Studio Code.
+encounter some errors while using Visual Studio Code if you try working on the Python components
+of the project.
 
 Download and install [Visual Studio Code](https://code.visualstudio.com/). Then, install the
 following extensions into Visual Studio Code:
 
 + Scala (Metals) by Scalameta
 + ANTLR4 grammar syntax support by Mike Lischke
-+ Python by Microsoft
-+ reStructuredText by LeXtudio
++ Python by Microsoft (needed for editing Python support scripts)
++ reStructuredText by LeXtudio (needed for editing the documentation)
++ XML by Red Hat (needed for editing the Scala tutorial)
+
+For basic development only the Scala and ANTLR4 extensions are needed. The others only pertain
+to particular aspects of the project as indicated above and aren't necessary to install if you
+don't anticipate working on those aspects.
+
+Other extensions that may be useful include:
+
++ Code Spell Checker by Street Side Software
++ GitLens by GitKraken
++ Rewrap by stkb
++ Todo Tree by Gruntfuggly
+
+The Rewrap extension is particularly useful for editing comments and documentation to ensure
+that text wraps neatly. Use Alt+Q (or Option+Q on macOS) to rewrap a paragraph. The Todo Tree
+extension is useful for tracking TODO and FIXME comments in the code.
 
 Open Visual Studio Code on the top level folder of this repository. The Metals extension should
 notice that there is an SBT build defined, and prompt you to import it. Some time is required to
 execute this import and perform related indexing. Also, when you first open a Scala file, there
-is some additional extra time required while Metals compiles the project.
+is some additional time required while Metals compiles the project.
 
 ### IntelliJ IDEA
 
@@ -217,7 +259,6 @@ should be sufficient. Then, install the following plugins into IntelliJ:
 
 + Scala
 + ANTLR
-+ Python (Optional)
 
 Open IntelliJ IDEA on the top level folder of this repository. As with Visual Studio Code,
 IntelliJ should notice the SBT build and prompt you to import it. This will also take some time

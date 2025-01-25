@@ -7,6 +7,7 @@
         "ANTLR",
         "Bazel",
         "buildable",
+        "Coursier",
         "Intelli",
         "Kiama",
         "multicore",
@@ -14,9 +15,18 @@
         "Scalameta",
         "subfolders",
         "subprojects",
-        "venv"
+        "venv",
+        "Williston"
     ],
     "python.analysis.extraPaths": [
         "doc/sphinx-extensions"
-    ]
+    ],
+    "xml.fileAssociations": [
+        {
+            "pattern": "*.xml",
+            "systemId": "lib/docbookxi.rnc"
+        }
+    ],
+    "xml.validation.enabled": true,
+    "rewrap.wrappingColumn": 96
 }

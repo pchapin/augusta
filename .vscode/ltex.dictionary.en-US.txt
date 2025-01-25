@@ -15,3 +15,7 @@ VSCode
 Kiama
 FastParse
 Bazel
+Coursier
+classpath
+XInclude
+FIXME
