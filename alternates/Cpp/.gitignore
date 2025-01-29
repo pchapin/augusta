@@ -1,0 +1,48 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+agc++
+*.exe
+*.out
+*.app
+
+# Open Watcom specific files
+*.err
+*.mk
+*.mk1
+*.lk1
+*.map
+*.sym
+
+# Bison output
+ada.tab.cpp
+ada.tab.hpp
+
+# Generated documentation
+doc/internal

@@ -105,7 +105,7 @@ _TODO:_ Discuss how to install SBT via Coursier.
   Augusta generates code for the Low Level Virtual Machine (LLVM). Only the back-end tools from
   the LLVM project are needed. None of the front-end compilers (gcc, clang, etc.) are necessary.
 
-  _TODO:_ Document how to set up LLVM.
+_TODO:_ Document how to set up LLVM.
 
 ### Python Virtual Environment
 
@@ -177,6 +177,13 @@ Additional SBT commands of interest are:
 
 See the [SBT documentation](https://www.scala-sbt.org/documentation.html) for more details about
 SBT.
+
+### Alternates
+
+Two alternate implementations of AGC are available. The first is a C++ implementation. The
+second is a Rust implementation. Both of these implementations are in the very early stages of
+development and are currently little more than placeholders. They can be found in subfolders of
+the `alternates` folder. See the README files in those folders for more details. 
 
 ### Documentation
 

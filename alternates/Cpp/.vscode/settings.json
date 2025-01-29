@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "string": "cpp",
+        "stdexcept": "cpp"
+    },
+    "cSpell.words": [
+        "COLONEQUAL",
+        "LABELEND",
+        "LABELSTART",
+        "RPAREN",
+        "WGML",
+        "wmake"
+    ]
+}
