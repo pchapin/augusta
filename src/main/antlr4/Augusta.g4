@@ -8,16 +8,23 @@ grammar Augusta;
 // High Level Grammar
 // ------------------
 
+// Augusta only allows compilation units that are a single subprogram.
+// Ada-style packages are not currently supported.
 compilation_unit
-    :   procedure_definition;
+    :   procedure_definition | function_definition;
 
 procedure_definition
-    :   PROCEDURE IDENTIFIER IS declarations block IDENTIFIER? ';';
+    :   PROCEDURE IDENTIFIER parameter_list? IS declarations block IDENTIFIER? ';';
 
+function_definition
+    :   FUNCTION IDENTIFIER parameter_list? RETURN IDENTIFIER IS declarations block IDENTIFIER? ';';
 
 // Declaration Grammar
 // -------------------
 
+// There is no mechanism for declaring types in Augusta. All types are built-in.
+// There is no mechanism for declaring subprograms in Augusta.
+// There are no arrays in Augusta (yet).
 declarations
     :   declaration*;
 
@@ -27,6 +34,13 @@ declaration
 object_declaration
     :   IDENTIFIER ':' IDENTIFIER (':=' expression)? ';';
 
+parameter_list
+    :   '(' parameter_declaration+ ')';
+
+// In Ada the mode is optional and defaults to IN. Augusta requires the mode to be specified.
+// In Ada parameter declarations can have default values. Augusta does not support this feature.
+parameter_declaration
+    :   IDENTIFIER ':' (IN | OUT | IN OUT) IDENTIFIER;
 
 // Statement Grammar
 // -----------------
@@ -43,19 +57,17 @@ statement
 assignment_statement
     :   left_expression ASSIGNMENT expression ';';
 
+// Augusta only supports the IF statement. The CASE statement is not currently supported.
 conditional_statement
     :   IF expression THEN thenStatements+=statement+
        (elsif_fragment)*
        (ELSE elseStatements+=statement+)?
         END IF ';';
 
-// The problem with including elsif_fragment in the rule above is that I don't know how to
-// distinguish the batches of statements in the various ELSIF parts. Unfortunately when building
-// the CFG this rule seems to require two different exit points: one leading to the next ELSE if
-// the expression is False, and one leading to the overall end when the statement list completes.
 elsif_fragment
     :   ELSIF expression THEN statement+;
 
+// Augusta only supports the WHILE loop. The FOR loop is not currently supported.
 iteration_statement
     :   WHILE expression LOOP statement+ END LOOP ';';
 
@@ -73,21 +85,22 @@ primary_expression
     |   BOOLEAN_LITERAL
     |   '(' expression ')';
 
-multiplicative_expression
-    locals [String expressionType]
-    :   multiplicative_expression (MULTIPLY | DIVIDE | REM) primary_expression
-    |   primary_expression;
-
 unary_expression
     locals [String expressionType]
-    :   (PLUS | MINUS) multiplicative_expression
-    |   multiplicative_expression;
+    :   (PLUS | MINUS) primary_expression
+    |   primary_expression;
+
+multiplicative_expression
+    locals [String expressionType]
+    :   multiplicative_expression (MULTIPLY | DIVIDE | REM) unary_expression
+    |   unary_expression;
 
 additive_expression
     locals [String expressionType]
-    :   additive_expression (PLUS | MINUS)  unary_expression
-    |   unary_expression;
+    :   additive_expression (PLUS | MINUS)  multiplicative_expression
+    |   multiplicative_expression;
 
+// This does not deal with Ada's rules about parenthesizing potentially ambiguous expressions.
 relational_expression
     locals [String expressionType]
     :   relational_expression
@@ -99,6 +112,7 @@ expression
     locals [String expressionType]
     :   relational_expression;
 
+// Augusta currently only supports simple left-hand side expressions.
 left_expression
     locals [String expressionType]
     :   IDENTIFIER;
