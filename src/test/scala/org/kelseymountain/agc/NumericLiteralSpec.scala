@@ -4,6 +4,11 @@ import scanner.Literals.*
 
 class NumericLiteralSpec extends UnitSpec:
 
+  def runIntTests(cases: Array[(String, BigInt)]): Unit =
+    for (text, value) <- cases do
+      val literalValue = decodeIntegerLiteral(text)
+      assert(literalValue == value)
+
   "A decimal integer literal" should "handle underscores" in {
     val testCases = Array(
       ("42", BigInt("42")),               // The most basic example.
@@ -11,10 +16,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("12_345_678", BigInt("12345678")), // A more complex example with multiple underscores.
       ("1_2_3_4", BigInt("1234"))         // A somewhat odd, but legal use of underscores.
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   it should "handle powers of two" in {
@@ -33,15 +35,12 @@ class NumericLiteralSpec extends UnitSpec:
       ("2_147_483_648", BigInt("2147483648")),  // 2**31
       ("4_294_967_295", BigInt("4294967295")),  // 2**32 - 1
       ("4_294_967_296", BigInt("4294967296")),  // 2**32
-      ("9_223_372_036_854_775_807", BigInt("92230372036854775807")),  // 2**63 - 1
+      ("9_223_372_036_854_775_807", BigInt("9223372036854775807")),   // 2**63 - 1
       ("9_223_372_036_854_775_808", BigInt("9223372036854775808")),   // 2**63
       ("18_446_744_073_709_551_615", BigInt("18446744073709551615")), // 2**64 - 1
-      ("18_446_744_073_709_551_616", BigInt("18446744073709551615"))  // 2**64
+      ("18_446_744_073_709_551_616", BigInt("18446744073709551616"))  // 2**64
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   it should "handle exponents" in {
@@ -55,10 +54,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("1E1_0", BigInt("10000000000")),
       ("1E1_000", BigInt("10").pow(1000))
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   "A based integer literal" should "handle base 2" in {
@@ -71,10 +67,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("2#1100_0011_0101_1010#", BigInt("50010")),
       ("2#1100_0011_0101_1010_1100_0011_0101_1010#", BigInt("3277505370"))
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   it should "handle base 8" in {
@@ -93,10 +86,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("8#77_77_77_77_77_77_77#", BigInt("4398046511103")),
       ("8#77_77_77_77_77_77_77_77#", BigInt("281474976710655"))
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   it should "handle base 16" in {
@@ -116,10 +106,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("16#FFFF_FFFF_FFFF_FFFF#", BigInt("18446744073709551615")),
       ("16#7FFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF#", BigInt("2").pow(127) - 1)
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   it should "handle other bases" in {
@@ -127,10 +114,7 @@ class NumericLiteralSpec extends UnitSpec:
       // TODO: Add other test cases.
       ("13#2C#", BigInt("38"))
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   it should "handle underscores" in {
@@ -138,10 +122,7 @@ class NumericLiteralSpec extends UnitSpec:
       // TODO: Add other test cases (are there any?).
       ("1_6#2A#", BigInt("42"))
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
   it should "handle exponents" in {
@@ -149,10 +130,7 @@ class NumericLiteralSpec extends UnitSpec:
       // TODO: Add other test cases.
       ("16#2A#E+2", BigInt("10752"))
     )
-
-    for (text, value) <- testCases do
-      val literalValue = decodeIntegerLiteral(text)
-      assert(literalValue == value)
+    runIntTests(testCases)
   }
 
 //  // Strictly speaking, we only need to test for invalid literals that would pass the RE used
@@ -161,7 +139,7 @@ class NumericLiteralSpec extends UnitSpec:
 //  // variety of illegal things that nevertheless appear approximately like integer literals
 //  // since 'decodeIntegerLiteral' is likely able to produce better error messages than the
 //  // lexical analyzer could.
-//  it should "be detected as invalid" in {
+//  it should "be detected as invalid appropriately" in {
 //    val testCases = Array(
 //      ("xyz", "Invalid start of literal") // Should never occur. The lexer won't tokenize this.
 //      // TODO: Add more! Out of range values, bad suffix combinations, bad use of underscore...
@@ -174,30 +152,58 @@ class NumericLiteralSpec extends UnitSpec:
 //      assert(caught.getMessage == errorMessage)
 //  }
 
+  def runRealTests(cases: Array[(String, BigDecimal)]): Unit =
+    for (text, value) <- cases do
+      val literalValue = decodeRealLiteral(text)
+      assert(literalValue == value)
 
-//  "A decimal real literal" should "be decoded" in {
-//    val testCases = Array(
-//      // A couple of basic test cases
-//      ("1.234", BigDecimal("1.234")),
-//      ("0.01234", BigDecimal("0.01234"))
-//      // TODO: Add more test cases (especially when the TODO items in Literals.scala are fixed)!
-//    )
-//    for (text, value) <- testCases do
-//      val literalValue = decodeRealLiteral(text)
-//      assert(literalValue == value)
-//  }
+  "A decimal real literal" should "handle underscores" in {
+    val testCases = Array(
+      ("1.234", BigDecimal("1.234")),
+      ("1.234_567", BigDecimal("1.234567")),
+      ("1_2.345", BigDecimal("12.345")),
+      ("1_2.3_4_5", BigDecimal("12.345"))
+    )
+    runRealTests(testCases)
+  }
 
-//  // See the comment on the testing of invalid integer literals above. The same applies here.
-//  it should "be detected as invalid" in {
-//    val testCases = Array(
-//      ("1.a", "Invalid start of fractional part in literal")
-//      // TODO: Add more! (Lots more!)
-//    )
-//    for (text, errorMessage) <- testCases do
-//      val caught = intercept[InvalidLiteralException] {
-//        val _ = decodeRealLiteral(text)
-//      }
-//      assert(caught.getMessage == errorMessage)
-//  }
+  it should "handle exponents" in {
+    // TODO: Add test cases for negative exponents.
+    val testCases = Array(
+      ("1.234E0", BigDecimal("1.234")),
+      ("1.234e1", BigDecimal("12.34")),
+      ("1.234E2", BigDecimal("123.4")),
+      ("5.678e+5", BigDecimal("567800.0")),
+      ("56.78E5", BigDecimal("5678000.0")),
+      ("5_6.7_8e5", BigDecimal("5678000.0")),
+      ("1.234E1_3", BigDecimal("12340000000000.0")),
+      ("1.234e1_000", BigDecimal("1.234E1000"))
+    )
+    runRealTests(testCases)
+  }
+
+  // See the comment on the testing of invalid integer literals above. The same applies here.
+  it should "be detected as invalid appropriately" in {
+    val testCases = Array(
+      ("a.2", "Invalid start of real literal"),
+      ("1a.2", "Invalid character in real literal"),
+      ("1__1.2", "Invalid consecutive underscores in real literal"),
+      ("1_a.2", "Invalid character in real literal"),
+      ("1.a", "Invalid start of fractional part in real literal"),
+      ("1.2a", "Invalid character in real literal"),
+      ("1.2__3", "Invalid consecutive underscores in real literal"),
+      ("1.2_a", "Invalid character in real literal"),
+      ("1.2ea", "Invalid start of exponent in real literal"),
+      ("1.2e+a", "Invalid start of exponent in real literal"),
+      ("1.2e1a", "Invalid character in real literal"),
+      ("1.2e1__2", "Invalid consecutive underscores in real literal"),
+      ("1.2e1_a", "Invalid character in real literal")
+    )
+    for (text, errorMessage) <- testCases do
+      val caught = intercept[InvalidLiteralException] {
+        val _ = decodeRealLiteral(text)
+      }
+      assert(caught.getMessage == errorMessage)
+  }
 
 end NumericLiteralSpec

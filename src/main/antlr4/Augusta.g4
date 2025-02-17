@@ -69,7 +69,7 @@ null_statement
 primary_expression
     locals [String expressionType]
     :   IDENTIFIER
-    |   NUMERIC_LITERAL
+    |   INTEGER_LITERAL
     |   BOOLEAN_LITERAL
     |   '(' expression ')';
 
@@ -218,17 +218,27 @@ WHITESPACE
 COMMENT
     :   '--' .*? [\r\n] -> skip;
 
-// Just integer literals for now.
 // Note that Ada allows underscores to appear in the exponent.
-NUMERIC_LITERAL
+INTEGER_LITERAL
     :   (DECIMAL | BASED) ( ('E' | 'e') '+'? DIGIT+ )?;
+
+// Note that Ada allows underscores to appear in the exponent.
+REAL_LITERAL
+    :   (DECIMAL_REAL | BASED_REAL) ( ('E' | 'e') ('+' | '-')? DIGIT+ )?;
 
 fragment DECIMAL
     :   DIGIT ('_'? DIGIT)*;
 
+fragment DECIMAL_REAL
+    :   DIGIT ('_'? DIGIT)* '.' DIGIT ('_'? DIGIT)*;
+
 // Note that Ada allows underscores to appear in the base.
 fragment BASED
     :   DIGIT+ '#' HEX_DIGIT ('_'? HEX_DIGIT)* '#';
+
+// Note that Ada allows underscores to appear in the base.
+fragment BASED_REAL
+    :   DIGIT+ '#' HEX_DIGIT ('_'? HEX_DIGIT)* '.' HEX_DIGIT ('_'? HEX_DIGIT)* '#';
 
 fragment DIGIT
     :   [0-9];
