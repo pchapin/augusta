@@ -133,6 +133,8 @@ object Literals:
             state = State.GetExponentDigits
           else throw InvalidLiteralException("Invalid character in real literal")
 
+    // TODO: Analyze the final state and throw an exception if the state is invalid.
+
     (wholePart + fractionalPart) * BigDecimal(10.0).pow(exponent)
 
   /**

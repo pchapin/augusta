@@ -1,5 +1,5 @@
 begin
-   X := A + B +;
+   X := A + B;
    X := A - B;
    X := A * B;
    X := A / B;
