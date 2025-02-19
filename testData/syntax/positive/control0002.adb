@@ -1,25 +1,25 @@
-BEGIN
-   IF X + Y THEN
-      WHILE X + Y LOOP
-         IF X + Y THEN
+begin
+   if X + Y then
+      while X + Y loop
+         if X + Y then
             A := B + C;
-         END IF;
-      END LOOP;
-   END IF;
+         end if;
+      end loop;
+   end if;
 
-   whilE X + Y looP
-      whilE X + Y looP
+   while X + Y loop
+      while X + Y loop
          A := B + C;
-      enD looP;
-   enD looP;
+      end loop;
+   end loop;
 
-   If X + Y Then
-      Null;
-   Elsif X + Y Then
-      While X + Y Loop
-         If X + Y Then
+   if X + Y then
+      null;
+   elsif X + Y then
+      while X + Y loop
+         if X + Y then
            A := B + C;
-         End If;
-      End Loop;
-   End If;
-END
+         end if;
+      end loop;
+   end if;
+end

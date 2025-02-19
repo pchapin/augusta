@@ -1,9 +1,9 @@
 begin
-   while X + Y LOOP
+   while X + Y loop
       null;
    end loop;
 
-   while X + Y LOOP
+   while X + Y loop
       X := A + B;
       Y := C + D;
    end loop;

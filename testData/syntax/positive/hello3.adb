@@ -1,5 +1,5 @@
 -- A silly program to just exercise some declarations.
---
+
 procedure Hello is
    X : Integer;
 

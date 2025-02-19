@@ -1,14 +1,8 @@
 package org.kelseymountain.agc
 
-import org.scalatest._
-import funsuite._
-import matchers._
-
 // Suites are good high-level groupings of tests.
-class MainSuite extends AnyFunSuite with Assertions with should.Matchers {
+class MainSuite extends UnitSuite:
 
   test("Trivial Test") {
     // TODO: Enhance the trivial test.
   }
-
-}

@@ -1,5 +1,5 @@
 -- A silly program to just exercise some computations.
---
+
 procedure Hello is
   X : Integer;
   Y : Integer := 5;
