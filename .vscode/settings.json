@@ -29,5 +29,18 @@
         }
     ],
     "xml.validation.enabled": true,
-    "rewrap.wrappingColumn": 96
+    "rewrap.wrappingColumn": 96,
+    "todo-tree.filtering.includeGlobs": [
+        "**/*.rst",
+        "**/*.scala",
+        "**/*.g4",
+        "**/*.md",
+        "**/*.txt",
+        "**/*.cpp",
+        "**/*.rs",
+        "**/*.py",
+        "**/*.xml"
+    ],
+    "todo-tree.regex.regex": "(//|#|<!--|\\.\\.\\s+|;|/\\*|^[ \\t]*(-|\\d+.))\\s*($TAGS)",
+    "todo-tree.tree.scanMode": "workspace only"
 }
