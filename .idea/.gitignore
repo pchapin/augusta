@@ -1,0 +1,23 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+# Zeppelin ignored files
+/ZeppelinRemoteNotebooks/
+
+# These are being ignored because IntelliJ can generate them from build.sbt.
+/.name
+/libraries
+/misc.xml
+/modules.xml
+/modules
+/sbt.xml
+/scala_compiler.xml
+/scala_settings.xml
+/vcs.xml
+
+# The only folders that should be committed at this time are `codeStyles` and `scopes`.

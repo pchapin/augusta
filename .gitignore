@@ -1,6 +1,9 @@
 
 # Local IntelliJ configuration.
-.idea
+#.idea
+#
+# Let's try committing .idea and see how that goes. Since much (although not all) of the
+# configuration comes from build.sbt, we'll use .gitignore in the .idea folder aggressively.
 
 # Manually installed jars.
 lib/*.jar

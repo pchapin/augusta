@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="AGC" pattern="file:src//*||file:test//*||file:testData//*||augusta.g4" />
+</component>
