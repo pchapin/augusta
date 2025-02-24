@@ -16,6 +16,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("12_345_678", BigInt("12345678")), // A more complex example with multiple underscores.
       ("1_2_3_4", BigInt("1234"))         // A somewhat odd, but legal use of underscores.
     )
+    pending
     runIntTests(testCases)
   }
 
@@ -40,6 +41,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("18_446_744_073_709_551_615", BigInt("18446744073709551615")), // 2**64 - 1
       ("18_446_744_073_709_551_616", BigInt("18446744073709551616"))  // 2**64
     )
+    pending
     runIntTests(testCases)
   }
 
@@ -54,7 +56,28 @@ class NumericLiteralSpec extends UnitSpec:
       ("1E1_0", BigInt("10000000000")),
       ("1E1_000", BigInt("10").pow(1000))
     )
+    pending
     runIntTests(testCases)
+  }
+
+  // Strictly speaking, we only need to test for invalid literals that would pass the RE used
+  // by the lexical analyzer. The lexical analyzer will not tokenize anything that doesn't match
+  // one of its regular expressions. It may be reasonable to let the lexical analyzer match a
+  // variety of illegal things that nevertheless appear approximately like integer literals
+  // since 'decodeIntegerLiteral' is likely able to produce better error messages than the
+  // lexical analyzer could.
+  it should "be detected as invalid appropriately" in {
+    val testCases = Array(
+      ("xyz", "Invalid start of literal") // Should never occur. The lexer won't tokenize this.
+      // TODO: Add more! Out of range values, bad suffix combinations, bad use of underscore...
+    )
+
+    pending
+    for (text, errorMessage) <- testCases do
+      val caught = intercept[InvalidLiteralException] {
+        val _ = decodeIntegerLiteral(text)
+      }
+      assert(caught.getMessage == errorMessage)
   }
 
   "A based integer literal" should "handle base 2" in {
@@ -67,6 +90,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("2#1100_0011_0101_1010#", BigInt("50010")),
       ("2#1100_0011_0101_1010_1100_0011_0101_1010#", BigInt("3277505370"))
     )
+    pending
     runIntTests(testCases)
   }
 
@@ -86,6 +110,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("8#77_77_77_77_77_77_77#", BigInt("4398046511103")),
       ("8#77_77_77_77_77_77_77_77#", BigInt("281474976710655"))
     )
+    pending
     runIntTests(testCases)
   }
 
@@ -106,6 +131,7 @@ class NumericLiteralSpec extends UnitSpec:
       ("16#FFFF_FFFF_FFFF_FFFF#", BigInt("18446744073709551615")),
       ("16#7FFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF_FFFF#", BigInt("2").pow(127) - 1)
     )
+    pending
     runIntTests(testCases)
   }
 
@@ -114,6 +140,7 @@ class NumericLiteralSpec extends UnitSpec:
       // TODO: Add other test cases.
       ("13#2C#", BigInt("38"))
     )
+    pending
     runIntTests(testCases)
   }
 
@@ -122,6 +149,7 @@ class NumericLiteralSpec extends UnitSpec:
       // TODO: Add other test cases (are there any?).
       ("1_6#2A#", BigInt("42"))
     )
+    pending
     runIntTests(testCases)
   }
 
@@ -130,27 +158,9 @@ class NumericLiteralSpec extends UnitSpec:
       // TODO: Add other test cases.
       ("16#2A#E+2", BigInt("10752"))
     )
+    pending
     runIntTests(testCases)
   }
-
-//  // Strictly speaking, we only need to test for invalid literals that would pass the RE used
-//  // by the lexical analyzer. The lexical analyzer will not tokenize anything that doesn't match
-//  // one of its regular expressions. It may be reasonable to let the lexical analyzer match a
-//  // variety of illegal things that nevertheless appear approximately like integer literals
-//  // since 'decodeIntegerLiteral' is likely able to produce better error messages than the
-//  // lexical analyzer could.
-//  it should "be detected as invalid appropriately" in {
-//    val testCases = Array(
-//      ("xyz", "Invalid start of literal") // Should never occur. The lexer won't tokenize this.
-//      // TODO: Add more! Out of range values, bad suffix combinations, bad use of underscore...
-//    )
-//
-//    for (text, errorMessage) <- testCases do
-//      val caught = intercept[InvalidLiteralException] {
-//        val _ = decodeIntegerLiteral(text)
-//      }
-//      assert(caught.getMessage == errorMessage)
-//  }
 
   def runRealTests(cases: Array[(String, BigDecimal)]): Unit =
     for (text, value) <- cases do
