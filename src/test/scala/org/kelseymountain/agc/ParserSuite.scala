@@ -60,13 +60,13 @@ object ParserSuite:
   val prefix: String = "testData" +  File.separator + "syntax" + File.separator + "positive"
 
   val expressionCases: Array[String] =
-    Array("expr0000.adb", "expr0001.adb", "expr0002.adb", "expr0003.adb"
+    Array("expr0000.agb", "expr0001.agb", "expr0002.agb", "expr0003.agb"
       ) map { prefix + File.separator + _}
 
   val controlCases: Array[String] =
-    Array("control0000.adb", "control0001.adb", "control0002.adb"
+    Array("control0000.agb", "control0001.agb", "control0002.agb"
       ) map { prefix + File.separator + _}
 
   val wholeFileCases: Array[String] =
-    Array("hello1.adb", "hello2.adb" /*, "hello3.adb", "subprogram0001.adb", "subprogram0002.adb" */
+    Array("hello1.agb", "hello2.agb" /*, "hello3.agb", "subprogram0001.agb", "subprogram0002.agb" */
       ) map { prefix + File.separator + _}
