@@ -38,8 +38,12 @@ class ParserSuite extends UnitSuite:
         testFile.close()
 
   // Used for testing declarations.
+  // Declarations are wrapped in a declare statement. The `declarations` non-terminal allows for
+  // zero declarations, which can lead to successful parsing of a file that starts with an
+  // erroneous declaration. An alternative approach would be to check for leftover tokens after
+  // parsing.      
   private def doDeclarationTests(testCaseNames: Array[String]): Unit =
-    doTests(testCaseNames, _.declarations())
+    doTests(testCaseNames, _.statement())
 
   // Used for testing both expressions (via assignment statements) and control structures.
   private def doBlockTests(testCaseNames: Array[String]): Unit =
@@ -70,7 +74,7 @@ object ParserSuite:
   val prefix: String = "testData" +  File.separator + "syntax" + File.separator + "positive"
 
   val declarationCases: Array[String] =
-    Array("decl0000.agb"
+    Array("decl0000.agb", "decl0001.agb"
       ) map { prefix + File.separator + _}
 
   val expressionCases: Array[String] =
@@ -78,7 +82,8 @@ object ParserSuite:
       ) map { prefix + File.separator + _}
 
   val statementCases: Array[String] =
-    Array("stmt0000.agb", "stmt0001.agb", "stmt0002.agb"
+    Array("stmt0000.agb", "stmt0001.agb", "stmt0002.agb", "stmt0003.agb",
+          "stmt0004.agb"
       ) map { prefix + File.separator + _}
 
   val wholeFileCases: Array[String] =

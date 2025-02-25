@@ -1,6 +1,10 @@
 -- This file tests the expression forms in isolation.
 
 begin
+   -- Logical expressions
+   X := A and B;
+   X := A or  B;
+
    -- Relational expressions
    X := A <  B;
    X := A <= B;
@@ -20,6 +24,7 @@ begin
    -- Unary expressions
    X := -A;
    X := +A;
+   X := not A;
 
    -- Primary expressions
    X := A;

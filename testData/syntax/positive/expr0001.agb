@@ -1,6 +1,11 @@
 -- This file tests expressions with mixed operators.
 
 begin
+   X := A and B or C;
+   X := A or B and C;
+   X := not A and B;
+   X := A and not B;
+   X := A < B = C;
    X := A + B * C;
    X := A / B + C;
    X := A > B + C;

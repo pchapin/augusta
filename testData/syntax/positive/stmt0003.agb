@@ -1,0 +1,7 @@
+-- This file tests the return statement.
+
+begin
+   return;
+   return 1;
+   return A + B;
+end

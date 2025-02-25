@@ -1,0 +1,90 @@
+-- This file tests the declare statement.
+
+begin
+   -- Completely empty declare statement.
+   declare
+   begin
+      null;
+   end;
+
+   -- Declare statement with declarations.
+   declare
+      A : Integer;
+      B : Float;
+      C : Boolean;
+   begin
+      null;
+   end;
+
+   -- Declare statement with statements.
+   declare
+      X : Integer := 42;
+   begin
+      Y : X + 1;
+    end;
+
+   -- Nested declare statements.
+   declare
+      A : Integer;
+   begin
+      X := A + 1;
+      declare
+         B : Integer;
+      begin
+         X := A + B;
+      end;
+   end;
+
+   -- IF/DECLARE statement.
+   if X + Y then
+      declare
+         A : Integer;
+      begin
+         X := A + 1;
+      end;
+   end if;
+
+   -- IF/ELSE/DECLARE statement.
+   if X + Y then
+      declare
+         A : Integer;
+      begin
+         X := A + 1;
+      end;
+   else
+      declare
+         B : Integer;
+      begin
+         X := B + 1;
+      end;
+   end if;
+
+   -- WHILE/DECLARE statement.
+   while X + Y loop
+      declare
+         A : Integer;
+      begin
+         X := A + 1;
+      end;
+   end loop;
+
+   -- DECLARE/IF/ELSE statement.
+   declare
+      A : Integer;
+   begin
+      if X + Y then
+         X := A + 1;
+      else
+         X := A + 2;
+      end if;
+   end;
+
+   -- DECLARE/WHILE statement.
+   declare
+      A : Integer;
+   begin
+      while X + Y loop
+         X := A + 1;
+      end loop;
+   end;
+end

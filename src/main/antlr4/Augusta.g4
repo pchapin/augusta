@@ -8,9 +8,12 @@ grammar Augusta;
 // High Level Grammar
 // ------------------
 
-// Augusta only allows compilation units that are a single subprogram.
+// Augusta only allows compilation units that are a sequence of subprogram definitions.
 // Ada-style packages are not currently supported.
 compilation_unit
+    :   subprogram_definition+;
+
+subprogram_definition
     :   procedure_definition | function_definition;
 
 procedure_definition
@@ -18,6 +21,14 @@ procedure_definition
 
 function_definition
     :   FUNCTION IDENTIFIER parameter_list? RETURN IDENTIFIER IS declarations block IDENTIFIER? ';';
+
+parameter_list
+    :   '(' parameter_declaration+ ')';
+
+// In Ada the mode is optional and defaults to IN. Augusta requires the mode to be specified.
+// In Ada parameter declarations can have default values. Augusta does not support this feature.
+parameter_declaration
+    :   IDENTIFIER ':' (IN | OUT | IN OUT) IDENTIFIER;
 
 // Declaration Grammar
 // -------------------
@@ -33,14 +44,6 @@ declaration
 
 object_declaration
     :   IDENTIFIER ':' IDENTIFIER (':=' expression)? ';';
-
-parameter_list
-    :   '(' parameter_declaration+ ')';
-
-// In Ada the mode is optional and defaults to IN. Augusta requires the mode to be specified.
-// In Ada parameter declarations can have default values. Augusta does not support this feature.
-parameter_declaration
-    :   IDENTIFIER ':' (IN | OUT | IN OUT) IDENTIFIER;
 
 // Statement Grammar
 // -----------------
