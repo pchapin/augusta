@@ -1,0 +1,73 @@
+-- This file explores nested IF and WHILE statements.
+
+begin
+   -- Nested IF/IF
+   if X + Y then
+      if X + Y then
+         A := B + C;
+      end if;
+   end if;
+
+   -- Nested WHILE/WHILE
+   while X + Y loop
+      while X + Y loop
+         A := B + C;
+      end loop;
+   end loop;
+
+   -- Nested IF/WHILE/IF
+   if X + Y then
+      while X + Y loop
+         if X + Y then
+            A := B + C;
+         end if;
+      end loop;
+   end if;
+
+   -- Nested WHILE/IF/WHILE
+   while X + Y loop
+      if X + Y then
+         while X + Y loop
+            A := B + C;
+         end loop;
+      end if;
+   end loop;
+
+   -- Nested IF/ELSE/IF
+   if X + Y then
+      null;
+   else
+      if X + Y then
+         A := B + C;
+      end if;
+   end if;
+
+   -- Nested IF/ELSE/WHILE
+   if X + Y then
+      null;
+   else
+      while X + Y loop
+         A := B + C;
+      end loop;
+   end if;
+
+   -- Nested IF/ELSIF/IF
+   if X + Y then
+      null;
+   elsif X + Y then
+      if X + Y then
+         A := B + C;
+      end if;
+   end if;
+
+   -- Nested IF/ELSIF/WHILE
+   if X + Y then
+      null;
+   elsif X + Y then
+      while X + Y loop
+         if X + Y then
+            A := B + C;
+         end if;
+      end loop;
+   end if;
+end

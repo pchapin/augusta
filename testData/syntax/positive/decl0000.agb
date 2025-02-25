@@ -1,0 +1,4 @@
+-- Simple object declarations.
+
+X : Integer;       -- Uninitialized declaration.
+X : Integer := 5;  -- Initialized declaration.

@@ -1,0 +1,6 @@
+-- An empty program.
+
+procedure Main is
+begin
+   null;
+end Main;

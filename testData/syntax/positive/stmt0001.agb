@@ -1,10 +1,12 @@
+-- This file explores variations of the WHILE loop.
+
 begin
    while X + Y loop
       null;
    end loop;
 
    while X + Y loop
-      X := A + B;
-      Y := C + D;
+      A := B + C;
+      D := E + F;
    end loop;
 end

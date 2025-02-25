@@ -1,7 +1,21 @@
+-- This file tests numeric literal forms in isolation.
+
 begin
+   -- Integer literals
    X := 1;
    X := 1E2;
    X := 10_000;
    X := 2#1111_1111#;
    X := 2#1111_1111#E2;
+   X := 16#FF#;
+   X := 16#FF#E2;
+
+   -- Real literals
+   X := 1.0;
+   X := 1.0E2;
+   X := 10_000.0;
+   X := 2#1111_1111.1010_1010#;
+   X := 2#1111_1111.1010_1010#E2;
+   X := 16#FF.0#;
+   X := 16#FF.0#E2;
 end

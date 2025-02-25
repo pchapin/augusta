@@ -37,18 +37,28 @@ class ParserSuite extends UnitSuite:
       finally
         testFile.close()
 
+  // Used for testing declarations.
+  private def doDeclarationTests(testCaseNames: Array[String]): Unit =
+    doTests(testCaseNames, _.declarations())
+
+  // Used for testing both expressions (via assignment statements) and control structures.
   private def doBlockTests(testCaseNames: Array[String]): Unit =
     doTests(testCaseNames, _.block())
 
+  // Used for testing complete programs.
   private def doWholeFileTests(testCaseNames: Array[String]): Unit =
     doTests(testCaseNames, _.compilation_unit())
+
+  test("Syntax: Declarations") {
+    doDeclarationTests(declarationCases)
+  }
 
   test("Syntax: Expressions") {
     doBlockTests(expressionCases)
   }
 
-  test("Syntax: Control Structures") {
-    doBlockTests(controlCases)
+  test("Syntax: Statements") {
+    doBlockTests(statementCases)
   }
 
   test("Syntax: Whole File") {
@@ -59,14 +69,18 @@ class ParserSuite extends UnitSuite:
 object ParserSuite:
   val prefix: String = "testData" +  File.separator + "syntax" + File.separator + "positive"
 
+  val declarationCases: Array[String] =
+    Array("decl0000.agb"
+      ) map { prefix + File.separator + _}
+
   val expressionCases: Array[String] =
     Array("expr0000.agb", "expr0001.agb", "expr0002.agb", "expr0003.agb"
       ) map { prefix + File.separator + _}
 
-  val controlCases: Array[String] =
-    Array("control0000.agb", "control0001.agb", "control0002.agb"
+  val statementCases: Array[String] =
+    Array("stmt0000.agb", "stmt0001.agb", "stmt0002.agb"
       ) map { prefix + File.separator + _}
 
   val wholeFileCases: Array[String] =
-    Array("hello1.agb", "hello2.agb" /*, "hello3.agb", "subprogram0001.agb", "subprogram0002.agb" */
+    Array("hello0.agb", "hello1.agb", "hello2.agb" /*, "hello3.agb", "subprogram0001.agb", "subprogram0002.agb" */
       ) map { prefix + File.separator + _}

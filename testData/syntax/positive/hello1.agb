@@ -1,9 +1,10 @@
--- A silly program to just exercise some computations.
+-- A complete program.
 
 procedure Hello is
-  X : Integer;
-  Y : Integer := 5;
+  X : Integer;       -- Uninitialized declaration.
+  Y : Integer := 5;  -- Initialized declaration.
 begin
+  -- Various computations, but no control flow.
   X := X + X*Y - 42;
   Y := X/3 + 1;
   X := Y/(3 + 1);

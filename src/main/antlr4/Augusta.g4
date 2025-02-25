@@ -82,6 +82,7 @@ primary_expression
     locals [String expressionType]
     :   IDENTIFIER
     |   INTEGER_LITERAL
+    |   REAL_LITERAL
     |   BOOLEAN_LITERAL
     |   '(' expression ')';
 
