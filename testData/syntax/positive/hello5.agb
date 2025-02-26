@@ -1,0 +1,22 @@
+-- This file tests multiple function definitions.
+
+-- Check no parameters.
+function F1 return Integer is
+   X : Integer;
+begin
+   return X;
+end;
+
+-- Check one parameter.
+function F2(X : in Integer) return Integer is
+   Y : Integer;
+begin
+   return Y;
+end;
+
+-- Check multiple parameters.
+function F3(X : in Integer; Y : out Integer; Z : in out Integer) return Integer is
+   W : Integer;
+begin
+   return W;
+end;

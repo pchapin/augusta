@@ -1,0 +1,25 @@
+-- This file tests multiple procedure definitions.
+
+-- Check all three parameter modes.
+procedure P1(X : in Integer; Y : out Integer; Z : in out Integer) is
+   X : Integer;
+begin
+   null;
+end;
+
+-- Check parameterless procedures.
+procedure Hello is
+  A : Integer;
+
+  type T is range 1 .. 10;
+  B : T;
+begin  -- Hello
+  null;
+end;
+
+-- Check one parameter.
+-- Support for global type declarations is not yet implemented, but the parser won't complain.
+procedure P2(X : in T) is
+begin
+   null;
+end;

@@ -41,7 +41,7 @@ class ParserSuite extends UnitSuite:
   // Declarations are wrapped in a declare statement. The `declarations` non-terminal allows for
   // zero declarations, which can lead to successful parsing of a file that starts with an
   // erroneous declaration. An alternative approach would be to check for leftover tokens after
-  // parsing.      
+  // parsing.
   private def doDeclarationTests(testCaseNames: Array[String]): Unit =
     doTests(testCaseNames, _.statement())
 
@@ -87,5 +87,6 @@ object ParserSuite:
       ) map { prefix + File.separator + _}
 
   val wholeFileCases: Array[String] =
-    Array("hello0.agb", "hello1.agb", "hello2.agb" /*, "hello3.agb", "subprogram0001.agb", "subprogram0002.agb" */
+    Array("hello0.agb", "hello1.agb", "hello2.agb", "hello3.agb",
+          "hello4.agb", "hello5.agb"
       ) map { prefix + File.separator + _}

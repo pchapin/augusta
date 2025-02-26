@@ -1,15 +1,13 @@
--- A silly program to just exercise some declarations.
+-- This file tests declarations.
 
 procedure Hello is
    X : Integer;
+   Y : Integer := 5;
 
    type A_Type is range 1 .. 10;
-   type B_Type is array(A_Type) of Boolean;
-   subtype C_Type is A_Type range 1 .. 5;
-   subtype D_Type is C_Type range 1 .. 2;
+   subtype B_Type is A_Type range 1 .. 5;
 
-   A : B_Type;
+   A : B_Type := Y;  -- A semantic error because Integer and A_Type are incompatible.
 begin
-   -- X := A(5);
    null;
 end;
