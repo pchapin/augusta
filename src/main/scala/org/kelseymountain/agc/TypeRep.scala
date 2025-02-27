@@ -2,8 +2,8 @@ package org.kelseymountain.agc
 
 enum TypeRep:
   case RangeRep(lower: BigInt, upper: BigInt)
-  case ArrayRep(indexSubtype: String, elementType: TypeRep)
-  case RecordRep(components: Map[String, TypeRep])
-  case AccessRep(referentType: TypeRep)
-  case EnumRep(values: List[String])
-  case SubtypeRep(parentType: String, range: RangeRep)
+  case SubtypeRep(parentType: TypeName, range: RangeRep)
+  case EnumRep(values: List[IdentifierName])
+  case ArrayRep(indexSubtype: TypeName, elementType: TypeName)
+  case RecordRep(components: Map[IdentifierName, TypeName])
+  case AccessRep(referentType: TypeName)
