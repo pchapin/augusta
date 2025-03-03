@@ -7,3 +7,5 @@ enum TypeRep:
   case ArrayRep(indexSubtype: TypeName, elementType: TypeName)
   case RecordRep(components: Map[IdentifierName, TypeName])
   case AccessRep(referentType: TypeName)
+  case ProcedureRep(parameterTypes: List[(IdentifierName, TypeName)])
+  case FunctionRep(parameterTypes: List[(IdentifierName, TypeName)], resultType: TypeName)
