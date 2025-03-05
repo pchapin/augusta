@@ -3,7 +3,7 @@ package org.kelseymountain.agc
 import org.kelseymountain.agc.TypeRep.{EnumRep, RangeRep}
 
 class SemanticAnalyzer(private val reporter: Reporter) extends AugustaBaseVisitor[Unit]:
-  import org.kelseymountain.agc.AugustaParser._
+  import org.kelseymountain.agc.AugustaParser.*
 
   // Configure the built-in types in a special "internal symbol table."
   private val internalScope = new BasicSymbolTable
@@ -26,7 +26,8 @@ class SemanticAnalyzer(private val reporter: Reporter) extends AugustaBaseVisito
 
   override def visitProcedure_definition(ctx: Procedure_definitionContext): Unit =
     val identifierName = ctx.IDENTIFIER(0).getText
-    // TODO: Generate a unique internal type name for this procedure.
+    // TODO: Verify that the identifier associated with `end` (if any) is the same.
+    // TODO: Generate a unique internal name for this procedure's type.
     // TODO: Deal with the exception thrown by addIdentifierByName.
     symbolTable.addIdentifierByName(identifierName, "Procedure")
     // TODO: Add the procedure's type to the symbol table.

@@ -47,7 +47,7 @@ class StackedSymbolTable(globalScope: BasicSymbolTable) extends SymbolTable:
     // Lazily produce a stack with either error messages or type names.
     // Search that stack for the first type name.
     stack.view
-      .map(basicTable => basicTable.getIdentifierType(name))
+      .map(_.getIdentifierType(name))
       .find(_.isRight)
       .getOrElse(Left(s"Unknown object: $name"))
 
@@ -55,7 +55,7 @@ class StackedSymbolTable(globalScope: BasicSymbolTable) extends SymbolTable:
     // Lazily produce a stack with either error messages or type representations.
     // Search that stack for the first representation.
     stack.view
-      .map(basicTable => basicTable.getTypeRepresentation(name))
+      .map(_.getTypeRepresentation(name))
       .find(_.isRight)
       .getOrElse(Left(s"Unknown type: $name"))
 
