@@ -1,11 +1,37 @@
 package org.kelseymountain.agc
 
 /**
- * A trait describing AGC symbol tables. Symbols are divided into type names and other names
- * (referred to here as "identifier names"). Note that symbol tables are mutable. Most of the
- * methods return Unit, and errors are reported by throwing exceptions.
+ * A trait describing readable symbol tables. These tables are used to look up the types of
+ * identifiers and the representations of types. They are never mutated. Errors are reported by
+ * returning an error message.
  */
-trait SymbolTable:
+trait ReadableSymbolTable:
+
+  /**
+   * Looks up the type associated with a given identifier name. Returns a human-readable
+   * message if the identifier name is not known.
+   *
+   * @param name The identifier name object to look up.
+   * @return The name of the type associated with the named identifier or an error message.
+   */
+  def getIdentifierType(name: IdentifierName): Either[String, TypeName]
+
+  /**
+   * Looks up the representation of a type given its name. Returns a human-readable message
+   * if the type name is not known.
+   *
+   * @param name The name of the type to look up.
+   * @return The representation of the named type or an error message.
+   */
+  def getTypeRepresentation(name: TypeName): Either[String, TypeRep]
+
+end ReadableSymbolTable
+
+/**
+ * A trait describing writable symbol tables. These tables are used to add new symbols to the
+ * table. Errors are reported by throwing exceptions.
+ */
+trait WritableSymbolTable:
 
   /**
    * Adds an identifier name along with its type to this symbol table. Duplicate identifier
@@ -27,36 +53,25 @@ trait SymbolTable:
    */
   def addTypeByName(name: TypeName, representation: TypeRep): Unit
 
-  /**
-   * @return An iterable collection containing the names of all the identifiers in this symbol
-   * table.
-   */
-  def getIdentifierNames: Iterable[IdentifierName]
+end WritableSymbolTable
 
-  /**
-   * Looks up the type associated with a given identifier name. Throws an exception if the
-   * object name is not known.
-   *
-   * @param name The identifier name object to look up.
-   * @return The name of the type associated with the named object.
-   */
-  def getIdentifierType(name: IdentifierName): TypeName
+/**
+ * A trait describing AGC symbol tables. Symbols are divided into type names and other names
+ * (referred to here as "identifier names"). Note that symbol tables are mutable. Most of the
+ * methods return Unit, and errors are reported by throwing exceptions.
+ */
+trait SymbolTable extends ReadableSymbolTable with WritableSymbolTable
 
-  /**
-   * Looks up the representation of a type given its name. Throws an exception if the type name
-   * is not known.
-   *
-   * @param name The name of the type to look up.
-   * @return The representation of the named type.
-   */
-  def getTypeRepresentation(name: TypeName): TypeRep
-
-end SymbolTable
 
 object SymbolTable:
-  class SymbolTableException(message: String) extends Exception(message)
+  /**
+   * The super class of all SymbolTable exceptions. These exceptions are only thrown when
+   * mutating a WriteableSymbolTable.
+   *
+   * @param message A human-readable message describing the error.
+   */
+  abstract class SymbolTableException(message: String) extends Exception(message)
 
-  class UnknownIdentifierNameException  (message: String) extends SymbolTableException(message)
   class UnknownTypeNameException        (message: String) extends SymbolTableException(message)
   class DuplicateIdentifierNameException(message: String) extends SymbolTableException(message)
   class DuplicateTypeNameException      (message: String) extends SymbolTableException(message)

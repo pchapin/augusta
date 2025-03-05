@@ -13,12 +13,12 @@ class BasicFileReporter(fileName: String) extends Reporter:
   def getErrorCount: Int   = errorCount
   def getWarningCount: Int = warningCount
 
-  def reportSourceError(errorToken: Token, message: String): Unit =
+  override def reportSourceError(errorToken: Token, message: String): Unit =
     errorCount += 1
     output.printf("error: (%d, %d) %s%n",
       errorToken.getLine, errorToken.getCharPositionInLine + 1, message)
 
-  def reportSourceWarning(warningToken: Token, message: String): Unit =
+  override def reportSourceWarning(warningToken: Token, message: String): Unit =
     warningCount += 1
     output.printf("warning: (%d, %d) %s%n",
       warningToken.getLine, warningToken.getCharPositionInLine + 1, message)

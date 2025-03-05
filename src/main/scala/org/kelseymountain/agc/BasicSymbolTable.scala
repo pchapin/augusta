@@ -9,35 +9,32 @@ class BasicSymbolTable extends SymbolTable:
   private val identifierMap = mutable.Map[IdentifierName, TypeName]()
   private val typeMap = mutable.Map[TypeName, TypeRep]()
 
-  def addIdentifierByName(name: IdentifierName, typeName: TypeName): Unit =
+  override def addIdentifierByName(name: IdentifierName, typeName: TypeName): Unit =
     if identifierMap.contains(name) then
-      throw SymbolTable.DuplicateIdentifierNameException("Duplicate identifier name: " + name)
+      throw SymbolTable.DuplicateIdentifierNameException(s"Duplicate identifier name: $name")
     else if !typeMap.contains(typeName) then
-      throw SymbolTable.UnknownTypeNameException("Unknown type name: " + typeName)
+      throw SymbolTable.UnknownTypeNameException(s"Unknown type name: $typeName")
     else if typeMap.contains(name) then
-      throw SymbolTable.ConflictingNameException("Already a type: " + name)
+      throw SymbolTable.ConflictingNameException(s"Already a type: $name")
     else
       identifierMap.put(name, typeName)
 
-  def addTypeByName(name: TypeName, representation: TypeRep): Unit =
+  override def addTypeByName(name: TypeName, representation: TypeRep): Unit =
     if typeMap.contains(name) then
-      throw SymbolTable.DuplicateTypeNameException("Duplicate type name: " + name)
+      throw SymbolTable.DuplicateTypeNameException(s"Duplicate type name: $name")
     else if identifierMap.contains(name) then
-      throw SymbolTable.ConflictingNameException("Already an object: " + name)
+      throw SymbolTable.ConflictingNameException(s"Already an object: $name")
     else
       typeMap.put(name, representation)
 
-  def getIdentifierNames: Iterable[IdentifierName] =
-    identifierMap.values
-
-  def getIdentifierType(name: IdentifierName): TypeName =
+  override def getIdentifierType(name: IdentifierName): Either[String, TypeName] =
     identifierMap.get(name) match
-      case Some(typeName) => typeName
-      case None => throw SymbolTable.UnknownIdentifierNameException("Unknown object: " + name)
+      case Some(typeName) => Right(typeName)
+      case None => Left(s"Unknown object: $name")
 
-  def getTypeRepresentation(name: TypeName): TypeRep =
+  override def getTypeRepresentation(name: TypeName): Either[String, TypeRep] =
     typeMap.get(name) match
-      case Some(representation) => representation
-      case None => throw new SymbolTable.UnknownTypeNameException("Unknown type: " + name)
+      case Some(representation) => Right(representation)
+      case None => Left(s"Unknown type: $name")
 
 end BasicSymbolTable
