@@ -20,7 +20,7 @@ begin
    declare
       X : Integer := 42;
    begin
-      Y : X + 1;
+      Y := X + 1;
     end;
 
    -- Nested declare statements.

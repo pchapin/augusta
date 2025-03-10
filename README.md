@@ -16,6 +16,9 @@ Augusta/AGC's development is done on Windows, macOS, and Linux. We intend to ful
 three platforms, both for the development of AGC and for developing and running Augusta
 programs.
 
+Kanban boards describing [Augusta/AGC's development](https://trello.com/w/augustaagc) are on
+Trello.
+
 
 ## Vision
 
@@ -43,7 +46,7 @@ tooling, rather than creating a language with numerous built-in features (i.e., 
 In addition to off-loading advanced language features to compiler extensions and tools, we feel
 that the infrastructure and ecosystem surrounding a language is as important as the language
 itself. Thus, we hope to provide Augusta support for popular editors and IDEs, and some as
-yet-to-be-determined build and package management system (for example,
+yet-to-be-determined build and package management system (perhaps
 [Bazel](https://bazel.build/)). We hope the early availability of these tools will encourage the
 growth of an active community around Augusta and accelerate its development.
 
@@ -52,26 +55,28 @@ to define the base language (which we call "Augusta Level 1," or simply "L1") an
 AGC compiler for that language.
 
 
-## Ada Subset?
+## Is Augusta an Ada Subset?
 
-When we say August is a "subset" of Ada we mean every valid Augusta program is also a valid Ada
-program. However, it is an open question if Augusta will ultimately be a subset of Ada or not.
-It is our intention to make Augusta as compatible with Ada as possible, but we also want to
-honor the vision of Augusta being a simple language to learn and implement. At the moment we
-regard the sequence of Augusta levels (L1, L2, etc.) as converging toward full Ada, but even
-that is not certain at this time.
+When we say a language is a "subset" of Ada we mean that every valid program in that language is
+also a valid Ada program. In that sense Augusta is *not* a subset of Ada.
 
-For example, Augusta Level 1 requires less checking of the source program than Ada does in the
-interest of simplicity, even for Ada constructs L1 supports. This makes L1 not a strict subset
-of Ada since some programs acceptable to an L1 compiler, would not be acceptable to an Ada
-compiler. However, we expect that some Ada-mandated checks could be added back with the help of
-Augusta's extension points. For example, a tool or compiler-plugin could be created that checks
-for Ada compatibility. Also, Augusta Level 2, when it is defined, may introduce some of the
-missing checks. This would technically break compatibility with L1, but it would move L2 closer
-to Ada.
+It is our intention to make Augusta as compatible with Ada as possible. However, we also want to
+honor the vision of Augusta being a simple language to learn and implement. We also don't feel
+the need to implement Ada's quirks for the sake of compatibility. At the moment, we regard the
+sequence of Augusta levels (L1, L2, etc.) as approximately converging toward full Ada, but we
+don't hold that convergence as an ultimate goal of this project.
 
-More details about Ada compatibility along with the rationale for breaking compatibility in
-certain cases is provided in the Augusta Language Reference Manual.
+For example, Augusta is a case-sensitve language, whereas Ada is case-insensitive. The case
+sensitivity of Augusta aligns with most modern languages and supports a naming convention where
+casing can be used to distinguish between types and objects (e.g., a type `Card` and an object
+`card` can coexist in the program as distinct entities). Case sensitivity is also slightly
+easier to implement.
+
+As a result, Augusta programs that use reserved words in unusual casings as ordinary identifiers
+(`While` instead of `while`) will compile, whereas they would not in Ada. This breaks Augusta as
+a subset of Ada, but we have no intention of ever changing this behavior. There are other
+examples. See the Augusta Language Reference Manual for more details about Augusta/Ada
+compatibility and the rationale for any deviations.
 
 
 ## Building

@@ -11,7 +11,7 @@ grammar Augusta;
 // Augusta only allows compilation units that are a sequence of subprogram definitions.
 // Ada-style packages are not currently supported.
 compilation_unit
-    :   subprogram_definition+;
+    :   (declaration | subprogram_definition)+;
 
 subprogram_definition
     :   procedure_definition | function_definition;
@@ -23,7 +23,7 @@ function_definition
     :   FUNCTION IDENTIFIER parameter_list? RETURN IDENTIFIER IS declarations block IDENTIFIER? ';';
 
 parameter_list
-    :   '(' parameter_declaration+ ')';
+    :   '(' parameter_declaration (';' parameter_declaration)* ')';
 
 // In Ada the mode is optional and defaults to IN. Augusta requires the mode to be specified.
 // In Ada parameter declarations can have default values. Augusta does not support this feature.
@@ -40,10 +40,24 @@ declarations
     :   declaration*;
 
 declaration
-    :   object_declaration;
+    :   enumeration_declaration
+    |   object_declaration
+    |   subtype_declaration
+    |   type_declaration;
+
+enumeration_declaration
+    :   TYPE IDENTIFIER IS '(' IDENTIFIER (',' IDENTIFIER)* ')' ';';
 
 object_declaration
     :   IDENTIFIER ':' IDENTIFIER (':=' expression)? ';';
+
+// Augusta only supports subtype declarations for integer types using constant ranges.
+subtype_declaration
+    :   SUBTYPE IDENTIFIER IS IDENTIFIER RANGE INTEGER_LITERAL DOTDOT INTEGER_LITERAL ';';
+
+type_declaration
+    :   TYPE IDENTIFIER IS NEW IDENTIFIER ';'
+    |   TYPE IDENTIFIER IS RANGE INTEGER_LITERAL DOTDOT INTEGER_LITERAL ';';
 
 // Statement Grammar
 // -----------------
@@ -54,8 +68,10 @@ block
 statement
     :   assignment_statement
     |   conditional_statement
+    |   declare_statement
     |   iteration_statement
-    |   null_statement;
+    |   null_statement
+    |   return_statement;
 
 assignment_statement
     :   left_expression ASSIGNMENT expression ';';
@@ -70,12 +86,18 @@ conditional_statement
 elsif_fragment
     :   ELSIF expression THEN statement+;
 
+declare_statement
+    :   DECLARE declarations BEGIN statement+ END ';';
+
 // Augusta only supports the WHILE loop. The FOR loop is not currently supported.
 iteration_statement
     :   WHILE expression LOOP statement+ END LOOP ';';
 
 null_statement
     :   NULL ';';
+
+return_statement
+    :   RETURN expression? ';';
 
 
 // Expression Grammar
@@ -91,7 +113,7 @@ primary_expression
 
 unary_expression
     locals [String expressionType]
-    :   (PLUS | MINUS) primary_expression
+    :   (PLUS | MINUS | NOT) primary_expression
     |   primary_expression;
 
 multiplicative_expression
@@ -112,9 +134,19 @@ relational_expression
             additive_expression
     |   additive_expression;
 
+and_expression
+    locals [String expressionType]
+    :   and_expression AND relational_expression
+    |   relational_expression;
+
+or_expression
+    locals [String expressionType]
+    :   or_expression OR and_expression
+    |   and_expression;
+
 expression
     locals [String expressionType]
-    :   relational_expression;
+    :   or_expression;
 
 // Augusta currently only supports simple left-hand side expressions.
 left_expression

@@ -4,5 +4,5 @@ declare
    X : Integer;       -- Uninitialized declaration.
    X : Integer := 5;  -- Initialized declaration.
 begin
-   null
+   null;
 end;
