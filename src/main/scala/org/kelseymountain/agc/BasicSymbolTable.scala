@@ -1,7 +1,8 @@
 package org.kelseymountain.agc
 
 /**
- * A BasicSymbolTable implements the SymbolTable trait by way of two ordinary in-memory maps.
+ * Provides symbol table services for a single (flat) scope. Basic symbol tables implement the
+ * SymbolTable trait by way of two ordinary in-memory maps.
  */
 class BasicSymbolTable extends SymbolTable:
   import collection.mutable
@@ -9,29 +10,33 @@ class BasicSymbolTable extends SymbolTable:
   private val identifierMap = mutable.Map[IdentifierName, TypeName]()
   private val typeMap = mutable.Map[TypeName, TypeRep]()
 
-  override def addIdentifierByName(name: IdentifierName, typeName: TypeName): Unit =
+  /** @inheritdoc */
+  override def addIdentifierByName(name: IdentifierName, typeName: TypeName): Either[String, Unit] =
     if identifierMap.contains(name) then
-      throw SymbolTable.DuplicateIdentifierNameException(s"Duplicate identifier name: $name")
-    else if !typeMap.contains(typeName) then
-      throw SymbolTable.UnknownTypeNameException(s"Unknown type name: $typeName")
+      Left(s"Duplicate identifier name: $name")
     else if typeMap.contains(name) then
-      throw SymbolTable.ConflictingNameException(s"Already a type: $name")
+      Left(s"Already a type: $name")
     else
       identifierMap.put(name, typeName)
+      Right(())
 
-  override def addTypeByName(name: TypeName, representation: TypeRep): Unit =
+  /** @inheritdoc */
+  override def addTypeByName(name: TypeName, representation: TypeRep): Either[String, Unit] =
     if typeMap.contains(name) then
-      throw SymbolTable.DuplicateTypeNameException(s"Duplicate type name: $name")
+      Left(s"Duplicate type name: $name")
     else if identifierMap.contains(name) then
-      throw SymbolTable.ConflictingNameException(s"Already an object: $name")
+      Left(s"Already an object: $name")
     else
       typeMap.put(name, representation)
+      Right(())
 
+  /** @inheritdoc */
   override def getIdentifierType(name: IdentifierName): Either[String, TypeName] =
     identifierMap.get(name) match
       case Some(typeName) => Right(typeName)
       case None => Left(s"Unknown object: $name")
 
+  /** @inheritdoc */
   override def getTypeRepresentation(name: TypeName): Either[String, TypeRep] =
     typeMap.get(name) match
       case Some(representation) => Right(representation)
