@@ -31,14 +31,3 @@ trait Reporter:
    * @param message THe human-readable message describing the warning.
    */
   def reportSourceWarning(warningNode: TerminalNode, message: String): Unit
-
-
-object Reporter:
-
-  /**
-   * Internal compiler errors are handled by throwing instances of this exception. They are not
-   * reported in the usual way. Instead, the compiler is intended to abort.
-   *
-   * @param message A human-readable, but not user-friendly, message describing the error.
-   */
-  class InternalErrorException(message: String) extends Exception(message)

@@ -1,23 +1,21 @@
 package org.kelseymountain.agc
 
-import org.kelseymountain.agc.TypeRep.{EnumRep, RangeRep, SubtypeRep}
-
 class SymbolTableBuilder(private val reporter: Reporter,
-                         private val symbolTable: SymbolTableTree) extends AugustaBaseVisitor[Option[TypeName]]:
+                         private val symbolTable: SymbolTableTree) extends AugustaBaseVisitor[Unit]:
   import org.kelseymountain.agc.AugustaParser.*
-
-  // Create and enter the global scope initially.
-  symbolTable.enterBuilderScope()
 
   // ==================
   // Visitation methods
   // ==================
 
-  override def visitCompilation_unit(ctx: Compilation_unitContext): Option[TypeName] =
+  override def visitCompilation_unit(ctx: Compilation_unitContext): Unit =
+    // Create and enter the global scope.
+    symbolTable.enterBuilderScope()
     visitChildren(ctx)  // This is the default behavior shown here for illustration.
-    None
+    // Exit the global scope.
+    symbolTable.exitBuilderScope()
 
-  override def visitProcedure_definition(ctx: Procedure_definitionContext): Option[TypeName] =
+  override def visitProcedure_definition(ctx: Procedure_definitionContext): Unit =
     val identifierName = ctx.IDENTIFIER(0).getText
     // TODO: Verify that the identifier associated with `end` (if any) is the same.
     // TODO: Generate a unique internal name for this procedure's type.
@@ -30,12 +28,10 @@ class SymbolTableBuilder(private val reporter: Reporter,
     visit(ctx.declarations)
     visit(ctx.block)
     symbolTable.exitBuilderScope()
-    None
 
-  override def visitObject_declaration(ctx: Object_declarationContext): Option[TypeName] =
+  override def visitObject_declaration(ctx: Object_declarationContext): Unit =
     val identifierName = ctx.IDENTIFIER(0).getText
     val typeName = ctx.IDENTIFIER(1).getText
     symbolTable.addIdentifierByName(identifierName, typeName) match
       case Left(message) => reporter.reportSourceError(ctx.IDENTIFIER(0), message)
       case Right(_)  => // Do nothing.
-    None

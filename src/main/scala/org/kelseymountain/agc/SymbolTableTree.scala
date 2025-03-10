@@ -54,7 +54,7 @@ class SymbolTableTree(rootScope: BasicSymbolTable) extends SymbolTable:
    */
   def exitBuilderScope(): Unit =
     current = current.parentNode.getOrElse(
-      throw new IllegalStateException("Cannot exit the root scope of a symbol table tree."))
+      throw IllegalStateException("Cannot exit the root scope of a symbol table tree."))
 
   /** @inheritdoc */
   override def addIdentifierByName(name: IdentifierName, typeName: TypeName): Either[String, Unit] =

@@ -27,3 +27,12 @@ def preDefinedSymbols: BasicSymbolTable =
   preDefinedScope.addTypeByName("Positive", SubtypeRep("Integer", RangeRep(1, Int.MaxValue)))
   preDefinedScope.addTypeByName("Boolean", EnumRep(List("False", "True")))
   preDefinedScope
+
+/**
+ * Internal compiler errors are handled by throwing instances of this exception. They are not
+ * reported in the usual way. Instead, the compiler is intended to abort.
+ *
+ * @param message A human-readable, but not necessarily user-friendly, message describing the
+ * error.
+ */
+class InternalErrorException(message: String) extends Exception(message)
