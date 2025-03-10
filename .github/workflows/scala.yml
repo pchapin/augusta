@@ -25,6 +25,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+        contents: write   # Needed for dependency graph upload (see below).
+
     steps:
     - name: Checkout
       uses: actions/checkout@v4
