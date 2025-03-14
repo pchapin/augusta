@@ -66,7 +66,7 @@ the need to implement Ada's quirks for the sake of compatibility. At the moment,
 sequence of Augusta levels (L1, L2, etc.) as approximately converging toward full Ada, but we
 don't hold that convergence as an ultimate goal of this project.
 
-For example, Augusta is a case-sensitve language, whereas Ada is case-insensitive. The case
+For example, Augusta is a case-sensitive language, whereas Ada is case-insensitive. The case
 sensitivity of Augusta aligns with most modern languages and supports a naming convention where
 casing can be used to distinguish between types and objects (e.g., a type `Card` and an object
 `card` can coexist in the program as distinct entities). Case sensitivity is also slightly
@@ -74,7 +74,7 @@ easier to implement.
 
 As a result, Augusta programs that use reserved words in unusual casings as ordinary identifiers
 (`While` instead of `while`) will compile, whereas they would not in Ada. This breaks Augusta as
-a subset of Ada, but we have no intention of ever changing this behavior. There are other
+a subset of Ada, but we have no intention of ever-changing this behavior. There are other
 examples. See the Augusta Language Reference Manual for more details about Augusta/Ada
 compatibility and the rationale for any deviations.
 
@@ -85,7 +85,8 @@ compatibility and the rationale for any deviations.
 
 The prerequisites necessary for setting up an Augusta/AGC development system are listed below.
 The version numbers given are for the specific versions we are using. In most cases, other
-closely related versions would probably also work, but have not been tested.
+closely related versions would probably also work, but have not been tested. More details about
+setting up these prerequisites are given in the following sections.
 
 _TODO:_ Discuss how to install SBT via Coursier.
 
@@ -105,21 +106,48 @@ _TODO:_ Discuss how to install SBT via Coursier.
   Sphinx, a Python package, is used to build the documentation. The instructions for setting up
   the necessary virtual environment with all required components are detailed below.
   
-+ [LLVM](http://llvm.org/) (19.1.4)
++ [LLVM](http://llvm.org/) (20.1.0)
 
   Augusta generates code for the Low Level Virtual Machine (LLVM). Only the back-end tools from
-  the LLVM project are needed. None of the front-end compilers (gcc, clang, etc.) are necessary.
+  the LLVM project are needed. The front-end compilers (gcc, clang, etc.) are not necessary.
 
-_TODO:_ Document how to set up LLVM.
+### AGC
+
+After installing the Java and SBT prerequisites, you can build AGC by issuing the following
+commands at a shell prompt in the root folder of the repository:
+
+    $ sbt compile  # Compiles the system.
+    $ sbt test     # Executes the unit tests.
+    $ sbt assembly # Builds the "uber-JAR" containing AGC and all dependencies.
+    
+These commands will work on all supported operating systems (Windows, macOS, and Linux). Note
+that "test" and "assembly" imply "compile," so you do not need to run "compile" separately.
+However, doing so can be helpful in isolating errors. The first time you run these commands, SBT
+will download many components, including the Scala compiler and the various libraries that AGC
+depends on. This can take some time, depending on your network connection.
+
+The resulting JAR file is in `target/scala-3.3.4`. The file is large because it contains all of
+AGC's dependencies and is completely self-contained. You can deploy AGC by simply copying that
+JAR file to another system and executing it.
+
+Additional SBT commands of interest are:
+
+    $ sbt clean    # Deletes all build artifacts.
+    $ sbt doc      # Builds the API documentation in target/scala-3.3.4/api.
+    $ sbt run      # Runs AGC interactively.
+    $ sbt console  # Starts the Scala REPL with AGC's classpath configured.
+
+See the [SBT documentation](https://www.scala-sbt.org/documentation.html) for more details about
+SBT.
 
 ### Python Virtual Environment
 
 The Augusta/AGC documentation is written using reStructuredText (reST) and compiled with Sphinx
 into presentation formats. If you intend to build the documentation, you will need to set up a
 Python virtual environment as described here. The build of AGC itself does not require this, but
-we use Python as our official scripting language so in the future Python might be used in other
-supportive roles. Therefore, we encourage every developer to go through these steps regardless
-of your current needs.
+we use Python as our official scripting language, so in the future Python might be used in other
+supportive roles. We encourage every contributor to go through these steps regardless of your
+current needs.
 
 First, install a suitable version of Python. Use at least version 3.6 as a minimum for Sphinx,
 but a more recent version is encouraged (we use 3.13.x). Then create a virtual environment in
@@ -154,34 +182,28 @@ When you are done working with Python you can deactivate the virtual environment
 $ deactivate
 ```
 
-### AGC
+### LLVM
 
-After installing the Java and SBT prerequisites, you can build AGC by issuing the following
-commands at a shell prompt in the root folder of the repository:
+To set up LLVM for use with AGC, first download the release from the [LLVM releases
+page](https://releases.llvm.org/). We recommend using the pre-built binaries for your platform
+since compiling LLVM from source can be its own adventure. You will want the full system. For
+example, on x64 Windows download clang+llvm-20.1.0-x86_64-pc-windows-msvc.tar.xz.
 
-    $ sbt compile  # Compiles the system.
-    $ sbt test     # Executes the unit tests.
-    $ sbt assembly # Builds the "uber-JAR" containing AGC and all dependencies.
-    
-These commands will work on all supported operating systems (Windows, macOS, and Linux). Note
-that "test" and "assembly" imply "compile," so you do not need to run "compile" separately.
-However, doing so can be helpful in isolating errors. The first time you run these commands, SBT
-will download many components, including the Scala compiler and the various libraries that AGC
-depends on. This can take some time, depending on your network connection.
+_TODO:_ Does the Windows version require the MSVC runtime?
 
-The resulting JAR file is in `target/scala-3.3.4`. The file is large because it contains all of
-AGC's dependencies and is completely self-contained. You can deploy AGC by simply copying that
-JAR file to another system and executing it.
+Extract the contents of the archive to a suitable location on your system, and add the `bin`
+folder of the LLVM distribution to your system's PATH environment variable.
 
-Additional SBT commands of interest are:
+Although LLVM 20.1.0 is the version we are using, other, similar versions are likely to work.
+Also, the precompiled binaries are community-supported, so not all platforms may be available
+for every version. Don't hesitate to pick an adjacent version if necessary.
 
-    $ sbt clean    # Deletes all build artifacts.
-    $ sbt doc      # Builds the API documentation in target/scala-3.3.4/api.
-    $ sbt run      # Runs AGC interactively.
-    $ sbt console  # Starts the Scala REPL with AGC's classpath configured.
-
-See the [SBT documentation](https://www.scala-sbt.org/documentation.html) for more details about
-SBT.
+LLVM is available from a variety of sources. For example, on macOS, you may be able to use
+Homebrew to install LLVM. On Linux, you may be able to use your distribution's package manager.
+For the purposes of this project, be sure the following tools are installed: `llvm-as`, `llc`,
+`opt`, and `lld`. These tools comprise the back-end pipeline used by AGC to convert LLVM
+assembly language into an executable for your platform. A partial installation that focuses more
+on supporting front-end compilers (e.g., `clang`) may not include all of these tools.
 
 ### Alternates
 
