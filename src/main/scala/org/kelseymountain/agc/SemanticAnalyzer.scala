@@ -6,7 +6,7 @@ class SemanticAnalyzer(private val reporter: Reporter,
 
   // Prepare the symbol table for reading.
   symbolTable.resetReaderTraversal()
-  
+
   // ==================
   // Visitation methods
   // ==================
@@ -20,12 +20,12 @@ class SemanticAnalyzer(private val reporter: Reporter,
     None
 
   override def visitAnd_expression(ctx: And_expressionContext): Option[TypeName] =
-    val leftType = visit(ctx.and_expression)          // Might be null.
     val rightType = visit(ctx.relational_expression)
 
-    if leftType == null then
+    if ctx.and_expression == null then
       rightType
     else
+      val leftType = visit(ctx.and_expression)
       if leftType.getOrElse(throw InternalErrorException("Subexpression with no type")) != "Boolean" then
         reporter.reportSourceError(ctx.AND, "Left operand of `and` must be Boolean")
       if rightType.getOrElse(throw InternalErrorException("Subexpression with no type")) != "Boolean" then

@@ -7,20 +7,27 @@ import com.monovore.decline.effect.*
 import org.antlr.v4.runtime.*
 import org.antlr.v4.runtime.tree.*
 
-private def processAugustaFile(filePath: String): IO[Unit] = {
+private def processAugustaFile(inputFilePath: String, outputFilePath: String): IO[Unit] = {
   for {
-    input <- IO.blocking(CharStreams.fromFileName(filePath))
-    lexer  = new AugustaLexer(input)
-    tokens = new CommonTokenStream(lexer)
-    parser = new AugustaParser(tokens)
-    tree = parser.compilation_unit()
+    input <- IO.blocking(CharStreams.fromFileName(inputFilePath))
     _ <- IO {
+      // Use ANTLR to parse the input file.
+      val lexer = new AugustaLexer(input)
+      val tokens = new CommonTokenStream(lexer)
+      val parser = new AugustaParser(tokens)
+      val tree = parser.compilation_unit()
+
+      // Build the symbol table.
       val myConsoleReporter = new BasicConsoleReporter
       val mySymbolTable = new SymbolTableTree(preDefinedSymbols)
       val mySymbolTableBuilder = new SymbolTableBuilder(myConsoleReporter, mySymbolTable)
       mySymbolTableBuilder.visit(tree)
+
+      // Perform semantic analysis.
       val mySemanticAnalyzer = new SemanticAnalyzer(myConsoleReporter, mySymbolTable)
       mySemanticAnalyzer.visit(tree)
+
+      // Perform code generation.
       val myCGenerator = new CGenerator(myConsoleReporter, mySymbolTable)
       myCGenerator.visit(tree)
     }
@@ -52,7 +59,7 @@ object Main extends CommandIOApp(
   // Combine all options into a single command.
   override def main: Opts[IO[ExitCode]] = (optimizationOpt, outputOpt, inputFile).mapN {
     (optLevel, outputFile, fileName) =>
-      processAugustaFile(fileName)
+      processAugustaFile(fileName, outputFile)
         .as(ExitCode.Success)
         .handleErrorWith { err =>
           IO.println(s"Error: ${err.getMessage}").as(ExitCode.Error)

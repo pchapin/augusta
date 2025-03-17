@@ -108,7 +108,7 @@ primary_expression
     :   IDENTIFIER
     |   INTEGER_LITERAL
     |   REAL_LITERAL
-    |   BOOLEAN_LITERAL
+    |   BOOLEAN_LITERAL       // A hack. Boolean values are ordinary identifiers.
     |   '(' expression ')';
 
 unary_expression
@@ -256,8 +256,12 @@ MULTIPLY      : '*';
 NOT_EQUAL     : '/=';
 PLUS          : '+';
 
+// Normally Boolean literals should be treated as ordinary identifiers representing the
+// enumerators of a built-in (i.e., in the root scope) enumeration type named "Boolean."
+// Since Augusta does not currently deal with enumerators very well, these are hard-coded
+// for now.
 BOOLEAN_LITERAL
-    :   'True' | 'False';
+    :   'False' | 'True';
 
 IDENTIFIER
     :   [a-zA-Z][a-zA-Z0-9_]*;
