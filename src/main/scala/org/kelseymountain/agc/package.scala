@@ -16,6 +16,14 @@ type IdentifierName = String
 type TypeName = String
 
 /**
+ * Represents names of basic blocks. The name serves as a label on the basic block when
+ * generating LLVM IR, and it is used to identify the basic block in the CFG. This is a
+ * placeholder in the sense that it is subject to elaboration into a specialized class if the
+ * need ever arises.
+ */
+type BlockName = String
+
+/**
  * Computes a symbol table containing built-in type declarations. The returned symbol table
  * can be used to initialize a new symbol table stack or symbol table tree.
  */
