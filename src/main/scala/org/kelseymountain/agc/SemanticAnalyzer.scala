@@ -69,22 +69,26 @@ class SemanticAnalyzer(private val reporter: Reporter,
         case (Left(leftMessage), Left(rightMessage)) =>
           reporter.reportSourceError(operator, s"$leftMessage and $rightMessage")
           Some("Integer")  // Error recovery.
-          
+
         case (Left(leftMessage), Right(resolvedRightType)) =>
           reporter.reportSourceError(operator, leftMessage)
           Some(resolvedRightType)  // Error recovery.
-          
+
         case (Right(resolvedLeftType), Left(rightMessage)) =>
           reporter.reportSourceError(operator, rightMessage)
           Some(resolvedLeftType)  // Error recovery.
-          
+
         case (Right(resolvedLeftType), Right(resolvedRightType)) =>
           // Are the operand types compatible?
           if resolvedLeftType != resolvedRightType then
             reporter.reportSourceError(operator, "Operands must have the same type")
           // Are the operand types arithmetic?
-          // This doesn't properly deal with user-defined arithmetic types.  
-          if resolvedLeftType != "Integer" && resolvedLeftType != "Float" then
+          // This doesn't properly deal with user-defined arithmetic types.
+          else if !(resolvedLeftType == "Integer" || resolvedLeftType == "Float") then
             reporter.reportSourceError(operator, "Operands must be Integer or Float")
           Some(resolvedLeftType)
-          
+      end match
+    end if
+  end visitAdditive_expression
+
+end SemanticAnalyzer

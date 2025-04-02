@@ -6,6 +6,7 @@ enum ParameterMode:
   case InOutMode
 
 enum TypeRep:
+  case ParentRep(parentType: TypeName)
   case RangeRep(lower: BigInt, upper: BigInt)
   case SubtypeRep(parentType: TypeName, range: RangeRep)
   case EnumRep(values: List[IdentifierName])
