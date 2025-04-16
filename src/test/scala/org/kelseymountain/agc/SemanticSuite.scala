@@ -45,8 +45,9 @@ class SemanticSuite extends UnitSuite:
     end for
   end doTests
 
-  //test("Semantics: Basic")
+  //test("Semantics: Basic") {
   //  doTests(basicCases)
+  //}
 
   test("Semantics: Basic Type Checking") {
     // The type-checking tests are not passing yet. We should revisit once the AST is ready.
@@ -55,9 +56,10 @@ class SemanticSuite extends UnitSuite:
     }
   }
 
-  //test("Semantics: Type Declarations")
+  //test("Semantics: Type Declarations") {
   //  doTests(basicCases)
   //  doTests(typeDeclarations)
+  //}
 
 end SemanticSuite
 
