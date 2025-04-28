@@ -23,6 +23,9 @@ type TypeName = String
  */
 type BlockName = String
 
+enum BranchLabel:
+  case True, False, Unconditional
+
 /**
  * Computes a symbol table containing built-in type declarations. The returned symbol table
  * can be used to initialize a new symbol table stack or symbol table tree.

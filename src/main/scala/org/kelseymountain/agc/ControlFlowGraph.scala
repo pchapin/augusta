@@ -1,14 +1,21 @@
 package org.kelseymountain.agc
 
 /**
- * Represents a control flow graph (CFG) as a collection of `CFGNodes`, each identified by the
- * name of the basic block contained in those nodes.
+ * Represents a control flow graph (CFG) as a collection of `BasicBlock`, each identified by its
+ * name. The graph also contains edges that represent the flow of control between these blocks.
  *
- * @param entry  The name of the entry block in the control flow graph. This is the starting
- * point of the program's control flow or a specific function/method's flow.
+ * @param entry The name of the entry block in the control flow graph. This is the starting
+ * point of the program's or for a specific function/method's flow.
  *
- *  @param blocks A map that associates block names with their corresponding `CFGNode` instances.
- *  Each `CFGNode` contains a basic block and details about its successors through labeled edges.
+ *  @param blocks A map that associates block names with their corresponding `BasicBlock`
+ *  instances.
+ *
+ * @param edges A map that associates block names with their outgoing labeled edges.
+ *
+ *  @param exit The name of the exit block in the control flow graph.
  */
-// TODO: Probably `entry` should be an Option[BlockName] to allow for empty graphs.
-case class ControlFlowGraph(entry: BlockName, blocks: Map[BlockName, CFGNode])
+case class ControlFlowGraph(
+  entry: BlockName,
+  blocks: Map[BlockName, BasicBlock],
+  edges: Map[BlockName, Map[BranchLabel, BlockName]],
+  exit: BlockName)
